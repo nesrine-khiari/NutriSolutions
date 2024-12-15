@@ -1,4 +1,40 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --primary-color: #cc5500;
+  --secondary-color: #9dc209;
+  --background-color: #fbf4ea;
+  --brown: #5d2d00;
+  --light-green: #cbea7b;
+  --text-color: #263a43;
+}
+
 body {
   font-family: "Poppins", sans-serif;
+  cursor: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+/* Remove default styles for lists, links, and buttons */
+ul,
+ol,
+dl,
+li,
+a,
+button {
+  list-style: none;
+  text-decoration: none;
+  background: none;
 }
