@@ -9,7 +9,7 @@ export class ButtonComponent implements OnInit {
   @Input() text: string = '';
   @Input() type: string = 'Submit';
   @Input() width: string = '100%';
-  @Input() height: string = '50px';
+  @Input() fontWeight: string = 'bold';
   @Input() backgroundColor: string = '';
   @Input() textColor: string = 'white';
   @Input() boxShadow: string = '';
@@ -36,7 +36,7 @@ export class ButtonComponent implements OnInit {
     return {
       width: this.width,
       type: this.type,
-      height: this.height,
+      fontWeight: this.fontWeight,
       color: this.textColor,
       boxShadow: this.isHovered ? this.boxShadow : 'none',
       backgroundColor: this.backgroundColor,

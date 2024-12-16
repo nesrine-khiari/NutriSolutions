@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['../../../assets/css/auth-common.css', './signup.component.css'],
 })
 export class SignupComponent {
-  currentStep: number = 2;
+  currentStep: number = 1;
   stepLabels: string[] = [
     'Account Type',
     'Account Information',

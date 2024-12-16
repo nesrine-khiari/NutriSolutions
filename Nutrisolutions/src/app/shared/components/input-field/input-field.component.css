@@ -4,6 +4,7 @@
   margin: 0.8rem 0rem;
 }
 .input-label {
+  font-size: 0.9rem;
   color: var(--text-color);
 }
 .input-wrapper {
@@ -12,19 +13,18 @@
 
 input {
   width: 100%;
-  padding: 0.5rem 0rem 0.5rem 0.5rem;
-  font-size: 1rem;
+  padding: 0.7rem 0rem 0.7rem 0.5rem;
+  font-size: 0.8rem;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 input:focus {
-  border:2px solid ;
+  border: 2px solid;
   border-color: var(--secondary-color); /* Your preferred color */
   box-shadow: 0 0 10px var(--light-green);
   outline: none;
 }
 input::placeholder {
-  font-size: 0.9rem;
   color: var(--hint-text);
 }
 .toggle-icon {
