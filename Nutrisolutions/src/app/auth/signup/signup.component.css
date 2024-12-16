@@ -1,0 +1,17 @@
+.buttons {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  justify-content: end;
+}
+.form {
+  justify-content: space-between;
+}
+
+.steps-wrapper {
+  width: 80%;
+}
+
+.step-content {
+  width: 50%;
+}
