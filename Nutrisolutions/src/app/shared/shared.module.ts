@@ -11,9 +11,7 @@ import { ButtonComponent } from './components/button/button.component';
     ProgressIndicatorComponent,
     ButtonComponent
   ],
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
   exports: [
     AuthBackgroundComponent,
     InputFieldComponent,
@@ -22,4 +20,4 @@ import { ButtonComponent } from './components/button/button.component';
   ]
 
 })
-export class SharedModule { }
+export class SharedModule {}
