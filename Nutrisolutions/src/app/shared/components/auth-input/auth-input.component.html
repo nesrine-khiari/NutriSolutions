@@ -1,0 +1,9 @@
+<div class="input-wrapper">
+    <label class="input-heading">{{heading}}</label>
+    <div class="input">
+        <input [type]=getType() [placeholder]="placeholder">
+        <i class="fa-solid fa-eye input-icon" *ngIf="isPassword && !showPassword" (click)="toggleShowPassword()"></i>
+        <i class="fa-solid fa-eye-slash  input-icon" *ngIf="isPassword && showPassword"
+            (click)="toggleShowPassword()"></i>
+    </div>
+</div>

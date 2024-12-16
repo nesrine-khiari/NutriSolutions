@@ -1,0 +1,22 @@
+<app-auth-background>
+    <div class="form">
+        <h1>Register</h1>
+        <div class="steps-wrapper">
+            <app-steps [steps]="stepLabels" [activeStep]="currentStep"></app-steps>
+        </div>
+        <div class="inputs">
+            <app-auth-input [heading]="'Email Address'" [type]="'email'"> </app-auth-input>
+            <app-auth-input [heading]="'Password'" [type]="'password'"> </app-auth-input>
+            <app-auth-input [heading]="'Confirm Password'" [type]="'password'" [placeholder]="''"> </app-auth-input>
+        </div>
+        <div class="buttons">
+            <app-button [backgroundColor]="'white'" [textColor]="'var( --hint-text-color)'"
+                [boxShadow]="'0 4px 8px 2px var(--hint-text-color)'" [text]="'Previous'"></app-button>
+            <app-button [text]="'Next'"></app-button>
+        </div>
+
+
+
+
+    </div>
+</app-auth-background>
