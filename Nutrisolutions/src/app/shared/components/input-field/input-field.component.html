@@ -1,0 +1,19 @@
+<div class="input-field-container">
+  <label class="input-label">{{ label }}</label>
+  <div class="input-wrapper">
+    <input
+      [type]="isPassword && !isPasswordVisible ? 'password' : 'text'"
+      [placeholder]="placeholder"
+      [required]="required"  
+      [name]="formControlName"
+    />
+    <span class="toggle-icon" [hidden]="!isPassword" (click)="togglePasswordVisibility()">
+      <i class="fa"
+        [ngClass]="{
+          'fa-eye': isPassword && !isPasswordVisible,
+          'fa-eye-slash': isPassword && isPasswordVisible
+        }"
+      ></i>
+    </span>
+  </div>
+</div>

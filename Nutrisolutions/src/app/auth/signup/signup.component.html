@@ -1,0 +1,49 @@
+<app-auth-background>
+  <form>
+    <h1>Inscription</h1>
+    <div class="steps-wrapper">
+      <app-progress-indicator
+        [steps]="stepLabels"
+        [activeStep]="currentStep"
+      ></app-progress-indicator>
+    </div>
+    <div class="inputs">
+      <app-input-field
+        label="Email Address"
+        placeholder="Type your email here"
+        type="email"
+        ngModel
+        name="email"
+        [required]="true"
+      ></app-input-field>
+
+      <app-input-field
+        label="Password"
+        placeholder="Type your password here"
+        formControlName="password"
+        [isPassword]="true"
+        ngModel
+        name="password"
+        [required]="true"
+      ></app-input-field>
+      <app-input-field
+        label="Confirm Password"
+        placeholder="Confirm your password here"
+        formControlName="password"
+        [isPassword]="true"
+        ngModel
+        name="password"
+        [required]="true"
+      ></app-input-field>
+    </div>
+    <div class="buttons">
+      <app-button
+        [text]="'Previous'"
+        [backgroundColor]="'white'"
+        [textColor]="'var(--hint-text)'"
+        [boxShadow]="'0 4px 8px 2px var(--hint-text)'"
+      ></app-button>
+      <app-button [text]="'Next'"></app-button>
+    </div>
+  </form>
+</app-auth-background>

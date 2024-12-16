@@ -58,5 +58,8 @@ export class AppComponent implements AfterViewInit {
     };
 
     animateCircles();
+ 
   }
+
 }
+

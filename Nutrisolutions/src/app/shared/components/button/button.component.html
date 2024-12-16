@@ -1,0 +1,8 @@
+<button class="button"
+  [ngStyle]="getStyles()"
+  (mouseover)="isHovered = true"
+  (mouseleave)="isHovered = false"
+  type="{{ type }}"
+>
+  {{ text }}
+</button>

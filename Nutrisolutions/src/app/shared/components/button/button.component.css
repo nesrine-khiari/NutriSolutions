@@ -1,0 +1,10 @@
+.button{
+  height: 60px;
+  padding: 0px 20px;
+  text-align: center;
+  border: none;
+  font-weight: bold;
+  cursor: 'pointer';
+  transition: 'border-color 0.3s ease';
+  font-weight: bold;
+}

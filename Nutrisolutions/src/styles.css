@@ -7,6 +7,7 @@
   --brown: #5d2d00;
   --light-green: #cbea7b;
   --text-color: #263a43;
+  --hint-text: #B1B1B1;
 }
 
 body {
@@ -24,7 +25,7 @@ body {
 * {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 /* Remove default styles for lists, links, and buttons */
@@ -38,3 +39,7 @@ button {
   text-decoration: none;
   background: none;
 }
+
+@import 'node_modules/primeng/resources/themes/saga-blue/theme.css';
+@import 'node_modules/primeng/resources/primeng.min.css';
+@import 'node_modules/primeicons/primeicons.css';
