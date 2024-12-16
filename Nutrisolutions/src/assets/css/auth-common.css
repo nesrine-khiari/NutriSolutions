@@ -23,3 +23,17 @@ form {
 form .inputs {
   width: 60%;
 }
+@media (min-width: 1920px) and (min-height: 1080px) {
+  form{
+    width: 70%;
+    height: 80%;
+  }
+  form .inputs{
+    width: 50%
+  }
+}
+@media screen and (max-width: 768px) {
+  .form {
+    width: 60%;
+  }
+}
