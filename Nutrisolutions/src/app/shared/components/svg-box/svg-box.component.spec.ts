@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SignupComponent } from './signup.component';
+import { SvgBoxComponent } from './svg-box.component';
 
-describe('SignupComponent', () => {
-  let component: SignupComponent;
-  let fixture: ComponentFixture<SignupComponent>;
+describe('SvgBoxComponent', () => {
+  let component: SvgBoxComponent;
+  let fixture: ComponentFixture<SvgBoxComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SignupComponent],
+      declarations: [SvgBoxComponent]
     });
-    fixture = TestBed.createComponent(SignupComponent);
+    fixture = TestBed.createComponent(SvgBoxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

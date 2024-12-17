@@ -17,23 +17,21 @@ form {
   height: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 }
 form .inputs {
-  width: 60%;
+  margin-top: 30px;
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
 }
-@media (min-width: 1920px) and (min-height: 1080px) {
-  form{
-    width: 70%;
-    height: 80%;
-  }
-  form .inputs{
-    width: 50%
-  }
-}
+
 @media screen and (max-width: 768px) {
-  .form {
-    width: 60%;
+  form {
+    width: max(80%, 500px);
   }
 }

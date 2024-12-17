@@ -1,0 +1,46 @@
+.dropdown-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.8rem;
+}
+.dropdown {
+  width: 100%;
+  padding: 0.7rem 2rem 0.7rem 0.5rem; /* Add right padding for the arrow */
+  font-size: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  appearance: none; /* Remove default dropdown arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+select.dropdown:focus {
+  border: 1px solid var(--secondary-color);
+  box-shadow: 0 0 10px var(--light-green);
+
+  border-radius: 6px;
+  outline: none;
+}
+.dropdown-wrapper {
+  position: relative;
+  width: 100%;
+}
+.dropdown-wrapper::after {
+  content: "▼"; /* Unicode character for dropdown arrow */
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Position arrow inside wrapper */
+  transform: translateY(-50%);
+  pointer-events: none; /* Prevent interaction with the pseudo-element */
+  color: black;
+  font-size: 0.8rem;
+}
+
+.dropdown-wrapper:focus-within::after {
+  color: var(--secondary-color);
+}
+
+option:checked {
+  background-color: var(--secondary-color);
+}
