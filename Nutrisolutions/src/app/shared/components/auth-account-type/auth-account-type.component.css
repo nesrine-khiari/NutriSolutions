@@ -2,7 +2,7 @@
   gap: 20px;
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 0.8rem 1rem;
   border-radius: 8px;
   background-color: #f9f6f2;
   cursor: pointer;
@@ -35,8 +35,8 @@
 }
 
 .account-info h3 {
+  margin: 0;
   font-size: clamp(0.8rem, 2vw, 1.1rem);
-
   color: var(--text-color);
 }
 

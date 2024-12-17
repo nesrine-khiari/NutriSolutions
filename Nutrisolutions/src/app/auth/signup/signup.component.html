@@ -2,69 +2,130 @@
   <form>
     <h1>Inscription</h1>
     <div class="steps-wrapper">
-      <app-progress-indicator [steps]="stepLabels" [activeStep]="currentStep"></app-progress-indicator>
+      <app-progress-indicator
+        [steps]="stepLabels"
+        [activeStep]="currentStep"
+      ></app-progress-indicator>
     </div>
 
     <div *ngIf="currentStep == 0" class="inputs">
       <h2>Choose your Account Type</h2>
 
       <!-- <div class="account-type-container"> -->
-      <app-auth-account-type *ngFor="let account of accountTypes" [type]="account.type"
-        [description]="account.description" [selectedType]="selectedType"
-        (typeSelected)="selectType($event)"></app-auth-account-type>
+      <app-auth-account-type
+        *ngFor="let account of accountTypes"
+        [type]="account.type"
+        [description]="account.description"
+        [selectedType]="selectedType"
+        (typeSelected)="selectType($event)"
+      ></app-auth-account-type>
       <!-- </div> -->
     </div>
 
     <div *ngIf="currentStep == 1" class="inputs">
-      <app-input-field label="Email Address" placeholder="Type your email here" type="email" ngModel name="email"
-        [required]="true"></app-input-field>
+      <app-input-field
+        label="Email Address"
+        placeholder="Type your email here"
+        type="email"
+        ngModel
+        name="email"
+        [required]="true"
+      ></app-input-field>
 
-      <app-input-field label="Password" placeholder="Type your password here" formControlName="password"
-        [isPassword]="true" ngModel name="password" [required]="true"></app-input-field>
-      <app-input-field label="Confirm Password" placeholder="Confirm your password here" formControlName="password"
-        [isPassword]="true" ngModel name="password" [required]="true"></app-input-field>
+      <app-input-field
+        label="Password"
+        placeholder="Type your password here"
+        formControlName="password"
+        [isPassword]="true"
+        ngModel
+        name="password"
+        [required]="true"
+      ></app-input-field>
+      <app-input-field
+        label="Confirm Password"
+        placeholder="Confirm your password here"
+        formControlName="password"
+        [isPassword]="true"
+        ngModel
+        name="password"
+        [required]="true"
+      ></app-input-field>
     </div>
 
     <div *ngIf="currentStep == 2" class="inputs">
-      <app-input-field label="Name" placeholder="Type your name here" type="text" [required]="true"></app-input-field>
+      <app-input-field
+        label="Name"
+        placeholder="Type your name here"
+        type="text"
+        [required]="true"
+      ></app-input-field>
       <div class="dropdowns">
-        <app-auth-dropdown class="dropdown" [label]="'Gender'"></app-auth-dropdown>
+        <app-auth-dropdown
+          class="dropdown"
+          [label]="'Gender'"
+        ></app-auth-dropdown>
         <app-auth-dropdown class="dropdown" [label]="'Age'"></app-auth-dropdown>
-
       </div>
-      <app-input-field label="Phone Number" placeholder="+216" type="text" [required]="true"></app-input-field>
+      <app-input-field
+        label="Phone Number"
+        placeholder="+216"
+        type="text"
+        [required]="true"
+      ></app-input-field>
     </div>
 
-
     <div *ngIf="currentStep == 3" class="inputs">
-      <app-input-field label="Name" placeholder="Type your name here" type="text" [required]="true"></app-input-field>
+      
       <div class="dropdowns">
-        <app-auth-dropdown class="dropdown" [label]="'Poids Actuel'"></app-auth-dropdown>
-        <app-auth-dropdown class="dropdown" [label]="'Taille'"></app-auth-dropdown>
-
+        <app-auth-dropdown
+          class="dropdown"
+          [label]="'Poids Actuel'"
+        ></app-auth-dropdown>
+        <app-auth-dropdown
+          class="dropdown"
+          [label]="'Taille'"
+        ></app-auth-dropdown>
       </div>
-      <app-auth-dropdown class="dropdown" [label]="'Activité journalière'"></app-auth-dropdown>
-      <app-auth-dropdown class="dropdown" [label]="'Objectif'"></app-auth-dropdown>
-
+      <app-auth-dropdown
+        class="dropdown"
+        [label]="'Activité journalière'"
+      ></app-auth-dropdown>
+      <app-auth-dropdown
+        class="dropdown"
+        [label]="'Objectif'"
+      ></app-auth-dropdown>
     </div>
 
     <div *ngIf="currentStep == 4" class="inputs">
       <app-svg-box>
         <div class="upload-image">
-          <img src="assets/images/upload-image.png" alt="upload">
+          <img src="assets/images/upload-image.png" alt="upload" />
           <h3>Upload Picture</h3>
         </div>
       </app-svg-box>
     </div>
 
-
-
     <div class="buttons">
-      <app-button [text]="'Previous'" (click)="goPrevious()" *ngIf="currentStep>0" [fontWeight]="'300'"
-        [backgroundColor]="'white'" [textColor]="'var(--hint-text)'"
-        [boxShadow]="'0 4px 8px 2px var(--hint-text)'"></app-button>
-      <app-button [text]="'Next'" (click)="goNext()" *ngIf="currentStep<4" [fontWeight]="'300'"></app-button>
-      <app-button [text]="'Confirm'" *ngIf="currentStep==4" [fontWeight]="'600'"></app-button>
+      <app-button
+        [text]="'Previous'"
+        (click)="goPrevious()"
+        *ngIf="currentStep > 0"
+        [fontWeight]="'300'"
+        [backgroundColor]="'white'"
+        [textColor]="'var(--hint-text)'"
+        [boxShadow]="'0 4px 8px 2px var(--hint-text)'"
+      ></app-button>
+      <app-button
+        [text]="'Next'"
+        (click)="goNext()"
+        *ngIf="currentStep < 4"
+        [fontWeight]="'300'"
+      ></app-button>
+      <app-button
+        [text]="'Confirm'"
+        *ngIf="currentStep == 4"
+        [fontWeight]="'600'"
+      ></app-button>
     </div>
   </form>
 </app-auth-background>

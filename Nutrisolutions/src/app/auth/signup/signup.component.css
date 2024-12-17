@@ -3,7 +3,7 @@
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--primary-color);
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
 }
 /* .account-type-container {
   width: 100%;
@@ -49,6 +49,3 @@
 .dropdowns .dropdown {
   flex: 50%;
 }
-/* form{
-  background-color: aqua;
-} */
