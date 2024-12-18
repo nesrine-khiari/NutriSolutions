@@ -27,7 +27,6 @@
         label="Email Address"
         placeholder="Type your email here"
         type="email"
-        ngModel
         name="email"
         [required]="true"
       ></app-input-field>
@@ -35,18 +34,15 @@
       <app-input-field
         label="Password"
         placeholder="Type your password here"
-        formControlName="password"
         [isPassword]="true"
-        ngModel
+        
         name="password"
         [required]="true"
       ></app-input-field>
       <app-input-field
         label="Confirm Password"
         placeholder="Confirm your password here"
-        formControlName="password"
         [isPassword]="true"
-        ngModel
         name="password"
         [required]="true"
       ></app-input-field>
@@ -124,7 +120,7 @@
       <app-button
         [text]="'Confirm'"
         *ngIf="currentStep == 4"
-        [fontWeight]="'600'"
+        [fontWeight]="'300'"
       ></app-button>
     </div>
   </form>

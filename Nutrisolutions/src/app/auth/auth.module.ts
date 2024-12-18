@@ -4,7 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { SharedModule } from '../shared/shared.module';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SignupComponent } from './signup/signup.component';
-
+import { FormsModule, NgModel } from '@angular/forms';
 
 
 @NgModule({
@@ -15,8 +15,8 @@ import { SignupComponent } from './signup/signup.component';
  ],
   imports: [
     CommonModule,
-    SharedModule
-  ],
+    SharedModule,
+    FormsModule  ],
   exports: [
     LoginComponent,
     ResetPasswordComponent,

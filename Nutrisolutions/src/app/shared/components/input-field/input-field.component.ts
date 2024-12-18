@@ -10,7 +10,6 @@ export class InputFieldComponent {
   @Input() placeholder: string = ''; 
   @Input() type: string = 'text'; 
   @Input() isPassword: boolean = false; 
-  @Input() formControlName: string = '';
   @Input() required: boolean = false; 
 
   isPasswordVisible: boolean = false;

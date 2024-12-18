@@ -32,7 +32,7 @@
 }
 
 .upload-image h3 {
-  color: var(--brown);
+  color: var(--primary-color);
   font-size: 1.5vw;
   font-weight: bold;
   text-align: center;

@@ -1,20 +1,18 @@
 <app-auth-background>
-  <form>
+  <form #loginForm="ngForm">
     <h1>Connexion</h1>
     <div class="inputs">
       <app-input-field
         label="Email Address"
         placeholder="Type your email here"
         type="email"
-        ngModel
+
         name="email"
         [required]="true"
       ></app-input-field>
-
       <app-input-field
         label="Password"
         placeholder="Type your password here"
-        formControlName="password"
         [isPassword]="true"
         ngModel
         name="password"
@@ -26,9 +24,11 @@
         </div>
         <a href="#" class="forgot-password">Forgot Password ?</a>
       </div>
-      <!-- <div style="width: 100%"> -->
-        <app-button [text]="'Connexion'"></app-button>
-      <!-- </div> -->
+      <app-button
+        [type]="'submit'"
+        [disabled]="loginForm.invalid ?? false"
+        [text]="'Connexion'"
+      ></app-button>
       <div class="signup">
         Don't have an account?
         <a id="signup">Sign up</a>

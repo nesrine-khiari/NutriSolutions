@@ -4,11 +4,15 @@
     <input
       [type]="isPassword && !isPasswordVisible ? 'password' : 'text'"
       [placeholder]="placeholder"
-      [required]="required"  
-      [name]="formControlName"
+      [required]="required"
     />
-    <span class="toggle-icon" [hidden]="!isPassword" (click)="togglePasswordVisibility()">
-      <i class="fa"
+    <span
+      class="toggle-icon"
+      [hidden]="!isPassword"
+      (click)="togglePasswordVisibility()"
+    >
+      <i
+        class="fa"
         [ngClass]="{
           'fa-eye': isPassword && !isPasswordVisible,
           'fa-eye-slash': isPassword && isPasswordVisible

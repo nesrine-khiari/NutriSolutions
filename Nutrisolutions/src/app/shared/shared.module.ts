@@ -7,6 +7,7 @@ import { ButtonComponent } from './components/button/button.component';
 import { AuthDropdownComponent } from './components/auth-dropdown/auth-dropdown.component';
 import { AuthAccountTypeComponent } from './components/auth-account-type/auth-account-type.component';
 import { SvgBoxComponent } from './components/svg-box/svg-box.component';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -17,7 +18,7 @@ import { SvgBoxComponent } from './components/svg-box/svg-box.component';
     AuthAccountTypeComponent,
     SvgBoxComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule,ReactiveFormsModule],
   exports: [
     AuthBackgroundComponent,
     InputFieldComponent,

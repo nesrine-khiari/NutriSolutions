@@ -14,6 +14,7 @@ export class ButtonComponent implements OnInit {
   @Input() textColor: string = 'white';
   @Input() boxShadow: string = '';
   @Input() borderRadius: string = '8px';
+  @Input() disabled: boolean = false;
 
   isHovered: boolean = false;
 
@@ -35,6 +36,7 @@ export class ButtonComponent implements OnInit {
   getStyles() {
     return {
       width: this.width,
+      disabled: this.disabled,
       type: this.type,
       fontWeight: this.fontWeight,
       color: this.textColor,
