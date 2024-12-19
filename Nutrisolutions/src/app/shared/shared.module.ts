@@ -14,7 +14,6 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CoreModule } from '../core/core.module';
-import { InputNumberFieldComponent } from './components/input-number-field/input-number-field.component';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -24,7 +23,6 @@ import { InputNumberFieldComponent } from './components/input-number-field/input
     AuthDropdownComponent,
     AuthAccountTypeComponent,
     SvgBoxComponent,
-    InputNumberFieldComponent,
   ],
   imports: [CommonModule, FormsModule, CoreModule],
   exports: [
