@@ -49,10 +49,10 @@
 
 @media screen and (max-width: 768px) {
   .left-section {
-    flex: 85%;
+    flex: 90%;
   }
   .right-section {
-    flex: 15%;
+    flex: 10%;
   }
   .background {
     flex-direction: column;
