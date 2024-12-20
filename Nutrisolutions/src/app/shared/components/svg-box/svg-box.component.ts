@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 @Component({
@@ -7,15 +7,18 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
   styleUrls: ['./svg-box.component.css'],
 })
 export class SvgBoxComponent implements OnInit {
+  @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef;
   @Input() width: string = '200px';
   @Input() height: string = '200px';
+  actualWidth: number = 0;
+  actualHeight: number = 0;
   backgroundStyle: SafeStyle = '';
 
   constructor(private sanitizer: DomSanitizer) {}
 
   getPathD(): string {
-    const w = parseFloat(this.width);
-    const h = parseFloat(this.height);
+    const w = this.actualWidth || 200; // Fallback to default value
+    const h = this.actualHeight || 200;
 
     return `
       M 0,${0.1 * h} 
@@ -30,13 +33,20 @@ export class SvgBoxComponent implements OnInit {
       Z
     `;
   }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    // Dynamically extract the dimensions of the container
+    const container = this.svgContainer.nativeElement;
+
+    this.actualWidth = container.offsetWidth || 200;
+    this.actualHeight = container.offsetHeight || 200;
+
     const svgElement = `
       <svg
-        viewBox="0 0 ${this.width} ${this.height}"
-        width="${this.width}"
-        height="${this.height}"
+        viewBox="0 0 ${this.actualWidth} ${this.actualHeight}"
+        width="${this.actualWidth}"
+        height="${this.actualHeight}"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
@@ -45,7 +55,6 @@ export class SvgBoxComponent implements OnInit {
             <stop offset="52%" style="stop-color: #cc5500; stop-opacity: 1" />
           </linearGradient>
         </defs>
-
 
         <path
           d="${this.getPathD()}"

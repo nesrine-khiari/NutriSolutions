@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { FormsModule } from '@angular/forms';
 import { RecipesModule } from './features/recipes/recipes.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,6 +15,7 @@ import { RecipesModule } from './features/recipes/recipes.module';
     AuthModule,
     FormsModule,
     RecipesModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent],

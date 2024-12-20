@@ -2,98 +2,85 @@
   <form>
     <h1>Inscription</h1>
     <div class="steps-wrapper">
-      <app-progress-indicator
-        [steps]="stepLabels"
-        [activeStep]="currentStep"
-      ></app-progress-indicator>
+      <app-progress-indicator [steps]="stepLabels" [activeStep]="currentStep"></app-progress-indicator>
     </div>
+
+
+    <!-- __________ STEP 1 : ACCOUNT TYPE ___________ -->
 
     <div *ngIf="currentStep == 0" class="inputs">
       <h2>Choose your Account Type</h2>
 
-      <!-- <div class="account-type-container"> -->
-      <app-auth-account-type
-        *ngFor="let account of accountTypes"
-        [type]="account.type"
-        [description]="account.description"
-        [selectedType]="selectedType"
-        (typeSelected)="selectType($event)"
-      ></app-auth-account-type>
-      <!-- </div> -->
+      <app-auth-account-type *ngFor="let account of accountTypes" [type]="account.type"
+        [description]="account.description" [selectedType]="selectedType"
+        (typeSelected)="selectType($event)"></app-auth-account-type>
     </div>
+
+    <!-- __________ STEP 2 : EMAIL & PASSWORD ___________ -->
 
     <div *ngIf="currentStep == 1" class="inputs">
-      <app-input-field
-        label="Email Address"
-        placeholder="Type your email here"
-        type="email"
-        name="email"
-        [required]="true"
-      ></app-input-field>
+      <app-input-field label="Email Address" [inputValue]="email" (onInputChange)="setEmail($event)"
+        placeholder="Type your email here" type="email" name="email" [required]="true"
+        [updateInputNote]="updateEmailInputNote"></app-input-field>
 
-      <app-input-field
-        label="Password"
-        placeholder="Type your password here"
-        [isPassword]="true"
-        
-        name="password"
-        [required]="true"
-      ></app-input-field>
-      <app-input-field
-        label="Confirm Password"
-        placeholder="Confirm your password here"
-        [isPassword]="true"
-        name="password"
-        [required]="true"
-      ></app-input-field>
+      <app-input-field label="Password" [inputValue]="password" placeholder="Type your password here"
+        [isPassword]="true" name="password" [required]="true" (onInputChange)="setPassword($event)"
+        [updateInputNote]="updatePasswordInputNote"></app-input-field>
+      <app-input-field label="Confirm Password" [inputValue]="confirmPassword" placeholder="Confirm your password here"
+        [isPassword]="true" name="password" [required]="true" [valid]="valid"
+        (onInputChange)="setConfirmPassword($event)"
+        [updateInputNote]="updateConfirmPasswordInputNote"></app-input-field>
     </div>
+
+    <!-- __________ STEP 3 : NAME / GENDER / AGE / PHONENUMBER ___________ -->
 
     <div *ngIf="currentStep == 2" class="inputs">
-      <app-input-field
-        label="Name"
-        placeholder="Type your name here"
-        type="text"
-        [required]="true"
-      ></app-input-field>
+      <app-input-field label="Name" [inputValue]="name" (onInputChange)="setName($event)"
+        placeholder="Type your name here" type="text" [required]="true"></app-input-field>
       <div class="dropdowns">
-        <app-auth-dropdown
-          class="dropdown"
-          [label]="'Gender'"
-        ></app-auth-dropdown>
-        <app-auth-dropdown class="dropdown" [label]="'Age'"></app-auth-dropdown>
+        <app-auth-dropdown [options]="genderOptions" class="dropdown" [label]="'Gender'"
+          [selectedOption]="selectedGender" (onInputChange)="selectGender($event)"></app-auth-dropdown>
+        <app-auth-dropdown [options]="ageOptions" class="dropdown" [label]="'Age'" [selectedOption]="selectedAge"
+          (onInputChange)="selectAge($event)"></app-auth-dropdown>
       </div>
-      <app-input-field
-        label="Phone Number"
-        placeholder="+216"
-        type="text"
-        [required]="true"
-      ></app-input-field>
+      <app-input-field label="Phone Number" [inputValue]="phoneNumber" (onInputChange)="setPhoneNumber($event)"
+        placeholder="+216" type="text" [required]="true"></app-input-field>
     </div>
+
+
+    <!-- __________ STEP 4 : POIDS / TAILLE / ACTIVITE / OBJECTIF ___________ -->
 
     <div *ngIf="currentStep == 3" class="inputs">
-      
+
       <div class="dropdowns">
-        <app-auth-dropdown
-          class="dropdown"
-          [label]="'Poids Actuel'"
-        ></app-auth-dropdown>
-        <app-auth-dropdown
-          class="dropdown"
-          [label]="'Taille'"
-        ></app-auth-dropdown>
+        <app-auth-dropdown [options]="poidsActuelOptions" class="dropdown" [label]="'Poids Actuel (Kg)'"
+          [selectedOption]="selectedPoids" (onInputChange)="selectPoids($event)"></app-auth-dropdown>
+
+        <app-auth-dropdown [options]="tailleOptions" class="dropdown" [label]="'Taille (cm)'"
+          [selectedOption]="selectedTaille" (onInputChange)="selectTaille($event)"></app-auth-dropdown>
       </div>
-      <app-auth-dropdown
-        class="dropdown"
-        [label]="'Activité journalière'"
-      ></app-auth-dropdown>
-      <app-auth-dropdown
-        class="dropdown"
-        [label]="'Objectif'"
-      ></app-auth-dropdown>
+      <app-auth-dropdown [options]="activiteJournaliereOptions" class="dropdown" [label]="'Activité journalière'"
+        [selectedOption]="selectedActiviteJournaliere"
+        (onInputChange)="selectActiviteJournaliere($event)"></app-auth-dropdown>
+      <app-auth-dropdown [options]="objectifOptions" class="dropdown" [label]="'Objectif'"
+        [selectedOption]="selectedObjectif" (onInputChange)="selectObjectif($event)"></app-auth-dropdown>
     </div>
 
+    <!-- __________ STEP 5 : PHOTO  ___________ -->
+
     <div *ngIf="currentStep == 4" class="inputs">
-      <app-svg-box >
+      <div class="uploaded-image-container" *ngIf="uploadedImage" (click)="triggerFileInput()">
+        <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" hidden />
+        <div class="uploaded-image">
+          <img [src]="uploadedImage" alt="Uploaded Image" />
+          <div class="edit-icon">
+            <img src="assets/images/edit.png" alt="">
+          </div>
+        </div>
+
+      </div>
+      <app-svg-box *ngIf="!uploadedImage" (click)="triggerFileInput()">
+        <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" hidden />
         <div class="upload-image">
           <img src="assets/images/upload-image.png" alt="upload" />
           <h3>Upload Picture</h3>
@@ -102,26 +89,11 @@
     </div>
 
     <div class="buttons">
-      <app-button
-        [text]="'Previous'"
-        (click)="goPrevious()"
-        *ngIf="currentStep > 0"
-        [fontWeight]="'300'"
-        [backgroundColor]="'white'"
-        [textColor]="'var(--hint-text)'"
-        [boxShadow]="'0 4px 8px 2px var(--hint-text)'"
-      ></app-button>
-      <app-button
-        [text]="'Next'"
-        (click)="goNext()"
-        *ngIf="currentStep < 4"
-        [fontWeight]="'300'"
-      ></app-button>
-      <app-button
-        [text]="'Confirm'"
-        *ngIf="currentStep == 4"
-        [fontWeight]="'300'"
-      ></app-button>
+      <app-button [text]="'Previous'" (click)="goPrevious()" *ngIf="currentStep > 0" [fontWeight]="'300'"
+        [backgroundColor]="'white'" [textColor]="'var(--hint-text)'"
+        [boxShadow]="'0 4px 8px 2px var(--hint-text)'"></app-button>
+      <app-button [text]="'Next'" (click)="goNext()" *ngIf="currentStep < 4" [fontWeight]="'300'"></app-button>
+      <app-button [text]="'Confirm'" *ngIf="currentStep == 4" [fontWeight]="'300'"></app-button>
     </div>
   </form>
 </app-auth-background>

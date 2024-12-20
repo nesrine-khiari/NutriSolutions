@@ -19,6 +19,7 @@
   object-fit: cover;
 }
 .list-container {
+  background-color: aqua;
   width: 90%;
 }
 .right-section {
