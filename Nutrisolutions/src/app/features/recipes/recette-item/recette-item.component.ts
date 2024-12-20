@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class RecetteItemComponent {
   @Input() name: string = 'Catlecia';
-  @Input() description: string = 'Lorem ipsum tese rata ben kamer houca hoven  ';
+  @Input() description: string =
+    'Lorem ipsum tese rata ben kamer houca hoven  ';
   @Input() calories: number = 100;
 }

@@ -1,0 +1,24 @@
+<app-svg-box [height]="'100%'" [width]="'100%'">
+    <div class="nutritionist-item">
+        <div class="nutritionist-img">
+            <img src="assets/images/nutritionist.jpg" alt="" />
+        </div>
+        <div class="nutritionist-content">
+            <div class="stars-container">
+                <app-star [selectedStars]="4"></app-star>
+            </div>
+            <h2>{{ name }}</h2>
+            <p>
+                {{ patientsNumber }}+ Patients
+            </p>
+            <p>
+                {{ yearsOfExperience }}+ Années d'expérience
+            </p>
+        </div>
+        <div class="button">
+            <app-button [text]="'Vois plus'" [fontWeight]="'400'" [width]="'100%'"></app-button>
+
+        </div>
+
+    </div>
+</app-svg-box>

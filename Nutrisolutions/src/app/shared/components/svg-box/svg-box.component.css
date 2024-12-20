@@ -8,6 +8,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
 }
 .svg-content {
   width: 100%;

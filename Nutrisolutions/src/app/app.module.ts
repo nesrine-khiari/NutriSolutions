@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { FormsModule } from '@angular/forms';
 import { RecipesModule } from './features/recipes/recipes.module';
 import { SharedModule } from './shared/shared.module';
+import { NutritionistsModule } from './features/nutritionists/nutritionists.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,7 +16,8 @@ import { SharedModule } from './shared/shared.module';
     AuthModule,
     FormsModule,
     RecipesModule,
-    SharedModule
+    NutritionistsModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -10,7 +10,8 @@ import { SvgBoxComponent } from './components/svg-box/svg-box.component';
 import { FormsModule } from '@angular/forms';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { PageBackgroundComponent } from './components/page-background/page-background.component';
-import { RecetteItemComponent } from './components/recette-item/recette-item.component';
+import { RecetteItemComponent } from '../features/recipes/recette-item/recette-item.component';
+import { StarComponent } from './components/star/star.component';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -23,6 +24,7 @@ import { RecetteItemComponent } from './components/recette-item/recette-item.com
     NavBarComponent,
     PageBackgroundComponent,
     RecetteItemComponent,
+    StarComponent,
   ],
   imports: [CommonModule, FormsModule],
   exports: [
@@ -36,6 +38,8 @@ import { RecetteItemComponent } from './components/recette-item/recette-item.com
     NavBarComponent,
     PageBackgroundComponent,
     RecetteItemComponent,
+
+    StarComponent,
   ],
 })
 export class SharedModule {}
