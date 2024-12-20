@@ -1,0 +1,151 @@
+.nav-bar {
+  height: 100vh;
+  display: flex;
+  gap: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  /* border: 3px solid red; */
+  width: 28%;
+}
+.nav-bar-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.bg-img {
+  position: absolute;
+  top: 0;
+  left: -25%;
+  z-index: -1;
+}
+.bg-img img {
+  transform: rotate(21deg);
+  height: 100vh;
+  width: 100%;
+  object-fit: cover;
+}
+
+.nav-bar-content {
+  height: 100vh;
+  width: 200px;
+  transition: width 0.3s ease-out;
+  background-color: var(--brown);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  &.active {
+    width: 60px;
+    padding: 0.4rem;
+    justify-content: center;
+  }
+}
+
+.logo {
+  width: clamp(160px, 20%, 200px);
+  &.active {
+    display: none;
+  }
+}
+
+.menu-items {
+  overflow: hidden;
+  width: 90%;
+  display: flex;
+}
+
+.menu-item {
+  padding: 0.5rem 0.2rem 0.5rem 0.5rem;
+  display: flex;
+  cursor: pointer;
+  color: #ffffff;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--light-orange), transparent);
+    transition: all 0.2s ease-in-out;
+  }
+  &:hover {
+    color: var(--light-orange);
+  }
+  &:hover::before {
+    left: -30%;
+  }
+}
+
+.menu-item .icon,
+.menu-item .title {
+  transition: color 0.3s ease;
+}
+
+.menu-item.selected .icon,
+.menu-item.selected .title {
+  color: var(--light-orange);
+}
+.menu-item.hovered .icon,
+.menu-item.hovered .title {
+  color: var(--light-orange);
+}
+
+.toggle {
+  position: absolute;
+  top: 5%;
+  left: 85%;
+  border-radius: 10px;
+  width: 50px; /* Adjust this if needed */
+  height: 50px;
+  font-size: 2rem;
+  cursor: pointer;
+  background-color: var(--brown);
+  display: flex;
+  justify-content: center; /* Center the icon horizontally */
+  align-items: center; /* Center the icon vertically */
+  &.active {
+    top: 5%;
+    left: 50%;
+  }
+}
+
+.icon-toggle {
+  color: white;
+  width: 30px; /* Set the desired width */
+  text-align: center; /* Ensure the icon is centered inside its container */
+}
+
+.itemsTitles {
+  &.active {
+    display: none;
+  }
+}
+
+.logout {
+  &.active {
+    display: none;
+    transition: display 0.3s ease;
+  }
+}
+
+.itemsIcons {
+  &.active {
+    font-size: 1.5rem;
+    transition: font-size 0.3s ease;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .icon-toggle {
+    width: 20px;
+  }
+  .itemsIcons {
+    &.active {
+      font-size: 4vw;
+    }
+  }
+}

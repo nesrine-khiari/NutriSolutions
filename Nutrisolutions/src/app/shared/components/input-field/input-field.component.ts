@@ -11,7 +11,7 @@ export class InputFieldComponent {
   @Input() type: string = 'text'; 
   @Input() isPassword: boolean = false; 
   @Input() required: boolean = false; 
-
+  @Input() inputValue: any;
   isPasswordVisible: boolean = false;
 
   // Toggle password visibility

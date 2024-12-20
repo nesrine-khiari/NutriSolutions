@@ -1,11 +1,8 @@
 <div class="input-field-container">
   <label class="input-label">{{ label }}</label>
   <div class="input-wrapper">
-    <input
-      [type]="isPassword && !isPasswordVisible ? 'password' : 'text'"
-      [placeholder]="placeholder"
-      [required]="required"
-    />
+    <input ngModel [type]="isPassword && !isPasswordVisible ? 'password' : 'text'" [placeholder]="placeholder"
+      [required]="required" [(ngModel)]="inputValue" [minlength]="isPassword?8:null" [email]="type=='email'" />
     <span
       class="toggle-icon"
       [hidden]="!isPassword"

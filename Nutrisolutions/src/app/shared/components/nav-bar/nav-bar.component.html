@@ -1,0 +1,44 @@
+<div class="nav-bar">
+  <div class="nav-bar-container">
+    <div class="bg-img">
+      <img src="assets/images/oranges.png" alt="oranges" />
+    </div>
+    <div class="nav-bar-content" #navBar>
+      <img
+        src="assets/images/nutri-logo.png"
+        alt="nutri-logo"
+        class="logo"
+        #logo
+      />
+      <div class="menu-items">
+        <ul class="itemsIcons" #itemsIcons>
+          <li
+            class="menu-item"
+            *ngFor="let item of menuItems; let i = index"
+            [class.selected]="selectedItem === i"
+            (click)="selectItem(i)"
+          >
+            <span class="icon"><i [class]="item.iconClass"></i></span>
+          </li>
+        </ul>
+        <ul class="itemsTitles" #itemsTitles>
+          <li
+            class="menu-item"
+            *ngFor="let item of menuItems; let i = index"
+            [class.selected]="selectedItem === i"
+            (click)="selectItem(i)"
+          >
+            <span class="title">{{ item.title }}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="toggle" #toggle>
+        <span class="icon-toggle"><i class="fas fa-bars"></i></span>
+      </div>
+
+      <div class="logout" #logout>
+        <app-button [text]="'Déconnexion'" [fontWeight]="'500'"></app-button>
+      </div>
+    </div>
+  </div>
+</div>

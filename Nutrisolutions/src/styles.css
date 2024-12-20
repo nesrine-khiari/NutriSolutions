@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 :root {
   font-size: 16px;
@@ -9,9 +10,12 @@
   --light-green: #cbea7b;
   --text-color: #263a43;
   --hint-text: #b1b1b1;
+  --light-orange: #FBB03B;
 }
 
 body {
+  background-color: var(--background-color);
+  height: 100%;
   font-family: "Poppins", sans-serif;
   cursor: none;
   margin: 0;
@@ -53,4 +57,14 @@ label.input-label {
 ::selection {
   background-color: var(--light-green);
   color: white;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none; /* Removes the default bullet points */
+}
+
+li {
+  margin: 0;
+  padding: 0;
 }

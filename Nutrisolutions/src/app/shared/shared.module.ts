@@ -7,7 +7,9 @@ import { ButtonComponent } from './components/button/button.component';
 import { AuthDropdownComponent } from './components/auth-dropdown/auth-dropdown.component';
 import { AuthAccountTypeComponent } from './components/auth-account-type/auth-account-type.component';
 import { SvgBoxComponent } from './components/svg-box/svg-box.component';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { PageBackgroundComponent } from './components/page-background/page-background.component';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -17,8 +19,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
     AuthDropdownComponent,
     AuthAccountTypeComponent,
     SvgBoxComponent,
+    NavBarComponent,
+    PageBackgroundComponent,
   ],
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule,FormsModule],
   exports: [
     AuthBackgroundComponent,
     InputFieldComponent,
@@ -27,6 +31,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
     AuthDropdownComponent,
     AuthAccountTypeComponent,
     SvgBoxComponent,
+    NavBarComponent,
+    PageBackgroundComponent
   ],
 })
 export class SharedModule {}
