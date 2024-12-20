@@ -14,6 +14,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CoreModule } from '../core/core.module';
+import { RecetteItemComponent } from './components/recette-item/recette-item.component';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -23,6 +24,7 @@ import { CoreModule } from '../core/core.module';
     AuthDropdownComponent,
     AuthAccountTypeComponent,
     SvgBoxComponent,
+    RecetteItemComponent,
   ],
   imports: [CommonModule, FormsModule, CoreModule],
   exports: [
@@ -33,6 +35,7 @@ import { CoreModule } from '../core/core.module';
     AuthDropdownComponent,
     AuthAccountTypeComponent,
     SvgBoxComponent,
+    RecetteItemComponent,
   ],
 })
 export class SharedModule {}

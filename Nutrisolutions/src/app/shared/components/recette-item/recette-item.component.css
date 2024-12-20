@@ -1,0 +1,44 @@
+.recette-item-container {
+  /* width: clamp(170px, 200px, 30vw); */
+  width: 500px;
+  position: relative;
+}
+.recette-item {
+  width: 90%;
+  height: 65%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  padding-bottom: 10px;
+}
+.recette-img {
+  width: 100%;
+  display: flex;
+  position: absolute;
+  /* background-color: aquamarine; */
+  top: -50%;
+}
+.recette-img img {
+  width: 90%;
+}
+
+.recette-item h2 {
+  color: var(--primary-color);
+  font-size: clamp(17px, 4vw, 26px);
+  font-weight: 400;
+}
+.recette-item p {
+  display: -webkit-box; /* Flexbox-like behavior for multiline ellipsis */
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  color: var(--brown);
+  font-size: clamp(9px, 12px, 1.4vw);
+  overflow: hidden;
+  font-weight: 400;
+}
+.recette-item h4 {
+  color: var(--secondary-color);
+  font-size: 1rem;
+  font-weight: 400;
+}
