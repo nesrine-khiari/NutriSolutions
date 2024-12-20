@@ -43,14 +43,3 @@
   color: var(--primary-color);
   font-size: 1.7rem;
 }
-
-.grid-container {
-  padding: 20px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 150px);
-  grid-template-rows: repeat(3, 180px);
-  justify-content: center;
-  row-gap: 70px;
-  column-gap: 35px;
-}

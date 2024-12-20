@@ -1,4 +1,13 @@
 <app-page-background [quote]="'Un nutritionniste, votre allié pour \nune santé équilibrée et durable'">
+    <div class="filters">
+        <app-search></app-search>
+        <app-dropdown></app-dropdown>
+        <app-dropdown [name]="'Catégorie'"></app-dropdown>
+        <div style="margin-left:auto">
+            <app-button [text]="'Ajouter Recette'"></app-button>
+
+        </div>
+    </div>
     <div class="grid-container">
         <app-nutritionist-item></app-nutritionist-item>
         <app-nutritionist-item></app-nutritionist-item>

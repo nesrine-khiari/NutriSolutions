@@ -1,7 +1,7 @@
 .svg-container {
   width: var(--width);
   height: var(--height);
-  padding-top: 10%;
+  padding-top: 5%;
   border-radius: 8%;
   box-shadow: 0 20px 10px rgba(0, 0, 0, 0.1);
   margin: auto;
@@ -11,7 +11,6 @@
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-  background-color: transparent;
 }
 .svg-content {
   width: 100%;

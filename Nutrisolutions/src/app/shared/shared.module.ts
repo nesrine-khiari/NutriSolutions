@@ -12,6 +12,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { PageBackgroundComponent } from './components/page-background/page-background.component';
 import { RecetteItemComponent } from '../features/recipes/recette-item/recette-item.component';
 import { StarComponent } from './components/star/star.component';
+import { SearchComponent } from './components/search/search.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -25,6 +27,8 @@ import { StarComponent } from './components/star/star.component';
     PageBackgroundComponent,
     RecetteItemComponent,
     StarComponent,
+    SearchComponent,
+    DropdownComponent,
   ],
   imports: [CommonModule, FormsModule],
   exports: [
@@ -40,6 +44,8 @@ import { StarComponent } from './components/star/star.component';
     RecetteItemComponent,
 
     StarComponent,
+    SearchComponent,
+    DropdownComponent,
   ],
 })
 export class SharedModule {}
