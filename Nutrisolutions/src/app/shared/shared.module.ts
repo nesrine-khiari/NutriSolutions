@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { PageBackgroundComponent } from './components/page-background/page-background.component';
 import { RecetteItemComponent } from './components/recette-item/recette-item.component';
+import { SearchComponent } from './components/search/search.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -23,6 +25,8 @@ import { RecetteItemComponent } from './components/recette-item/recette-item.com
     NavBarComponent,
     PageBackgroundComponent,
     RecetteItemComponent,
+    SearchComponent,
+    DropdownComponent,
   ],
   imports: [CommonModule, FormsModule],
   exports: [
@@ -36,6 +40,8 @@ import { RecetteItemComponent } from './components/recette-item/recette-item.com
     NavBarComponent,
     PageBackgroundComponent,
     RecetteItemComponent,
+    SearchComponent,
+    DropdownComponent,
   ],
 })
 export class SharedModule {}

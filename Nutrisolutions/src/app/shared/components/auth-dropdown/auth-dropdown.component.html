@@ -1,12 +1,14 @@
 <div class="dropdown-container">
-    <label class="input-label">{{ label }}</label>
-    <div class="dropdown-wrapper">
-
-        <select class="dropdown" [(ngModel)]="selectedOption" (ngModelChange)="notifyParent($event)">
-            <option *ngFor="let option of options" [value]="option">
-                <div class="option">{{option}}</div>
-            </option>
-
-        </select>
-    </div>
+  <label class="input-label">{{ label }}</label>
+  <div class="dropdown-wrapper">
+    <select
+      class="dropdown"
+      [(ngModel)]="selectedOption"
+      (ngModelChange)="notifyParent($event)"
+    >
+      <option *ngFor="let option of options" [value]="option">
+        <div class="option">{{ option }}</div>
+      </option>
+    </select>
+  </div>
 </div>
