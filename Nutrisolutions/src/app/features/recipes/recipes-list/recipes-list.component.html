@@ -1,17 +1,16 @@
 <app-page-background [quote]="'Manger sain, c\'est prendre soin de soi avec chaque bouchée'">
+  <div class="filters">
+    <app-search></app-search>
+    <app-dropdown></app-dropdown>
+    <app-dropdown [name]="'Catégorie'"></app-dropdown>
+    <div style="margin-left:auto">
+      <app-button [text]="'Ajouter Recette'"></app-button>
+
+    </div>
+  </div>
   <div class="grid-container">
-    <app-recette-item></app-recette-item>
-    <app-recette-item></app-recette-item>
-    <app-recette-item></app-recette-item>
-    <app-recette-item></app-recette-item>
-    <app-recette-item></app-recette-item>
-    <app-recette-item></app-recette-item>
-    <app-recette-item></app-recette-item>
-    <app-recette-item></app-recette-item>
-    <app-recette-item></app-recette-item>
-    <app-recette-item></app-recette-item>
-    <app-recette-item></app-recette-item>
-    <app-recette-item></app-recette-item>
+    <app-recipe-item *ngFor="let recipe of recipes;" [name]="recipe.name" [description]="recipe.description"
+      [calories]="recipe.calories" [imageUrl]="recipe.imageUrl"></app-recipe-item>
 
   </div>
 </app-page-background>

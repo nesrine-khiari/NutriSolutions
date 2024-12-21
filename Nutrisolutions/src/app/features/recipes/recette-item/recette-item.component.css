@@ -21,13 +21,15 @@
 
 .recette-img {
   width: 100%;
+  height: 70%;
   display: flex;
   justify-content: center;
   position: absolute;
-  top: -50%;
+  top: -35%;
 }
 .recette-img img {
-  width: 90%;
+  filter: drop-shadow(var(--drop-shadow));
+  width: 80%;
 }
 
 .recette-item h2 {

@@ -9,13 +9,10 @@
         </div>
     </div>
     <div class="grid-container">
-        <app-nutritionist-item></app-nutritionist-item>
-        <app-nutritionist-item></app-nutritionist-item>
-        <app-nutritionist-item></app-nutritionist-item>
-        <app-nutritionist-item></app-nutritionist-item>
-        <app-nutritionist-item></app-nutritionist-item>
-        <app-nutritionist-item></app-nutritionist-item>
-        <app-nutritionist-item></app-nutritionist-item>
+        <app-nutritionist-item *ngFor="let nutritionist of nutritionists;" [name]="nutritionist.name"
+            [imgUrl]="nutritionist.profilePictureUrl" [patientsNumber]="nutritionist.patientsNumber"
+            [yearsOfExperience]="nutritionist.experience"></app-nutritionist-item>
+
 
     </div>
 </app-page-background>

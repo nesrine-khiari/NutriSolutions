@@ -1,10 +1,17 @@
 .grid-container {
   padding: 20px;
+  padding-top: 30px;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, 150px);
   grid-template-rows: repeat(3, 180px);
   justify-content: center;
-  row-gap: 70px;
+  row-gap: 90px;
   column-gap: 35px;
+}
+.filters {
+  display: flex;
+  padding: 0 40px 40px 40px;
+  gap: 20px;
+  width: 100%;
 }
