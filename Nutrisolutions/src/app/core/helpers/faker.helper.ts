@@ -1,6 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { NutritionistModel } from 'src/app/models/nutritionist.model';
-import { RecipeModel } from 'src/app/models/nutritionist.model copy';
+import {
+  CategoryEnum,
+  ObjectifEnum,
+  RecipeModel,
+} from 'src/app/models/recipe.model';
 
 export function generateFakeNutritionist(): NutritionistModel {
   return {
@@ -28,6 +32,16 @@ export function generateFakeRecipe(): RecipeModel {
     id: faker.string.uuid(),
     name: faker.lorem.words(faker.number.int({ min: 1, max: 1 })),
     description: faker.lorem.sentence(),
+    category: faker.helpers.arrayElement(
+      Object.values(CategoryEnum).filter(
+        (category) => category != CategoryEnum.ALL
+      )
+    ),
+    objectif: faker.helpers.arrayElement(
+      Object.values(ObjectifEnum).filter(
+        (objectif) => objectif != ObjectifEnum.ALL
+      )
+    ),
     ingredients: Array.from(
       { length: faker.number.int({ min: 3, max: 5 }) },
       () => faker.lorem.sentence()

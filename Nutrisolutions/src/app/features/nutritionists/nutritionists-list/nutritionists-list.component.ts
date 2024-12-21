@@ -1,5 +1,7 @@
-import { Component, inject, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { NutritionistModel } from 'src/app/models/nutritionist.model';
+import { ExperienceEnum } from 'src/app/models/recipe.model';
 import { NutritionistsService } from 'src/app/services/nutritionists.service';
 
 @Component({
@@ -10,8 +12,14 @@ import { NutritionistsService } from 'src/app/services/nutritionists.service';
 export class NutritionistsListComponent {
   nutritionists: NutritionistModel[] = [];
   nutritionistsService = inject(NutritionistsService);
+  searchControl: FormControl = new FormControl('');
+  experienceControl!: FormControl;
+  experienceOptions = Object.values(ExperienceEnum);
+
+  pageIndex: number = 0;
 
   constructor() {
     this.nutritionists = this.nutritionistsService.getAllNutritionists();
+    this.experienceControl = new FormControl(ExperienceEnum.ALL);
   }
 }

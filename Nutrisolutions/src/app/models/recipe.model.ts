@@ -12,4 +12,31 @@ export interface RecipeModel {
   difficulty: string; // Difficulty level (e.g., Easy, Medium, Hard)
   imageUrl: string; // Optional image URL for the recipe
   calories: number;
+  category: CategoryEnum;
+  objectif: ObjectifEnum;
+}
+
+export enum ObjectifEnum {
+  ALL = 'Tous',
+
+  PERDRE_POIDS = 'Perdre du poids',
+  PRENDRE_POIDS = 'Prendre du poids',
+  MUSCLER = 'Se muscler',
+  MAINTENIR_POIDS = 'Maintenir le poids',
+}
+export enum CategoryEnum {
+  ALL = 'Tous',
+  DINER = 'Diner',
+  DEJ = 'Déjeuner',
+  PETIT_DEJ = 'Petit Déjeuner',
+  SNACK = 'Snack',
+  ENTREE = 'Entrée',
+  PRINCIPAL = 'Plat principal',
+}
+export enum ExperienceEnum {
+  ALL = 'Tous',
+  JUNIOR = '1-3 ans',
+  MID_LEVEL = '4-6 ans',
+  SENIOR = '7-10 ans',
+  SENIOR_PLUS = 'Plus de 10 ans',
 }

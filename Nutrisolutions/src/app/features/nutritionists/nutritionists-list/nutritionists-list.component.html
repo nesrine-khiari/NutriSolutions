@@ -1,16 +1,17 @@
 <app-page-background [quote]="'Un nutritionniste, votre allié pour \nune santé équilibrée et durable'">
-    <div class="filters">
-        <app-search></app-search>
-        <app-dropdown></app-dropdown>
-        <app-dropdown [name]="'Catégorie'"></app-dropdown>
-        <div style="margin-left:auto">
-            <app-button [text]="'Ajouter Recette'"></app-button>
+    <h2 class="title">Nos Nutritionnistes:</h2>
 
-        </div>
+    <div class="filters">
+        <app-search [formControlName]="searchControl"></app-search>
+        <app-dropdown [name]="'Experience'" [options]="experienceOptions"
+            [formControlName]="experienceControl"></app-dropdown>
+
     </div>
     <div class="grid-container">
-        <app-nutritionist-item *ngFor="let nutritionist of nutritionists;" [name]="nutritionist.name"
-            [imgUrl]="nutritionist.profilePictureUrl" [patientsNumber]="nutritionist.patientsNumber"
+        <app-nutritionist-item
+            *ngFor="let nutritionist of nutritionists | nutritionistsFilter : searchControl.value : experienceControl.value ;"
+            [name]="nutritionist.name" [imgUrl]="nutritionist.profilePictureUrl"
+            [patientsNumber]="nutritionist.patientsNumber"
             [yearsOfExperience]="nutritionist.experience"></app-nutritionist-item>
 
 

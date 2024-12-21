@@ -7,15 +7,15 @@
 .search-input {
   width: 100%;
   padding: 8px 40px 8px 12px;
-  font-size: 16px;
+  font-size: 13px;
   border: 1px solid transparent;
   border-radius: 25px;
   background: linear-gradient(white, white) padding-box,
     linear-gradient(90deg, var(--primary-color), var(--secondary-color))
-      border-box; 
+      border-box;
   outline: none;
 }
-.search-input:focus{
+.search-input:focus {
   border: 1px solid transparent; /* Maintain gradient trick */
   background: linear-gradient(white, white) padding-box,
     linear-gradient(90deg, var(--secondary-color), var(--primary-color))
@@ -24,7 +24,6 @@
     0 0 1px var(--primary-color);
   outline: none;
 }
-
 
 .search-icon {
   position: absolute;

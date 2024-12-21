@@ -7,13 +7,14 @@ import { ButtonComponent } from './components/button/button.component';
 import { AuthDropdownComponent } from './components/auth-dropdown/auth-dropdown.component';
 import { AuthAccountTypeComponent } from './components/auth-account-type/auth-account-type.component';
 import { SvgBoxComponent } from './components/svg-box/svg-box.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { PageBackgroundComponent } from './components/page-background/page-background.component';
 import { RecetteItemComponent } from '../features/recipes/recette-item/recette-item.component';
 import { StarComponent } from './components/star/star.component';
 import { SearchComponent } from './components/search/search.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -29,8 +30,9 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
     StarComponent,
     SearchComponent,
     DropdownComponent,
+    PaginationComponent,
   ],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   exports: [
     AuthBackgroundComponent,
     InputFieldComponent,
@@ -42,7 +44,7 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
     NavBarComponent,
     PageBackgroundComponent,
     RecetteItemComponent,
-
+    PaginationComponent,
     StarComponent,
     SearchComponent,
     DropdownComponent,

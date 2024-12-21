@@ -13,9 +13,11 @@
   background-repeat: no-repeat;
 }
 .svg-content {
+  padding: 3%;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-overflow: ellipsis;
 }

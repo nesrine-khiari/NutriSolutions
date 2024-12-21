@@ -4,7 +4,7 @@ import {
   generateFakeNutritionist,
   generateFakeRecipe,
 } from '../core/helpers/faker.helper';
-import { RecipeModel } from '../models/nutritionist.model copy';
+import { RecipeModel } from '../models/recipe.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,9 @@ export class RecipesService {
 
   // Get all recipes
   getAllRecipes(): RecipeModel[] {
-    return this.recipes.length ? this.recipes : this.generateFakeRecipesList(9);
+    return this.recipes.length
+      ? this.recipes
+      : this.generateFakeRecipesList(12);
   }
 
   generateFakeRecipesList(count: number): RecipeModel[] {

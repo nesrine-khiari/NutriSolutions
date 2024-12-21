@@ -25,8 +25,9 @@
 .nutritionist-item h2 {
   text-align: center;
   color: black;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
+  text-overflow: ellipsis;
 }
 .nutritionist-item p {
   text-overflow: ellipsis;
