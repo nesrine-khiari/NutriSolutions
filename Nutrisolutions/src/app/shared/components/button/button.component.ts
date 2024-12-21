@@ -15,6 +15,7 @@ export class ButtonComponent implements OnInit {
   @Input() boxShadow: string = '';
   @Input() borderRadius: string = '8px';
   @Input() disabled: boolean = false;
+  @Input() fontSize: string = '0.9rem';
 
   isHovered: boolean = false;
 

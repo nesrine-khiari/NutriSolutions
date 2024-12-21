@@ -1,21 +1,35 @@
-<app-page-background [quote]="'Un nutritionniste, votre allié pour \nune santé équilibrée et durable'">
-    <div class="filters">
-        <app-search></app-search>
-        <app-dropdown></app-dropdown>
-        <app-dropdown [name]="'Catégorie'"></app-dropdown>
-        <div style="margin-left:auto">
-            <app-button [text]="'Ajouter Recette'"></app-button>
-
-        </div>
+<app-page-background
+  [quote]="
+    'Un nutritionniste, votre allié pour \nune santé équilibrée et durable'
+  "
+>
+  <div class="filters">
+    <app-search></app-search>
+    <app-dropdown
+      [options]="goalOptions"
+      [selectedOption]="selectedGoal"
+      (onInputChange)="selectGoal($event)"
+    ></app-dropdown>
+    <app-dropdown
+      [options]="categoryOptions"
+      [name]="'Catégorie'"
+      [selectedOption]="selectedCategory"
+      (onInputChange)="selectCategory($event)"
+    ></app-dropdown>
+    <div style="margin-left: auto">
+      <app-button
+        [fontSize]="'clamp(9px, 14px, 1.4vw)'"
+        [text]="'Ajouter Recette'"
+      ></app-button>
     </div>
-    <div class="grid-container">
-        <app-nutritionist-item></app-nutritionist-item>
-        <app-nutritionist-item></app-nutritionist-item>
-        <app-nutritionist-item></app-nutritionist-item>
-        <app-nutritionist-item></app-nutritionist-item>
-        <app-nutritionist-item></app-nutritionist-item>
-        <app-nutritionist-item></app-nutritionist-item>
-        <app-nutritionist-item></app-nutritionist-item>
-
-    </div>
+  </div>
+  <div class="grid-container">
+    <app-nutritionist-item></app-nutritionist-item>
+    <app-nutritionist-item></app-nutritionist-item>
+    <app-nutritionist-item></app-nutritionist-item>
+    <app-nutritionist-item></app-nutritionist-item>
+    <app-nutritionist-item></app-nutritionist-item>
+    <app-nutritionist-item></app-nutritionist-item>
+    <app-nutritionist-item></app-nutritionist-item>
+  </div>
 </app-page-background>

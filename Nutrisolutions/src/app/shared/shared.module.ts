@@ -14,6 +14,7 @@ import { RecetteItemComponent } from '../features/recipes/recette-item/recette-i
 import { StarComponent } from './components/star/star.component';
 import { SearchComponent } from './components/search/search.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { UploadImageComponent } from './upload-image/upload-image.component';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -29,6 +30,7 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
     StarComponent,
     SearchComponent,
     DropdownComponent,
+    UploadImageComponent,
   ],
   imports: [CommonModule, FormsModule],
   exports: [
@@ -42,7 +44,7 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
     NavBarComponent,
     PageBackgroundComponent,
     RecetteItemComponent,
-
+    UploadImageComponent,
     StarComponent,
     SearchComponent,
     DropdownComponent,

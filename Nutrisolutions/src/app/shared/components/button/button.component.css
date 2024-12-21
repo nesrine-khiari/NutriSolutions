@@ -4,7 +4,6 @@
   border: none;
   cursor: "pointer";
   transition: "border-color 0.3s ease";
-  font-size: 0.9rem;
   position: relative;
   overflow: hidden;
   &::before {
