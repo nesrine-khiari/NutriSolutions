@@ -15,6 +15,12 @@ import { RecipesService } from 'src/app/services/recipe.service';
 export class RecipesListComponent {
   recipes: RecipeModel[] = [];
   recipesService = inject(RecipesService);
+  currentPage: number = 0;
+
+  updatePage(index: number) {
+    this.currentPage = index;
+    //api call for next page
+  }
 
   searchControl: FormControl = new FormControl('');
   categoryControl!: FormControl;
