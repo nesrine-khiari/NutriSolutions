@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { NutritionistModel } from 'src/app/models/nutritionist.model';
+import { ExperienceEnum } from 'src/app/models/recipe.model';
+import { NutritionistsService } from 'src/app/services/nutritionists.service';
 
 @Component({
   selector: 'app-nutritionists-list',
@@ -6,29 +10,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./nutritionists-list.component.css'],
 })
 export class NutritionistsListComponent {
-  goalOptions: string[] = [
-    'Perdre du poids',
-    'Gagner du poids',
-    'Développer des muscles',
-  ];
+  nutritionists: NutritionistModel[] = [];
+  nutritionistsService = inject(NutritionistsService);
+  searchControl: FormControl = new FormControl('');
+  experienceControl!: FormControl;
+  experienceOptions = Object.values(ExperienceEnum);
 
-  categoryOptions: string[] = [
-    'Petit-déjeuner',
-    'Déjeuner',
-    'Snack',
-    'Diner',
-  ];
+  pageIndex: number = 0;
 
-  selectedGoal: string = '';
-  selectedCategory: string = '';
-
-  selectGoal(goal: string): void {
-    this.selectedGoal = goal;
-    console.log('New goal selected: ' + this.selectedGoal);
-  }
-
-  selectCategory(category: string): void {
-    this.selectedCategory = category;
-    console.log('New category selected: ' + this.selectedCategory);
+  constructor() {
+    this.nutritionists = this.nutritionistsService.getAllNutritionists();
+    this.experienceControl = new FormControl(ExperienceEnum.ALL);
   }
 }

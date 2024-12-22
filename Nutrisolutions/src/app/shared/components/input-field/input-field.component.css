@@ -1,85 +1,44 @@
 .input-field-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.input-wrapper {
-  position: relative;
-}
-
-input {
   width: 100%;
-  padding: 0.7rem 0rem 0.7rem 0.5rem;
-  font-size: 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  position: relative;
 }
 
-input:focus {
-  border: 2px solid var(--secondary-color);
-  box-shadow: 0 0 10px var(--light-green);
+.input-field {
+  width: 100%;
+  padding: 8px 40px 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 25px;
+  background-color: var(--background-color);
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(90deg, var(--primary-color), var(--secondary-color))
+      border-box;
   outline: none;
 }
-
-input.ng-valid.ng-dirty {
-  border-bottom: 5px solid var(--secondary-color);
+.input-field::placeholder {
+  /* Standard syntax */
+  color: var(--placeholderColor);
 }
 
-input.valid.ng-dirty {
-  border-bottom: 5px solid var(--secondary-color) !important;
+.input-field:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: var(--placeholderColor);
 }
 
-input.ng-invalid.ng-dirty {
-  border-bottom: 5px solid red;
-}
-input.ng-invalid.ng-dirty:focus {
-  border: 2px solid red;
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-}
-input.invalid.ng-dirty {
-  border-bottom: 5px solid red !important;
-}
-input.invalid.ng-dirty:focus {
-  border: 2px solid red;
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+.input-field::-ms-input-placeholder {
+  /* Microsoft Edge (legacy) */
+  color: var(--placeholderColor);
 }
 
-input::placeholder {
-  color: var(--hint-text);
-}
-.toggle-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: var(--hint-text);
+.input-field::-webkit-input-placeholder {
+  /* Chrome, Safari, Opera */
+  color: var(--placeholderColor);
 }
 
-.toggle-icon:hover {
-  color: #555;
-}
-
-.input-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.2rem;
-}
-
-.input-note {
-  padding: 0.2rem 1rem;
-  border-radius: 15px;
-  font-size: 0.7rem;
-}
-
-.error-input-note {
-  color: var(--red);
-  background-color: var(--light-red);
-}
-
-.valid-input-note {
-  background-color: var(--light-green);
-  color: var(--secondary-color);
+.input-field:focus {
+  border: 1px solid transparent; /* Maintain gradient trick */
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(90deg, var(--secondary-color), var(--primary-color))
+      border-box; /* Slight color shift for focus */
+  box-shadow: 0 0 1px var(--primary-color), 0 0 1px var(--secondary-color),
+    0 0 1px var(--primary-color);
+  outline: none;
 }

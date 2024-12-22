@@ -19,32 +19,32 @@
     <!-- __________ STEP 2 : EMAIL & PASSWORD ___________ -->
 
     <div *ngIf="currentStep == 1" class="inputs">
-      <app-input-field label="Email Address" [inputValue]="email" (onInputChange)="setEmail($event)"
+      <app-auth-input-field label="Email Address" [inputValue]="email" (onInputChange)="setEmail($event)"
         placeholder="Type your email here" type="email" name="email" [required]="true"
-        [updateInputNote]="updateEmailInputNote"></app-input-field>
+        [updateInputNote]="updateEmailInputNote"></app-auth-input-field>
 
-      <app-input-field label="Password" [inputValue]="password" placeholder="Type your password here"
+      <app-auth-input-field label="Password" [inputValue]="password" placeholder="Type your password here"
         [isPassword]="true" name="password" [required]="true" (onInputChange)="setPassword($event)"
-        [updateInputNote]="updatePasswordInputNote"></app-input-field>
-      <app-input-field label="Confirm Password" [inputValue]="confirmPassword" placeholder="Confirm your password here"
+        [updateInputNote]="updatePasswordInputNote"></app-auth-input-field>
+      <app-auth-input-field label="Confirm Password" [inputValue]="confirmPassword" placeholder="Confirm your password here"
         [isPassword]="true" name="password" [required]="true" [valid]="valid"
         (onInputChange)="setConfirmPassword($event)"
-        [updateInputNote]="updateConfirmPasswordInputNote"></app-input-field>
+        [updateInputNote]="updateConfirmPasswordInputNote"></app-auth-input-field>
     </div>
 
     <!-- __________ STEP 3 : NAME / GENDER / AGE / PHONENUMBER ___________ -->
 
     <div *ngIf="currentStep == 2" class="inputs">
-      <app-input-field label="Name" [inputValue]="name" (onInputChange)="setName($event)"
-        placeholder="Type your name here" type="text" [required]="true"></app-input-field>
+      <app-auth-input-field label="Name" [inputValue]="name" (onInputChange)="setName($event)"
+        placeholder="Type your name here" type="text" [required]="true"></app-auth-input-field>
       <div class="dropdowns">
         <app-auth-dropdown [options]="genderOptions" class="dropdown" [label]="'Gender'"
           [selectedOption]="selectedGender" (onInputChange)="selectGender($event)"></app-auth-dropdown>
         <app-auth-dropdown [options]="ageOptions" class="dropdown" [label]="'Age'" [selectedOption]="selectedAge"
           (onInputChange)="selectAge($event)"></app-auth-dropdown>
       </div>
-      <app-input-field label="Phone Number" [inputValue]="phoneNumber" (onInputChange)="setPhoneNumber($event)"
-        placeholder="+216" type="text" [required]="true"></app-input-field>
+      <app-auth-input-field label="Phone Number" [inputValue]="phoneNumber" (onInputChange)="setPhoneNumber($event)"
+        placeholder="+216" type="text" [required]="true"></app-auth-input-field>
     </div>
 
 

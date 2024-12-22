@@ -9,4 +9,5 @@ export class NutritionistItemComponent {
   @Input() name: string = 'Houcem';
   @Input() patientsNumber: number = 20;
   @Input() yearsOfExperience: number = 5;
+  @Input() imgUrl: string = 'assets/images/nutritionist.jpg';
 }

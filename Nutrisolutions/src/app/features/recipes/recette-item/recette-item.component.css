@@ -1,6 +1,6 @@
 .recette-item {
   position: relative;
-  width: auto;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -21,18 +21,20 @@
 
 .recette-img {
   width: 100%;
+  height: 70%;
   display: flex;
   justify-content: center;
   position: absolute;
-  top: -50%;
+  top: -35%;
 }
 .recette-img img {
-  width: 90%;
+  filter: drop-shadow(var(--drop-shadow));
+  width: 80%;
 }
 
 .recette-item h2 {
   color: var(--primary-color);
-  font-size: clamp(17px, 4vw, 26px);
+  font-size: clamp(16px, 4vw, 18px);
   font-weight: 400;
 }
 .recette-item p {
@@ -47,15 +49,18 @@
 }
 .recette-item h4 {
   color: var(--secondary-color);
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 400;
+  text-overflow: ellipsis;
 }
 
 .recette-content {
   margin-top: auto;
   height: 100%;
+  width: 100%;
   padding: 15px;
   display: flex;
   flex-direction: column;
   justify-content: end;
+  overflow: hidden;
 }
