@@ -2,7 +2,7 @@
   <h2>{{ title }}</h2>
   <div class="input">
     <app-input-field
-      [formControl]="detailControl"
+      [control]="detailControl"
       [placeholder]="placeholder"
       (enterPressed)="addDetail($event)"
     ></app-input-field>
@@ -10,7 +10,12 @@
   <ul>
     <li *ngFor="let detail of details; let i = index">
       <div class="detail-list">
-        <img src="assets/images/cancel.png" alt="delete" class="delete-icon" (click)="deleteDetail(i)" />
+        <img
+          src="assets/images/cancel.png"
+          alt="delete"
+          class="delete-icon"
+          (click)="deleteDetail(i)"
+        />
         <span class="detail-text">{{ detail }}</span>
       </div>
     </li>
