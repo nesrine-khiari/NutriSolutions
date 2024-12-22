@@ -1,5 +1,6 @@
 .tip {
-  width: 300px;
+  flex: 1 1 250px;
+  max-width: 300px;
   padding: 9px 11px;
   border-radius: 10px;
   display: flex;

@@ -1,6 +1,6 @@
 .landing-page {
   position: relative;
-  padding: 0px 70px;
+  padding: 0px 5%;
 }
 img.logo {
   position: absolute;
@@ -15,11 +15,11 @@ img.logo {
   display: flex;
   justify-content: end;
   padding-top: 30px;
+  margin-bottom: 50px;
   gap: 15px;
 }
 .first-section {
   height: 100vh;
-  background-color: red;
   display: flex;
   flex-direction: column;
 }
@@ -44,13 +44,14 @@ img.logo {
   gap: 15px;
   flex-wrap: wrap;
 }
-
+.number h2 {
+  font-size: clamp(20px, 2vw, 30px);
+}
 .opening {
   display: flex;
-  margin-bottom: 10px;
 }
 .left-section {
-  flex: 45%;
+  flex: 40%;
 }
 
 .left-section h1 {
@@ -59,43 +60,99 @@ img.logo {
   line-height: 1.2;
 }
 .left-section p {
-  font-size: 1rem;
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
   font-weight: 400;
   color: var(--text-color);
 }
 span.nutrition {
   background-color: var(--primary-color);
+  display: inline-block;
   border-radius: 20px 0px 20px 0px;
   color: white;
   padding: 7px;
   font-weight: bold;
+  animation: bounce-4 1s ease forwards;
 }
 
 .right-section {
-  flex: 55%;
-  padding-top: 30px;
+  flex: 60%;
+  height: 100%;
   position: relative;
   display: flex;
   justify-content: end;
-  align-items: center;
 }
 
-#small-flower,
-#big-flower,
+#main-img {
+  border-radius: 50% 0 0 50%;
+  object-fit: contain;
+  width: clamp(300px, 40vw, 500px);
+  height: 100%;
+}
+
 #arrow {
   position: absolute;
+  left: 0;
+  top: 50%;
+  width: clamp(60px, 7vw, 150px);
+
+  transform: translateY(-50%);
 }
+#small-flower {
+  position: absolute;
+  left: 20px;
+  bottom: 30%;
+  animation: rotate 2s 2s infinite ease-in-out;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
 #big-flower {
   position: absolute;
   top: -20px;
   right: 0;
+  width: clamp(60px, 7vw, 150px);
+  object-fit: contain;
+  animation: rotate 2s 2s infinite ease-in-out;
 }
+@keyframes bounce-4 {
+  0%,
+  100% {
+    transform: translateY(0);
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10);
 
+    transform: rotate(-5deg);
+  }
+}
 .tips {
-  flex: 10%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
   gap: 15px;
+  margin-top: 20px;
+}
+@keyframes bounce-4 {
+  0%,
+  40%,
+  80% {
+    transform: rotate(0deg);
+  }
+
+  20%,
+  60% {
+    transform: rotate(-3deg);
+  }
+  100% {
+    transform: rotate(-4deg);
+  }
 }
