@@ -14,6 +14,7 @@ import { RecetteItemComponent } from '../features/recipes/recette-item/recette-i
 import { StarComponent } from './components/star/star.component';
 import { SearchComponent } from './components/search/search.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 import { UploadImageComponent } from './upload-image/upload-image.component';
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { RecipeDescriptionComponent } from './components/recipe-description/recipe-description.component';
@@ -32,6 +33,7 @@ import { RecipeDescriptionComponent } from './components/recipe-description/reci
     StarComponent,
     SearchComponent,
     DropdownComponent,
+    PaginationComponent,
     UploadImageComponent,
     InputFieldComponent,
     RecipeDescriptionComponent,
@@ -48,6 +50,7 @@ import { RecipeDescriptionComponent } from './components/recipe-description/reci
     NavBarComponent,
     PageBackgroundComponent,
     RecetteItemComponent,
+    PaginationComponent,
     UploadImageComponent,
     StarComponent,
     SearchComponent,

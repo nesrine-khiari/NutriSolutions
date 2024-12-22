@@ -16,4 +16,8 @@
       [category]="recipe.category" [objectif]="recipe.objectif"></app-recipe-item>
 
   </div>
+  <div class="pagination">
+    <app-pagination (pageChanged)="updatePage($event)"></app-pagination>
+
+  </div>
 </app-page-background>
