@@ -15,6 +15,7 @@ export class ButtonComponent implements OnInit {
   @Input() boxShadow: string = '';
   @Input() borderRadius: string = '8px';
   @Input() disabled: boolean = false;
+  @Input() hasBorder: boolean = false;
 
   isHovered: boolean = false;
 
@@ -43,6 +44,9 @@ export class ButtonComponent implements OnInit {
       boxShadow: this.isHovered ? this.boxShadow : 'none',
       backgroundColor: this.backgroundColor,
       borderRadius: this.borderRadius,
+      border: this.hasBorder
+        ? `1px solid ${this.getCssVariable('--secondary-color')}`
+        : 'none',
     };
   }
 }

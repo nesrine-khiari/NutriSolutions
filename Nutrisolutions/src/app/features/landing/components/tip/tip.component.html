@@ -1,0 +1,4 @@
+<div (mouseenter)="hovered = true" (mouseleave)="hovered = false" class="tip">
+    <img [src]="'assets/images/'+imageUrl + (hovered?'-white':'')+'.png'" alt="">
+    <p>{{text}}</p>
+</div>
