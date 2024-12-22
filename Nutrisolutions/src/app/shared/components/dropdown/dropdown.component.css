@@ -7,7 +7,7 @@
 .dropdown-input {
   width: 100%;
   padding: 8px 40px 8px 12px;
-  font-size: 13px;
+  font-size: clamp(9px, 14px, 1.4vw);
   border: 1px solid transparent;
   border-radius: 25px;
   background: linear-gradient(white, white) padding-box,
@@ -18,14 +18,15 @@
   cursor: pointer;
 }
 
-.dropdown-icon {
+.dropdown-wrapper::after {
+  content: "▼"; 
   position: absolute;
   top: 50%;
-  right: 12px;
+  right: 12px; 
   transform: translateY(-50%);
+  pointer-events: none; 
   color: var(--primary-color);
-  font-size: 20px;
-  pointer-events: none;
+  font-size: 0.8rem;
 }
 
 .dropdown-input:focus {
@@ -39,4 +40,13 @@
 
 option:checked {
   background-color: var(--secondary-color);
+}
+
+
+.dropdown-input option[value=""] {
+  color: var(--primary-color); 
+}
+
+.dropdown-input:not(:invalid) {
+  color: var(--primary-color); /* Change to your selected color */
 }

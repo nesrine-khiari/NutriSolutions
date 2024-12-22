@@ -40,3 +40,11 @@ export enum ExperienceEnum {
   SENIOR = '7-10 ans',
   SENIOR_PLUS = 'Plus de 10 ans',
 }
+export enum PreparationTimeEnum {
+  ALL = 'Tous',
+  VERY_SHORT = 'Moins de 15 minutes',
+  SHORT = '15-30 minutes',
+  MEDIUM = '30-45 minutes',
+  LONG = '45-60 minutes',
+  VERY_LONG = 'Plus de 60 minutes',
+}

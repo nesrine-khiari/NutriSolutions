@@ -4,10 +4,11 @@ import { RecipesListComponent } from './recipes-list/recipes-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CoreModule } from '../../core/core.module';
 import { LandingModule } from '../landing/landing.module';
+import { AddRecipeComponent } from './add-recipe/add-recipe.component';
 
 @NgModule({
-  declarations: [RecipesListComponent],
+  declarations: [RecipesListComponent, AddRecipeComponent],
   imports: [CommonModule, SharedModule, CoreModule],
-  exports: [RecipesListComponent, LandingModule],
+  exports: [RecipesListComponent, LandingModule, AddRecipeComponent],
 })
 export class RecipesModule {}

@@ -1,12 +1,11 @@
 <app-auth-background>
   <form #loginForm="ngForm">
     <h1>Connexion</h1>
-
     <div class="inputs">
-      <app-input-field label="Email Address" placeholder="Type your email here" type="email" name="email"
-        [required]="true"></app-input-field>
-      <app-input-field label="Password" placeholder="Type your password here" [isPassword]="true" ngModel
-        name="password" [required]="true"></app-input-field>
+      <app-auth-input-field label="Email Address" placeholder="Type your email here" type="email" name="email"
+        [required]="true"></app-auth-input-field>
+      <app-auth-input-field label="Password" placeholder="Type your password here" [isPassword]="true" ngModel
+        name="password" [required]="true"></app-auth-input-field>
       <div class="extra-options">
         <div class="checkbox">
           <input type="checkbox" /> <label> Remember me ? </label>
