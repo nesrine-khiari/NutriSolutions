@@ -10,7 +10,7 @@
           [fontWeight]="'bold'"
           [fontSize]="'26px'"
           [color]="'var(--brown)'"
-          [formControlName]="titleControl"
+          [formControlNamee]="titleControl"
         ></app-input-field>
         <div class="details-grid-container">
           <div class="detail-item">
@@ -32,19 +32,18 @@
           <div class="detail-item" *ngFor="let item of items">
             <img [src]="item.image" alt="goal" />
             <app-input-field
-              [formControlName]="item.formControlName"
+              [formControlNamee]="item.formControlName"
               [placeholder]="item.placeholder"
             ></app-input-field>
           </div>
-
-          <div class="detail-item">
-            <img src="assets/images/meal.png" alt="preptime" />
-            <app-dropdown
-              [name]="'Temps de préparation'"
-              [options]="preptimeOptions"
-              [formControlName]="preptimeControl"
-            ></app-dropdown>
-          </div>
+        </div>
+        <div class="detail-item">
+          <img src="assets/images/meal.png" alt="preptime" />
+          <app-dropdown
+            [name]="'Temps de préparation'"
+            [options]="preptimeOptions"
+            [formControlName]="preptimeControl"
+          ></app-dropdown>
         </div>
       </div>
     </div>
@@ -62,7 +61,7 @@
         [placeholder]="'Ajouter une cooking Note'"
         [title]="'Cooking Note :'"
       ></app-recipe-description>
-      
     </div>
+    <app-button [text]="'Ajouter Recette'"></app-button>
   </div>
 </app-page-background>

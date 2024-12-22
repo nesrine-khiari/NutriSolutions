@@ -7,7 +7,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./input-field.component.css'],
 })
 export class InputFieldComponent implements OnInit {
-  @Input() formControlName: FormControl = new FormControl('');
+  @Input() formControlNamee: FormControl = new FormControl('');
   @Input() placeholder: string = 'Type your Recipe title here';
   @Input() placeholderColor: string = 'var(--primary-color)';
   @Input() fontSize: string = 'clamp(9px, 14px, 1.4vw)';
@@ -32,7 +32,7 @@ export class InputFieldComponent implements OnInit {
   }
 
   onEnter(): void {
-    this.enterPressed.emit(this.formControlName.value);
-    this.formControlName.reset();
+    this.enterPressed.emit(this.formControlNamee.value);
+    this.formControlNamee.reset();
   }
 }

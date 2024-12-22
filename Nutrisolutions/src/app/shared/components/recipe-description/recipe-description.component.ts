@@ -10,8 +10,8 @@ export class RecipeDescriptionComponent {
   @Input({ required: true }) title: string = 'Ingredients :';
   @Input({ required: true }) placeholder: string = 'Ingredients :';
   details: string[] = [];
-  detailControl = new FormControl('');
-
+  detailControl : FormControl= new FormControl('');
+  
   addDetail(value: string): void {
     if (value.trim()) {
       this.details.push(value);
