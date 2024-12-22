@@ -1,51 +1,38 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-input-field',
   templateUrl: './input-field.component.html',
   styleUrls: ['./input-field.component.css'],
 })
-export class InputFieldComponent {
-  @Input() label: string = '';
-  @Input() placeholder: string = '';
-  @Input() type: string = 'text';
-  @Input() isPassword: boolean = false;
-  @Input() required: boolean = false;
-  @Input() inputValue: string = '';
+export class InputFieldComponent implements OnInit {
+  @Input() formControlName: FormControl = new FormControl('');
+  @Input() placeholder: string = 'Type your Recipe title here';
+  @Input() placeholderColor: string = 'var(--primary-color)';
+  @Input() fontSize: string = 'clamp(9px, 14px, 1.4vw)';
+  @Input() color: string = 'var(--primary-color)';
+  @Input() fontWeight: string = '';
 
-  @Input() valid: boolean = true;
+  @Output() enterPressed = new EventEmitter<string>();
 
-  @Input() updateInputNote: (newValue: string, errors: any) => string = (
-    newValue: string,
-    errors: any
-  ) => {
-    if (errors) {
-      if (errors['required']) {
-        return 'Required Field..';
-      } else {
-        return 'Invalid input..';
-      }
-    } else {
-      return '';
-    }
-  };
-
-  @Output() onInputChange = new EventEmitter<string>();
-
-  inputNote: string = '';
-
-  updateValue(newValue: string, errors: any | null) {
-    this.onInputChange.emit(newValue);
-    console.log('errors: ' + errors);
-
-    this.inputNote = this.updateInputNote(newValue, errors);
+  ngOnInit(): void {
+    console.log('InputFieldComponent initialized');
+    console.log('Placeholder:', this.placeholder);
+    console.log('Font Size:', this.fontSize);
   }
 
-  isPasswordVisible: boolean = false;
+  getStyles() {
+    return {
+      placeholder: this.placeholder,
+      fontSize: this.fontSize,
+      fontWeight: this.fontWeight,
+      color: this.color,
+    };
+  }
 
-  // Toggle password visibility
-  togglePasswordVisibility() {
-    this.isPasswordVisible = !this.isPasswordVisible;
+  onEnter(): void {
+    this.enterPressed.emit(this.formControlName.value);
+    this.formControlName.reset();
   }
 }

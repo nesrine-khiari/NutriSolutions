@@ -13,7 +13,7 @@
   border-radius: 25px;
   background: linear-gradient(white, white) padding-box,
     linear-gradient(90deg, var(--primary-color), var(--secondary-color))
-      border-box; 
+      border-box;
   outline: none;
 }
 .search-input::placeholder { /* Standard syntax */
@@ -41,7 +41,6 @@
     0 0 1px var(--primary-color);
   outline: none;
 }
-
 
 .search-icon {
   position: absolute;

@@ -1,35 +1,19 @@
-<app-page-background
-  [quote]="
-    'Un nutritionniste, votre allié pour \nune santé équilibrée et durable'
-  "
->
-  <div class="filters">
-    <app-search></app-search>
-    <app-dropdown
-      [options]="goalOptions"
-      [selectedOption]="selectedGoal"
-      (onInputChange)="selectGoal($event)"
-    ></app-dropdown>
-    <app-dropdown
-      [options]="categoryOptions"
-      [name]="'Catégorie'"
-      [selectedOption]="selectedCategory"
-      (onInputChange)="selectCategory($event)"
-    ></app-dropdown>
-    <div style="margin-left: auto">
-      <app-button
-        [fontSize]="'clamp(9px, 14px, 1.4vw)'"
-        [text]="'Ajouter Recette'"
-      ></app-button>
+<app-page-background [quote]="'Un nutritionniste, votre allié pour \nune santé équilibrée et durable'">
+    <h2 class="title">Nos Nutritionnistes:</h2>
+
+    <div class="filters">
+        <app-search [formControlName]="searchControl"></app-search>
+        <app-dropdown [name]="'Experience'" [options]="experienceOptions"
+            [formControlName]="experienceControl"></app-dropdown>
+
     </div>
-  </div>
-  <div class="grid-container">
-    <app-nutritionist-item></app-nutritionist-item>
-    <app-nutritionist-item></app-nutritionist-item>
-    <app-nutritionist-item></app-nutritionist-item>
-    <app-nutritionist-item></app-nutritionist-item>
-    <app-nutritionist-item></app-nutritionist-item>
-    <app-nutritionist-item></app-nutritionist-item>
-    <app-nutritionist-item></app-nutritionist-item>
-  </div>
+    <div class="grid-container">
+        <app-nutritionist-item
+            *ngFor="let nutritionist of nutritionists | nutritionistsFilter : searchControl.value : experienceControl.value ;"
+            [name]="nutritionist.name" [imgUrl]="nutritionist.profilePictureUrl"
+            [patientsNumber]="nutritionist.patientsNumber"
+            [yearsOfExperience]="nutritionist.experience"></app-nutritionist-item>
+
+
+    </div>
 </app-page-background>

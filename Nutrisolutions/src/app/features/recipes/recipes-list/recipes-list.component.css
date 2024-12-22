@@ -1,10 +1,24 @@
 .grid-container {
   padding: 20px;
+  padding-top: 30px;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, 150px);
   grid-template-rows: repeat(3, 180px);
-  justify-content: center;
-  row-gap: 70px;
+  justify-content: start;
+  row-gap: 90px;
   column-gap: 35px;
+}
+.filters {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 35px;
+}
+h2.title {
+  align-self: start;
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 25px;
+  margin-bottom: 20px;
 }

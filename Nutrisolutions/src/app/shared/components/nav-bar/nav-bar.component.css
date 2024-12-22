@@ -126,6 +126,8 @@
 }
 
 .logout {
+  margin-top: auto;
+  margin-bottom: 25px;
   &.active {
     display: none;
     transition: display 0.3s ease;

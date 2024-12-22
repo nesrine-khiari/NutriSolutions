@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-dropdown',
@@ -8,14 +9,5 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class DropdownComponent {
   @Input() name: string = 'Objectif';
   @Input({ required: true }) options: any[] = ['Options1', 'Option2'];
-    @Input() selectedOption: string = '';
-    @Output() onInputChange = new EventEmitter<string>();
-  
-    ngOnInit() {
-      if (!this.selectedOption) this.selectedOption = this.options[0];
-    }
-    notifyParent(newValue: string) {
-      this.onInputChange.emit(newValue);
-      console.log('emitted new value : ' + newValue);
-    }
+  @Input() formControlName: FormControl = new FormControl('');
 }
