@@ -18,6 +18,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { UploadImageComponent } from './upload-image/upload-image.component';
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { RecipeDescriptionComponent } from './components/recipe-description/recipe-description.component';
+import { SearchHeaderComponent } from './components/search-header/search-header.component';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -37,6 +38,7 @@ import { RecipeDescriptionComponent } from './components/recipe-description/reci
     UploadImageComponent,
     InputFieldComponent,
     RecipeDescriptionComponent,
+    SearchHeaderComponent,
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   exports: [
@@ -56,7 +58,8 @@ import { RecipeDescriptionComponent } from './components/recipe-description/reci
     SearchComponent,
     DropdownComponent,
     InputFieldComponent,
-    RecipeDescriptionComponent
+    RecipeDescriptionComponent,
+    SearchHeaderComponent,
   ],
 })
 export class SharedModule {}

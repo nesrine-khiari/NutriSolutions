@@ -16,8 +16,8 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 })
 export class SvgBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('svgContainer', { static: false }) svgContainer!: ElementRef;
-  @Input() width: string = '200px';
-  @Input() height: string = '200px';
+  @Input() width: string = 'auto';
+  @Input() height: string = 'auto';
   actualWidth: number = 0;
   actualHeight: number = 0;
   backgroundStyle: SafeStyle = '';

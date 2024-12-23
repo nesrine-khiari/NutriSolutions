@@ -7,6 +7,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecipesModule } from './features/recipes/recipes.module';
 import { SharedModule } from './shared/shared.module';
 import { NutritionistsModule } from './features/nutritionists/nutritionists.module';
+import { ToastrModule } from 'ngx-toastr';
+import { HomeModule } from './features/home/home.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +22,14 @@ import { NutritionistsModule } from './features/nutritionists/nutritionists.modu
     NutritionistsModule,
     SharedModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000, // Notification duration (in ms)
+      positionClass: 'toast-top-right', // Position of notifications
+      preventDuplicates: true, // Prevent duplicate notifications
+      closeButton: true, // Show close button in the notification
+    }),
+    HomeModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

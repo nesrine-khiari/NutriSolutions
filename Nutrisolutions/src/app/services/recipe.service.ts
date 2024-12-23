@@ -21,6 +21,10 @@ export class RecipesService {
       : this.generateFakeRecipesList(12);
   }
 
+  getPopularRecipes(): RecipeModel[] {
+    return this.generateFakeRecipesList(4);
+  }
+
   generateFakeRecipesList(count: number): RecipeModel[] {
     return Array.from({ length: count }, () => generateFakeRecipe());
   }

@@ -8,6 +8,6 @@ import { CoreModule } from '../../core/core.module';
 @NgModule({
   declarations: [NutritionistsListComponent, NutritionistItemComponent],
   imports: [CommonModule, SharedModule, CoreModule],
-  exports: [NutritionistsListComponent],
+  exports: [NutritionistsListComponent, NutritionistItemComponent],
 })
 export class NutritionistsModule {}

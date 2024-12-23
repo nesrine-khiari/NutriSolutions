@@ -16,6 +16,10 @@ export class NutritionistsService {
       ? this.nutritionists
       : this.generateFakeNutritionistList(15);
   }
+  // Get all nutritionists
+  getBestNutritionists(): NutritionistModel[] {
+    return this.generateFakeNutritionistList(4);
+  }
 
   generateFakeNutritionistList(count: number): NutritionistModel[] {
     return Array.from({ length: count }, () => generateFakeNutritionist());
