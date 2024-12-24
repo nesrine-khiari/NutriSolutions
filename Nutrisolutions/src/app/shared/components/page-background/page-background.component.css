@@ -4,6 +4,7 @@
   width: 100%;
   position: relative;
   padding-bottom: 20px;
+  padding-top: 20px;
 }
 
 .left-section {
@@ -22,6 +23,9 @@
   width: max(90%, 600px);
   height: auto;
   overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 .right-section {
   width: 80%;
@@ -31,15 +35,3 @@
   align-items: center;
 }
 
-.quote {
-  width: 100%;
-  max-width: 21rem;
-  text-align: center;
-  white-space: normal;
-  line-height: 1.5;
-}
-.quote h3 {
-  font-family: "Dancing Script";
-  color: var(--primary-color);
-  font-size: 1.7rem;
-}

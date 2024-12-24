@@ -1,13 +1,9 @@
 <div class="page-container">
   <app-nav-bar></app-nav-bar>
   <div class="right-section">
-    <div class="quote">
-      <h3>{{ quote }}</h3>
-    </div>
     <div class="list-container">
-      <app-svg-box [height]="'100%'" [width]="'95%'">
-        <ng-content></ng-content>
-      </app-svg-box>
+      <app-search-header></app-search-header>
+      <ng-content></ng-content>
     </div>
   </div>
 </div>

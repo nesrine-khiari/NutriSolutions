@@ -1,0 +1,13 @@
+.quote {
+  margin: auto;
+  width: 100%;
+  max-width: 21rem;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.5;
+}
+.quote h3 {
+  font-family: "Dancing Script";
+  color: var(--primary-color);
+  font-size: 1.7rem;
+}

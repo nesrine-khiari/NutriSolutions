@@ -10,7 +10,10 @@ import { RecipesService } from 'src/app/services/recipe.service';
 @Component({
   selector: 'app-recipes-list',
   templateUrl: './recipes-list.component.html',
-  styleUrls: ['./recipes-list.component.css'],
+  styleUrls: [
+    './recipes-list.component.css',
+    '../../../../assets/css/list-common.css',
+  ],
 })
 export class RecipesListComponent {
   recipes: RecipeModel[] = [];

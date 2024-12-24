@@ -7,7 +7,10 @@ import { NutritionistsService } from 'src/app/services/nutritionists.service';
 @Component({
   selector: 'app-nutritionists-list',
   templateUrl: './nutritionists-list.component.html',
-  styleUrls: ['./nutritionists-list.component.css'],
+  styleUrls: [
+    './nutritionists-list.component.css',
+    '../../../../assets/css/list-common.css',
+  ],
 })
 export class NutritionistsListComponent {
   nutritionists: NutritionistModel[] = [];
