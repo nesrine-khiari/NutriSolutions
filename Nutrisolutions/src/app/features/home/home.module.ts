@@ -12,8 +12,7 @@ import { NutritionistsModule } from '../nutritionists/nutritionists.module';
   imports: [
     CommonModule,
     SharedModule,
-    WaterTrackingModule,
-    NutritionistsModule,
+WaterTrackingModule,    NutritionistsModule,
   ],
   exports: [HomePageComponent],
 })

@@ -12,8 +12,7 @@ import { RecetteItemComponent } from './recette-item/recette-item.component';
   imports: [CommonModule, SharedModule, CoreModule],
   exports: [
     RecipesListComponent,
-    LandingModule,
-    AddRecipeComponent,
+LandingModule,    AddRecipeComponent,
     RecetteItemComponent,
   ],
 })

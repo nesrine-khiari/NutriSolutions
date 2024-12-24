@@ -150,7 +150,6 @@
 .progress {
   height: 100%;
   flex: 1;
-  margin-right: clamp(30px, 4vw, 100px);
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
