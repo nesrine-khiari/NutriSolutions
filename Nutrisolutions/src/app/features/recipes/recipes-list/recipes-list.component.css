@@ -23,8 +23,3 @@ h2.title {
   margin-bottom: 20px;
 }
 
-.pagination {
-  width: 100%;
-  display: flex;
-  justify-content: end;
-}

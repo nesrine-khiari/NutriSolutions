@@ -6,14 +6,19 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { WaterTrackingModule } from '../water-tracking/water-tracking.module';
 import { TopListComponent } from './top-list/top-list.component';
 import { NutritionistsModule } from '../nutritionists/nutritionists.module';
+import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { NutritionistsTableComponent } from './nutritionists-table/nutritionists-table.component';
+import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
-  declarations: [HomePageComponent, TopListComponent],
+  declarations: [HomePageComponent, TopListComponent, AdminHomeComponent, NutritionistsTableComponent],
   imports: [
     CommonModule,
     SharedModule,
-WaterTrackingModule,    NutritionistsModule,
+    WaterTrackingModule,
+    NutritionistsModule,
+    CoreModule
   ],
-  exports: [HomePageComponent],
+  exports: [HomePageComponent, AdminHomeComponent],
 })
 export class HomeModule {}

@@ -20,10 +20,15 @@ export function generateFakeNutritionist(): NutritionistModel {
       () => faker.company.buzzNoun()
     ),
     bio: faker.lorem.sentences(2),
-
     location: faker.address.city(),
     consultationFee: faker.number.int({ min: 50, max: 300 }),
     ratings: faker.number.int({ min: 0, max: 5 }),
+
+    // New fields
+    address: faker.address.streetAddress(),
+    certificate: 'certif_' + faker.string.alpha(5) + '.pdf',
+    status: faker.helpers.arrayElement(['Approuvé', 'En attente', 'Rejeté']),
+    addedAt: faker.date.recent(), // Generates a recent date
   };
 }
 

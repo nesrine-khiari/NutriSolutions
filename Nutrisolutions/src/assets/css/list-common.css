@@ -11,3 +11,9 @@
   color: var(--primary-color);
   font-size: 1.7rem;
 }
+
+.pagination {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
