@@ -1,23 +1,13 @@
 <app-page-background>
-  <app-water-tracking></app-water-tracking>
-  <app-top-list [title]="'Les recettes les plus populaires'">
-    <app-recipe-item
-      *ngFor="let recipe of popularRecipes"
-      [name]="recipe.name"
-      [description]="recipe.description"
-      [calories]="recipe.calories"
-      [imageUrl]="recipe.imageUrl"
-      [category]="recipe.category"
-      [objectif]="recipe.objectif"
-    ></app-recipe-item>
-  </app-top-list>
-  <app-top-list [title]="'Les meilleurs nutritionistes'">
-    <app-nutritionist-item
-      *ngFor="let nutritionist of bestNutritionists"
-      [name]="nutritionist.name"
-      [imgUrl]="nutritionist.profilePictureUrl"
-      [patientsNumber]="nutritionist.patientsNumber"
-      [yearsOfExperience]="nutritionist.experience"
-    ></app-nutritionist-item>
-  </app-top-list>
+    <app-water-tracking></app-water-tracking>
+    <app-top-list [title]="'Les recettes les plus populaires'">
+        <app-recipe-item *ngFor="let recipe of popularRecipes" [name]="recipe.name" [description]="recipe.description"
+            [calories]="recipe.calories" [imageUrl]="recipe.imageUrl" [category]="recipe.category"
+            [objectif]="recipe.objectif"></app-recipe-item>
+    </app-top-list>
+    <app-top-list [title]="'Les meilleurs nutritionistes'">
+        <app-nutritionist-item *ngFor="let nutritionist of bestNutritionists" [name]="nutritionist.name"
+            [imgUrl]="nutritionist.profilePictureUrl" [patientsNumber]="nutritionist.patientsNumber"
+            [yearsOfExperience]="nutritionist.experience"></app-nutritionist-item>
+    </app-top-list>
 </app-page-background>

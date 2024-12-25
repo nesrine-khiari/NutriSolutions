@@ -10,9 +10,10 @@ import { NutritionistsModule } from './features/nutritionists/nutritionists.modu
 import { ToastrModule } from 'ngx-toastr';
 import { HomeModule } from './features/home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PlanningComponent } from './features/planning/planning.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PlanningComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

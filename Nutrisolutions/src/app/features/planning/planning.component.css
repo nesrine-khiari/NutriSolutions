@@ -1,0 +1,122 @@
+.planning {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(50px, 1fr));
+  grid-template-rows: repeat(6, minmax(70px, 1fr));
+  grid-template-areas:
+    "times-days horiz-header horiz-header horiz-header horiz-header horiz-header horiz-header horiz-header horiz-header horiz-header "
+    "vert-header mslot mslot mslot mslot break aslot aslot aslot aslot"
+    "vert-header mslot mslot mslot mslot break aslot aslot aslot aslot"
+    "vert-header mslot mslot mslot mslot break aslot aslot aslot aslot"
+    "vert-header mslot mslot mslot mslot break aslot aslot aslot aslot"
+    "vert-header mslot mslot mslot mslot break aslot aslot aslot aslot";
+
+  justify-content: center;
+  gap: 7px;
+}
+.slot {
+  background-color: #ebebeb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(10px, 1.5vw, 16px);
+}
+
+.horiz-header {
+  display: flex;
+  grid-area: horiz-header;
+  gap: 7px;
+}
+.horiz-header > * {
+  flex: 1 1 70px;
+}
+
+.morning-content {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(50px, 1fr));
+  grid-template-rows: repeat(5, minmax(70px, 1fr));
+  gap: 7px;
+  grid-area: mslot;
+}
+.afternoon-content {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(50px, 1fr));
+  grid-template-rows: repeat(5, minmax(70px, 1fr));
+  gap: 7px;
+  grid-area: aslot;
+}
+
+.vert-header {
+  display: flex;
+  flex-direction: column;
+  grid-area: vert-header;
+  gap: 7px;
+}
+
+.vert-header > * {
+  flex: 1 1 70px;
+}
+.times-days-slot {
+  background-color: #cbea7b;
+
+  grid-area: times-days;
+  position: relative;
+}
+.times-days-slot #days {
+  position: absolute;
+  right: 10%;
+  top: 10%;
+}
+.times-days-slot #slots {
+  position: absolute;
+  left: 5%;
+  bottom: 10%;
+}
+.times-days-slot:after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background: linear-gradient(
+    to right top,
+    transparent calc(50% - 1px),
+    black calc(50% - 1px) 50%,
+    transparent 50%
+  );
+}
+.break {
+  grid-area: break;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.header-slot {
+  background-color: #cbea7b;
+}
+
+.slot img {
+  opacity: 0;
+  transition: opacity 0.3s ease; /* Smooth fade-in effect */
+}
+
+/* Show the image on hover */
+.slot:hover:not(.header-slot) img {
+  opacity: 1;
+}
+
+.date-input {
+  width: 200px;
+  padding: 8px 40px 8px 12px;
+  font-size: clamp(9px, 14px, 1.4vw);
+  color: var(--primary-color);
+  border: 1px solid transparent;
+  border-radius: 25px;
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(90deg, var(--primary-color), var(--secondary-color))
+      border-box;
+  outline: none;
+}
