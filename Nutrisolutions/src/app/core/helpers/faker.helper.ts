@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { ClientModel } from 'src/app/models/client.model';
 import { NutritionistModel } from 'src/app/models/nutritionist.model';
 import {
   CategoryEnum,
@@ -24,6 +25,33 @@ export function generateFakeNutritionist(): NutritionistModel {
     location: faker.address.city(),
     consultationFee: faker.number.int({ min: 50, max: 300 }),
     ratings: faker.number.int({ min: 0, max: 5 }),
+  };
+}
+export function generateFakeClient(): ClientModel {
+  return {
+    id: faker.string.uuid(),
+    name: faker.name.fullName(),
+    email: faker.internet.email(),
+    phone: faker.phone.number(),
+    profilePictureUrl: faker.image.avatar(),
+    address: faker.address.streetAddress(),
+    objectif: faker.helpers.arrayElement(
+      Object.values(ObjectifEnum).filter(
+        (objectif) => objectif != ObjectifEnum.ALL
+      )
+    ),
+    age: faker.number.int({ min: 18, max: 80 }),
+    height: faker.number.int({ min: 150, max: 200 }),
+    weight: faker.number.int({ min: 50, max: 100 }),
+    gender: faker.helpers.arrayElement(['Male', 'Female']),
+    favoriteRecipes: Array.from(
+      { length: faker.number.int({ min: 1, max: 3 }) },
+      generateFakeRecipe
+    ),
+    appointments: Array.from(
+      { length: faker.number.int({ min: 1, max: 5 }) },
+      () => faker.date.future().toISOString()
+    ),
   };
 }
 

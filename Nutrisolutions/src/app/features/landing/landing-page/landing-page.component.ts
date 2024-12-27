@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppUtils } from 'src/app/core/utils/functions.utils';
 
 @Component({
   selector: 'app-landing-page',
@@ -7,9 +8,6 @@ import { Component } from '@angular/core';
 })
 export class LandingPageComponent {
   getCssVariable(variableName: string): string {
-    // Fetch the root element's styles
-    return getComputedStyle(document.documentElement)
-      .getPropertyValue(variableName)
-      .trim();
+    return AppUtils.getCssVariable(variableName);
   }
 }

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AppUtils } from 'src/app/core/utils/functions.utils';
 
 @Component({
   selector: 'app-button',
@@ -16,22 +17,17 @@ export class ButtonComponent implements OnInit {
   @Input() borderRadius: string = '8px';
   @Input() disabled: boolean = false;
   @Input() hasBorder: boolean = false;
+  @Input() onClick: () => void = () => {};
 
   isHovered: boolean = false;
 
   ngOnInit(): void {
     // Set default colors using CSS variables if not explicitly provided
     this.backgroundColor =
-      this.backgroundColor || this.getCssVariable('--secondary-color');
+      this.backgroundColor || AppUtils.getCssVariable('--secondary-color');
     this.boxShadow =
-      this.boxShadow || `0 4px 8px 2px ${this.getCssVariable('--light-green')}`;
-  }
-
-  private getCssVariable(variableName: string): string {
-    // Fetch the root element's styles
-    return getComputedStyle(document.documentElement)
-      .getPropertyValue(variableName)
-      .trim();
+      this.boxShadow ||
+      `0 4px 8px 2px ${AppUtils.getCssVariable('--light-green')}`;
   }
 
   getStyles() {
@@ -45,7 +41,7 @@ export class ButtonComponent implements OnInit {
       backgroundColor: this.backgroundColor,
       borderRadius: this.borderRadius,
       border: this.hasBorder
-        ? `1px solid ${this.getCssVariable('--secondary-color')}`
+        ? `1px solid ${AppUtils.getCssVariable('--secondary-color')}`
         : 'none',
     };
   }

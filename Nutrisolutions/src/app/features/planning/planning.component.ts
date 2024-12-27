@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { generateFakeNutritionist } from 'src/app/core/helpers/faker.helper';
+import { AppUtils } from 'src/app/core/utils/functions.utils';
 
 @Component({
   selector: 'app-planning',
@@ -140,7 +141,7 @@ export class PlanningComponent {
     }
   }
   getInitials(fullName: string) {
-    return fullName.split(' ')[0][0] + '.' + fullName.split(' ')[1][0];
+    return AppUtils.getInitials(fullName);
   }
 }
 

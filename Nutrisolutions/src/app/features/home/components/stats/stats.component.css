@@ -1,0 +1,63 @@
+.stats {
+  border-radius: clamp(10px, 2vw, 14px);
+  background-color: white;
+  width: clamp(100px, 20vw, 180px);
+  padding: clamp(5px, 1vw, 10px) clamp(12px, 2vw, 17px);
+  transition: transform 0.5s ease-in-out, box-shadow 1s ease-in-out;
+
+  overflow: visible;
+  box-shadow: none;
+}
+.stats:hover {
+  transform: scale(1.2);
+  box-shadow: 0 clamp(10px, 2vw, 20px) clamp(5px, 1vw, 10px) var(--hint-text);
+}
+
+.numbers {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+p.stat-object {
+  font-weight: 500;
+  font-size: clamp(10px, 1.5vw, 14px);
+}
+
+p.stat-number {
+  font-weight: 500;
+  font-size: clamp(20px, 3vw, 29px);
+}
+
+p.evolution-number {
+  font-size: clamp(8px, 1vw, 11px);
+  font-weight: 400;
+}
+
+.evolution {
+  padding: clamp(0px, 1vw, 1px) clamp(5px, 1.5vw, 7px);
+  display: flex;
+  justify-content: space-around;
+  border-radius: 7px;
+  overflow: hidden;
+  transition: transform 0.5s ease-in-out;
+}
+
+.evolution.active {
+  animation: translate 0.5s ease-in-out forwards;
+}
+
+@keyframes translate {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(clamp(10px, 3vw, 20px), clamp(-5px, 1.5vw, -10px));
+  }
+}
+
+.evolution img {
+  width: clamp(20%, 5vw, 30%);
+  object-fit: contain;
+}

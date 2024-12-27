@@ -1,0 +1,15 @@
+<div class="upcoming-patient" [class.active]="isFirst">
+    <div class="initials-wrapper" [style.borderColor]="styleObject.borderColor">
+        <div class="initials-avatar" [style.backgroundColor]="styleObject.backgroundColor">
+            {{getInitals(patient.name)}}
+        </div>
+    </div>
+    <div class="profile">
+        <h2>{{patient.name}}</h2>
+        <p>{{patient.gender}} -{{patient.age}}years</p>
+
+    </div>
+    <div class="meet-time" [ngStyle]="{'backgroundColor':styleObject.backgroundColor,'color':styleObject.borderColor}">
+        <p> 9:00AM</p>
+    </div>
+</div>
