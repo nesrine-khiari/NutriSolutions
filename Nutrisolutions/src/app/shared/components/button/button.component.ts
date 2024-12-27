@@ -1,36 +1,48 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AppUtils } from 'src/app/core/utils/functions.utils';
 
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.css'],
 })
-export class ButtonComponent {
-  @Input() type: string = 'submit';
+export class ButtonComponent implements OnInit {
+  @Input() text: string = '';
+  @Input() type: string = 'button';
   @Input() width: string = '100%';
-  @Input({ required: true }) text!: string;
+  @Input() fontWeight: string = 'bold';
   @Input() backgroundColor: string = '';
-  @Input() boxShadow: string = '';
   @Input() textColor: string = 'white';
+  @Input() boxShadow: string = '';
   @Input() borderRadius: string = '8px';
+  @Input() disabled: boolean = false;
+  @Input() hasBorder: boolean = false;
+  @Input() onClick: () => void = () => {};
 
   isHovered: boolean = false;
 
   ngOnInit(): void {
-    // If no backgroundColor is provided, use the CSS variable
-    if (!this.backgroundColor) {
-      this.backgroundColor = this.getCssVariable('--secondary-color');
-    }
-
-    this.boxShadow = this.boxShadow
-      ? this.boxShadow
-      : '0 4px 8px 2px' + this.getCssVariable('--secondary-color');
+    // Set default colors using CSS variables if not explicitly provided
+    this.backgroundColor =
+      this.backgroundColor || AppUtils.getCssVariable('--secondary-color');
+    this.boxShadow =
+      this.boxShadow ||
+      `0 4px 8px 2px ${AppUtils.getCssVariable('--light-green')}`;
   }
 
-  private getCssVariable(variableName: string): string {
-    // Fetch the root element's styles
-    return getComputedStyle(document.documentElement)
-      .getPropertyValue(variableName)
-      .trim();
+  getStyles() {
+    return {
+      width: this.width,
+      disabled: this.disabled,
+      type: this.type,
+      fontWeight: this.fontWeight,
+      color: this.textColor,
+      boxShadow: this.isHovered ? this.boxShadow : 'none',
+      backgroundColor: this.backgroundColor,
+      borderRadius: this.borderRadius,
+      border: this.hasBorder
+        ? `1px solid ${AppUtils.getCssVariable('--secondary-color')}`
+        : 'none',
+    };
   }
 }

@@ -1,0 +1,226 @@
+.water-tracker-container {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  position: relative;
+}
+.water-tracker-box-background {
+  width: clamp(200px, 30vw, 300px);
+  min-width: 200px;
+  height: 162px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  background-color: white;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+}
+.water-tracker-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.water-tracker-box h3 {
+  color: var(--primary-color);
+  font-size: 20px;
+  font-weight: 600;
+}
+.water-tracker-box p {
+  color: #90a5b4;
+  font-size: clamp(12px, 2vw, 14px);
+  font-weight: 400;
+}
+.water-tracker-box button {
+  margin-top: auto;
+  font-size: clamp(8px, 2vw, 12px);
+  border-radius: 20px;
+  background-color: white;
+  border: none;
+  width: auto;
+  padding: 7px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  align-self: flex-start;
+}
+
+.wave-animation {
+  width: 100%;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  padding: 0;
+}
+#small-water-drop {
+  width: clamp(30px, 7vw, 70px);
+  height: clamp(30px, 7vw, 70px);
+  top: 0px;
+  right: 0px;
+  position: absolute;
+  animation: drop 10s ease-in-out forwards;
+}
+#big-water-drop {
+  width: clamp(80px, 14vw, 150px);
+  height: clamp(80px, 14vw, 150px);
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  animation: drop 10s ease-in-out forwards;
+}
+
+.w1 {
+  stroke: none;
+  fill: #5dccfc;
+  opacity: 55%;
+  animation: move1 2s ease-in-out infinite;
+}
+.w2 {
+  stroke: none;
+  fill: #5dccfc;
+  opacity: 35%;
+  transform: translate3d(0, 0, 0);
+  animation: move2 10s ease-in-out infinite;
+}
+.w3 {
+  stroke: none;
+  fill: #5dccfc;
+  opacity: 30%;
+  transform: translate3d(0, 0, 0);
+  animation: move3 15s ease-in-out infinite;
+}
+@keyframes move1 {
+  0% {
+    transform: translateX(-400px) scaleX(2.5);
+  }
+  25% {
+    transform: translateX(-100px) scaleX(2.5);
+  }
+  50% {
+    transform: translateX(0) scaleX(2.5);
+  }
+  75% {
+    transform: translateX(-100px) scaleX(2.5);
+  }
+  100% {
+    transform: translateX(-400px) scaleX(2.5);
+  }
+}
+@keyframes move2 {
+  0% {
+    transform: translateX(-600px) scaleX(3);
+  }
+  25% {
+    transform: translateX(-100px) scaleX(2);
+  }
+  50% {
+    transform: translateX(0) scaleX(3);
+  }
+  75% {
+    transform: translateX(-100px) scaleX(2.5);
+  }
+  100% {
+    transform: translateX(-600px) scaleX(3);
+  }
+}
+@keyframes move3 {
+  0% {
+    transform: translateX(-800px) scaleX(3);
+  }
+  25% {
+    transform: translateX(-100px) scaleX(2.5);
+  }
+  50% {
+    transform: translateX(0) scaleX(3);
+  }
+  75% {
+    transform: translateX(-100px) scaleX(2.5);
+  }
+  100% {
+    transform: translateX(-800px) scaleX(3);
+  }
+}
+.progress {
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.progress h2 {
+  color: var(--primary-color);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.cups {
+  flex: 1;
+  width: 100%;
+  min-width: 250px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.cup {
+  height: clamp(50px, 5.5vw, 80px);
+  width: clamp(40px, 3vw, 50px);
+  background-image: url("src/assets/images/cup.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  border-radius: 0 0 15px 15px;
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+}
+.wave {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  transform: translateY(100%);
+}
+
+.wave.active {
+  animation: fill 2s -0.5s forwards ease-in-out;
+}
+
+@keyframes fill {
+  0% {
+    transform: translateY(100%); /* Wave starts below the cup */
+  }
+
+  100% {
+    transform: translateY(0); /* Wave fills the cup */
+  }
+}
+
+.emoji {
+  position: absolute;
+  width: clamp(30px, 4vw, 100px);
+  top: 0px;
+  right: 0px;
+}
+
+@keyframes drop {
+  0% {
+    transform: translateY(-20%); /* Wave starts below the cup */
+  }
+
+  100% {
+    transform: translateY(0); /* Wave fills the cup */
+  }
+}

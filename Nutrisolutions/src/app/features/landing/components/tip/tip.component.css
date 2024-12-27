@@ -1,0 +1,18 @@
+.tip {
+  flex: 1 1 250px;
+  max-width: 300px;
+  padding: 9px 11px;
+  border-radius: 10px;
+  display: flex;
+  gap: 10px;
+  background-color: white;
+  color: black;
+  &:hover {
+    background-color: var(--primary-color);
+    color: white;
+  }
+}
+
+.tip p {
+  font-size: max(0.9vw, 12px);
+}

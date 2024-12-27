@@ -1,29 +1,27 @@
 <app-auth-background>
-    <div class="form">
-        <h1>Sign In</h1>
-        <div class="inputs">
-            <app-auth-input [heading]="'Email Address'" [type]="'email'"> </app-auth-input>
-            <app-auth-input [heading]="'Password'" [type]="'password'"> </app-auth-input>
-            <div class="extra-options">
-                <div class="rememberme">
-                    <input id="rememberme" name="rememberme" type="checkbox" />
-                    <label for="rememberme"> Remember me?</label>
-                </div>
-
-                <a href="#" class="forgot-password">Forgot Password?</a>
-            </div>
-            <app-button [text]="'Connexion'"></app-button>
+  <form #loginForm="ngForm">
+    <h1>Connexion</h1>
+    <div class="inputs">
+      <app-auth-input-field label="Email Address" placeholder="Type your email here" type="email" name="email"
+        [required]="true"></app-auth-input-field>
+      <app-auth-input-field label="Password" placeholder="Type your password here" [isPassword]="true" ngModel
+        name="password" [required]="true"></app-auth-input-field>
+      <div class="extra-options">
+        <div class="checkbox">
+          <input type="checkbox" /> <label> Remember me ? </label>
         </div>
-
-        <div class="signup">
-            Don't have an account?
-            <a id="signup">Sign up</a>
-        </div>
-        <div class="socials">
-            <img src="assets/images/facebook-logo.png" alt="Facebook Logo" class="social-logo">
-            <img src="assets/images/apple-logo.png" alt="Apple Logo" class="social-logo">
-            <img src="assets/images/google-logo.png" alt="Google Logo" class="social-logo">
-        </div>
-
+        <a href="#" class="forgot-password">Forgot Password ?</a>
+      </div>
+      <app-button [type]="'submit'" [disabled]="loginForm.invalid ?? false" [text]="'Connexion'"></app-button>
+      <div class="signup">
+        Don't have an account?
+        <a id="signup">Sign up</a>
+      </div>
+      <div class="social-login">
+        <img src="assets/images/facebook-logo.png" alt="Facebook Logo" class="social-logo" />
+        <img src="assets/images/apple-logo.png" alt="Apple Logo" class="social-logo" />
+        <img src="assets/images/google-logo.png" alt="Google Logo" class="social-logo" />
+      </div>
     </div>
+  </form>
 </app-auth-background>

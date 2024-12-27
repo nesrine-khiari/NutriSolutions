@@ -1,0 +1,78 @@
+<div class="landing-page">
+
+    <img class="logo" src="assets/images/nutri-logo.png" alt="nutri-logo" class="logo" />
+
+
+
+    <div class="first-section">
+        <div class="header">
+            <div class="signup">
+                <app-button [width]="'100px'" [text]="'SignUp'" [borderRadius]="'20px 0px 20px 0px'"></app-button>
+
+            </div>
+            <div class="login">
+                <app-button [width]="'100px'" [text]="'Login'" [borderRadius]="'20px 0px 20px 0px'"></app-button>
+
+            </div>
+        </div>
+        <div class="opening">
+            <div class="left-section">
+                <h1>
+                    Votre <span class="nutrition">Nutrition</span><br>Au Coeur D<br> Votre Bien-Être
+                </h1>
+                <p>
+                    Découvrez NutriSolutions : nous offrons un suivi nutritionnel personnalisé pour vous aider à
+                    atteindre vos objectifs de bien-être, tout en respectant vos besoins uniques et vos préférences.
+                </p>
+                <div class="buttons">
+                    <app-button [width]="'130px'" [text]="'Savoir Plus'"
+                        [borderRadius]="'20px 0px 20px 0px'"></app-button>
+                    <app-button [textColor]="getCssVariable('--secondary-color')" [width]="'130px'"
+                        [text]="'Prendre RDV'" [borderRadius]="'20px 0px 20px 0px'" [backgroundColor]="'transparent'"
+                        [hasBorder]="true"></app-button>
+                </div>
+                <div class="numbers">
+                    <div class="number">
+                        <h2>50+</h2>
+                        <p>Nutritionnistes Certifiés</p>
+                    </div>
+                    <div class="number">
+                        <h2>200+</h2>
+                        <p>Repas Personnalisés</p>
+                    </div>
+                    <div class="number">
+                        <h2>500+</h2>
+                        <p>Clients Satisfaits</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="right-section">
+
+                <img id="main-img" src="assets/images/nutrition2.png" alt="nutrition2">
+                <img id="small-flower" src="assets/images/flower-shape.svg" alt="nutrition2">
+                <img id="big-flower" src="assets/images/big-flow.svg" alt="nutrition2">
+                <img id="arrow" src="assets/images/arrow.svg" alt="nutrition2">
+
+
+            </div>
+        </div>
+        <div class="tips">
+            <app-tip [imageUrl]="'apple'"
+                [text]="'Les pommes peuvent réduire le cholestérol élevé et la pression artérielle.'"></app-tip>
+            <app-tip [imageUrl]="'banana'"
+                [text]="'Les pommes peuvent réduire le cholestérol élevé et la pression artérielle.'"></app-tip>
+            <app-tip [imageUrl]="'ananas'"
+                [text]="'Les pommes peuvent réduire le cholestérol élevé et la pression artérielle.'"></app-tip>
+            <app-tip [imageUrl]="'rasain'"
+                [text]="'Les pommes peuvent réduire le cholestérol élevé et la pression artérielle.'"></app-tip>
+            <app-tip [imageUrl]="'fraise'"
+                [text]="'Les pommes peuvent réduire le cholestérol élevé et la pression artérielle.'"></app-tip>
+            <app-tip [imageUrl]="'pasteque'"
+                [text]="'Les pommes peuvent réduire le cholestérol élevé et la pression artérielle.'"></app-tip>
+            <app-tip [imageUrl]="'mangue'"
+                [text]="'Les pommes peuvent réduire le cholestérol élevé et la pression artérielle.'"></app-tip>
+        </div>
+    </div>
+</div>

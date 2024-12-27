@@ -1,0 +1,22 @@
+.grid-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 160px);
+  grid-template-rows: repeat(3, 180px);
+  justify-content: start;
+  row-gap: 70px;
+  column-gap: 35px;
+}
+.filters {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 50px;
+}
+h2.title {
+  align-self: start;
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 25px;
+  margin-bottom: 20px;
+}

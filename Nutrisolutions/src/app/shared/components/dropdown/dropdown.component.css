@@ -1,0 +1,52 @@
+.dropdown-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.dropdown-input {
+  width: 100%;
+  padding: 8px 40px 8px 12px;
+  font-size: clamp(9px, 14px, 1.4vw);
+  border: 1px solid transparent;
+  border-radius: 25px;
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(90deg, var(--primary-color), var(--secondary-color))
+      border-box;
+  outline: none;
+  appearance: none; /* Hides the default dropdown arrow */
+  cursor: pointer;
+}
+
+.dropdown-wrapper::after {
+  content: "▼"; 
+  position: absolute;
+  top: 50%;
+  right: 12px; 
+  transform: translateY(-50%);
+  pointer-events: none; 
+  color: var(--primary-color);
+  font-size: 0.8rem;
+}
+
+.dropdown-input:focus {
+  border: 1px solid transparent;
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(90deg, var(--secondary-color), var(--primary-color))
+      border-box; /* Slight color shift for focus */
+  box-shadow: 0 0 1px var(--primary-color), 0 0 1px var(--secondary-color),
+    0 0 1px var(--primary-color);
+}
+
+option:checked {
+  background-color: var(--secondary-color);
+}
+
+
+.dropdown-input option[value=""] {
+  color: var(--primary-color); 
+}
+
+.dropdown-input:not(:invalid) {
+  color: var(--primary-color); /* Change to your selected color */
+}

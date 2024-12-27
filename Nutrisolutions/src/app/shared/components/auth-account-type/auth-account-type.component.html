@@ -1,0 +1,9 @@
+<div class="account-type-card" [class.selected]="selectedType === type" (click)="selectType()">
+    <div class="icon-container" [class.active]="selectedType === type">
+        <img [src]="selectedType === type ? iconType2 : iconType1" class="icon" [alt]="type" />
+    </div>
+    <div class="account-info">
+        <h3 class="account-title">{{ type }}</h3>
+        <p>{{ description }}</p>
+    </div>
+</div>

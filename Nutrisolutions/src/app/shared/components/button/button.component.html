@@ -1,3 +1,4 @@
-<button class="btn" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false"
-    [ngStyle]="{'width':width, 'background-color': backgroundColor,'color': textColor,'border-radius': borderRadius,'box-shadow':isHovered? boxShadow :'none' }"
-    [type]="type">{{text}}</button>
+<button class="button" [ngStyle]="getStyles()" (mouseover)="isHovered = true" (mouseleave)="isHovered = false"
+  type="{{ type }}" (click)="onClick()">
+  {{ text }}
+</button>

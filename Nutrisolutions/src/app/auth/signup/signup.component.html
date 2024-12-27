@@ -1,22 +1,83 @@
 <app-auth-background>
-    <div class="form">
-        <h1>Register</h1>
-        <div class="steps-wrapper">
-            <app-steps [steps]="stepLabels" [activeStep]="currentStep"></app-steps>
-        </div>
-        <div class="inputs">
-            <app-auth-input [heading]="'Email Address'" [type]="'email'"> </app-auth-input>
-            <app-auth-input [heading]="'Password'" [type]="'password'"> </app-auth-input>
-            <app-auth-input [heading]="'Confirm Password'" [type]="'password'" [placeholder]="''"> </app-auth-input>
-        </div>
-        <div class="buttons">
-            <app-button [backgroundColor]="'white'" [textColor]="'var( --hint-text-color)'"
-                [boxShadow]="'0 4px 8px 2px var(--hint-text-color)'" [text]="'Previous'"></app-button>
-            <app-button [text]="'Next'"></app-button>
-        </div>
-
-
-
-
+  <form>
+    <h1>Inscription</h1>
+    <div class="steps-wrapper">
+      <app-progress-indicator [steps]="stepLabels" [activeStep]="currentStep"></app-progress-indicator>
     </div>
+
+
+    <!-- __________ STEP 1 : ACCOUNT TYPE ___________ -->
+
+    <div *ngIf="currentStep == 0" class="inputs">
+      <h2>Choose your Account Type</h2>
+
+      <app-auth-account-type *ngFor="let account of accountTypes" [type]="account.type"
+        [description]="account.description" [selectedType]="selectedType"
+        (typeSelected)="selectType($event)"></app-auth-account-type>
+    </div>
+
+    <!-- __________ STEP 2 : EMAIL & PASSWORD ___________ -->
+
+    <div *ngIf="currentStep == 1" class="inputs">
+      <app-auth-input-field label="Email Address" [inputValue]="email" (onInputChange)="setEmail($event)"
+        placeholder="Type your email here" type="email" name="email" [required]="true"
+        [updateInputNote]="updateEmailInputNote"></app-auth-input-field>
+
+      <app-auth-input-field label="Password" [inputValue]="password" placeholder="Type your password here"
+        [isPassword]="true" name="password" [required]="true" (onInputChange)="setPassword($event)"
+        [updateInputNote]="updatePasswordInputNote"></app-auth-input-field>
+      <app-auth-input-field label="Confirm Password" [inputValue]="confirmPassword"
+        placeholder="Confirm your password here" [isPassword]="true" name="password" [required]="true" [valid]="valid"
+        (onInputChange)="setConfirmPassword($event)"
+        [updateInputNote]="updateConfirmPasswordInputNote"></app-auth-input-field>
+    </div>
+
+    <!-- __________ STEP 3 : NAME / GENDER / AGE / PHONENUMBER ___________ -->
+
+    <div *ngIf="currentStep == 2" class="inputs">
+      <app-auth-input-field label="Name" [inputValue]="name" (onInputChange)="setName($event)"
+        placeholder="Type your name here" type="text" [required]="true"></app-auth-input-field>
+      <div class="dropdowns">
+        <app-auth-dropdown [options]="genderOptions" class="dropdown" [label]="'Gender'"
+          [selectedOption]="selectedGender" (onInputChange)="selectGender($event)"></app-auth-dropdown>
+        <app-auth-dropdown [options]="ageOptions" class="dropdown" [label]="'Age'" [selectedOption]="selectedAge"
+          (onInputChange)="selectAge($event)"></app-auth-dropdown>
+      </div>
+      <app-auth-input-field label="Phone Number" [inputValue]="phoneNumber" (onInputChange)="setPhoneNumber($event)"
+        placeholder="+216" type="text" [required]="true"></app-auth-input-field>
+    </div>
+
+
+    <!-- __________ STEP 4 : POIDS / TAILLE / ACTIVITE / OBJECTIF ___________ -->
+
+    <div *ngIf="currentStep == 3" class="inputs">
+
+      <div class="dropdowns">
+        <app-auth-dropdown [options]="poidsActuelOptions" class="dropdown" [label]="'Poids Actuel (Kg)'"
+          [selectedOption]="selectedPoids" (onInputChange)="selectPoids($event)"></app-auth-dropdown>
+
+        <app-auth-dropdown [options]="tailleOptions" class="dropdown" [label]="'Taille (cm)'"
+          [selectedOption]="selectedTaille" (onInputChange)="selectTaille($event)"></app-auth-dropdown>
+      </div>
+      <app-auth-dropdown [options]="activiteJournaliereOptions" class="dropdown" [label]="'Activité journalière'"
+        [selectedOption]="selectedActiviteJournaliere"
+        (onInputChange)="selectActiviteJournaliere($event)"></app-auth-dropdown>
+      <app-auth-dropdown [options]="objectifOptions" class="dropdown" [label]="'Objectif'"
+        [selectedOption]="selectedObjectif" (onInputChange)="selectObjectif($event)"></app-auth-dropdown>
+    </div>
+
+    <!-- __________ STEP 5 : PHOTO  ___________ -->
+
+    <div *ngIf="currentStep == 4" class="inputs">
+      <app-upload-image></app-upload-image>
+    </div>
+
+    <div class="buttons">
+      <app-button [text]="'Previous'" (click)="goPrevious()" *ngIf="currentStep > 0" [fontWeight]="'300'"
+        [backgroundColor]="'white'" [textColor]="'var(--hint-text)'"
+        [boxShadow]="'0 4px 8px 2px var(--hint-text)'"></app-button>
+      <app-button [text]="'Next'" (click)="goNext()" *ngIf="currentStep < 4" [fontWeight]="'300'"></app-button>
+      <app-button [text]="'Confirm'" *ngIf="currentStep == 4" [fontWeight]="'300'"></app-button>
+    </div>
+  </form>
 </app-auth-background>

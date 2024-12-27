@@ -1,0 +1,53 @@
+<app-page-background>
+  <div class="quote">
+    <h3>Manger sain, c'est prendre soin de soi avec chaque bouchée</h3>
+  </div>
+  <app-svg-box [height]="'100%'" [width]="'95%'">
+    <div class="recipe-container">
+      <div class="first-section-recipe">
+        <div class="img-container">
+          <img src="assets/images/recipe5.png" alt="" />
+        </div>
+        <div class="recipe-details">
+          <h2>{{ recipe?.name }}</h2>
+          <div class="details-grid-container">
+            <div class="detail-item" *ngFor="let item of items">
+              <img [src]="item.image" alt="goal" />
+              <h3>{{ item.content }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button-container">
+        <div *ngFor="let button of buttons">
+          <button class="recipe-button">
+            <img [src]="button.image" alt="Button Icon" />
+            {{ button.text }}
+          </button>
+        </div>
+      </div>
+      <div class="separation-line"></div>
+      <div class="second-section-recipe">
+        <div class="recipe-detail-item">
+          <h2>Ingrédients :</h2>
+          <ul>
+            <li *ngFor="let ingredient of recipe?.ingredients">
+              <div class="detail-list">
+                <input type="checkbox" />
+                <span class="detail-text">{{ ingredient }}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <app-recipe-details-item
+          [title]="'Instructions :'"
+          [details]="recipe?.instructions || []"
+        ></app-recipe-details-item>
+        <app-recipe-details-item
+          [title]="'Cooking Notes :'"
+          [details]="recipe?.cookingNotes || []"
+        ></app-recipe-details-item>
+      </div>
+    </div>
+  </app-svg-box>
+</app-page-background>

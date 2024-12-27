@@ -1,0 +1,17 @@
+<app-svg-box [height]="'100%'" [width]="'100%'">
+    <div class="recette-item">
+        <div class="recette-img">
+            <img [src]="imageUrl" alt="" />
+        </div>
+        <div class="recette-content">
+            <h2>{{ name }}</h2>
+            <p>
+                {{ description }}
+            </p>
+            <!-- <p>{{category}}</p>
+            <p>{{objectif}}</p> -->
+            <h4>{{ calories }} Calories</h4>
+        </div>
+
+    </div>
+</app-svg-box>

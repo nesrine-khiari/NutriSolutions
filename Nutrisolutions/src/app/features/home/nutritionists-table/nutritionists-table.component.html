@@ -1,0 +1,117 @@
+<div class="right-container">
+  <h2>Nos Nutritionnistes:</h2>
+  <div class="filters">
+    <app-search [formControlName]="searchControl"></app-search>
+    <app-dropdown
+      [name]="'Trier'"
+      [options]="trieOptions"
+      [formControlName]="trieControl"
+    ></app-dropdown>
+    <app-dropdown
+      [name]="'Status'"
+      [options]="statusOptions"
+      [formControlName]="statusControl"
+    ></app-dropdown>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Nutritioniste</th>
+        <th>Addresse</th>
+        <th>Numéro de téléphone</th>
+        <th>Email</th>
+        <th>Certificat</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let nutritionist of nutritionists
+            | nutritionistsTableFilter
+              : searchControl.value
+              : statusControl.value
+              : trieControl.value
+        "
+      >
+        <td
+          [innerHTML]="highlightText(nutritionist.name, searchControl.value)"
+        ></td>
+        <td
+          [innerHTML]="highlightText(nutritionist.address, searchControl.value)"
+        ></td>
+        <td
+          [innerHTML]="highlightText(nutritionist.phone, searchControl.value)"
+        ></td>
+        <td
+          [innerHTML]="highlightText(nutritionist.email, searchControl.value)"
+        ><span class="highlight">{{searchControl.value}}</span></td>
+
+        <td>
+          <a [href]="nutritionist.certificate" download>
+            <div class="certificate-container">
+              <img
+                src="assets/images/pdf-file.png"
+                alt="Download"
+                class="icon"
+              />
+              <span>{{ nutritionist.certificate }}</span>
+              <img
+                src="assets/images/download-icon.png"
+                alt="Download"
+                class="icon"
+              />
+            </div>
+          </a>
+        </td>
+
+        <td>
+          <div [ngSwitch]="nutritionist.status">
+            <!-- Status: Approved -->
+            <span *ngSwitchCase="'Approuvé'" class="status-approved">
+              {{ nutritionist.status }}
+            </span>
+
+            <span *ngSwitchCase="'Approuvée'" class="status-approved">
+              {{ nutritionist.status }}
+            </span>
+
+            <!-- Status: Rejected -->
+            <span *ngSwitchCase="'Rejeté'" class="status-rejected">
+              {{ nutritionist.status }}
+            </span>
+
+            <span *ngSwitchCase="'Rejetée'" class="status-rejected">
+              {{ nutritionist.status }}
+            </span>
+
+            <!-- Status: Pending -->
+            <div *ngSwitchCase="'En attente'" class="status-images">
+              <img
+                src="assets/images/accept.png"
+                alt="Accept"
+                class="icon"
+                (click)="updateStatus(nutritionist, 'Approuvé')"
+              />
+              <img
+                src="assets/images/cancel.png"
+                alt="Cancel"
+                class="icon"
+                (click)="updateStatus(nutritionist, 'Rejeté')"
+              />
+            </div>
+
+            <!-- Default case for other statuses -->
+            <span *ngSwitchDefault class="status-default">
+              {{ nutritionist.status }}
+            </span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <app-pagination></app-pagination>
+  </div>
+</div>

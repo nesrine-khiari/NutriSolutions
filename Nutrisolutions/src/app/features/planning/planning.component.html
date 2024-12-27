@@ -1,0 +1,49 @@
+<app-page-background>
+    <div class="quote">
+        <h3>
+            Un nutritionniste, votre allié pour
+            une santé équilibrée et durable
+        </h3>
+    </div>
+    <input id="date-input" type="date" class="date-input" [(ngModel)]="selectedDate.toISOString().split('T')[0]" ngModel
+        (ngModelChange)="updateSlots($event)" />
+    <div class="planning">
+        <!-- First Row: Empty slot + Time slots -->
+        <div class="times-days-slot">
+            <div class="slot">
+                <p id="days">Days</p>
+                <p id="slots">Slots</p>
+            </div>
+        </div>
+
+        <div class="horiz-header">
+            <div class="slot header-slot" *ngFor="let time of timeSlots">{{ time }}</div>
+        </div>
+        <div class="vert-header">
+            <div class="slot header-slot" *ngFor="let day of workDaysOfWeek">{{ day }}</div>
+        </div>
+
+        <div class="morning-content">
+            <div (click)="pickSlot(index,undefined,true)" class="slot"
+                *ngFor="let slot of morningSlots;let index=index;" [style.backgroundColor]="slot.color">
+                <p *ngIf="slot.isReserved">{{getInitials(slot.reservedBy)}}</p>
+                <img *ngIf="!slot.isReserved" src="assets/images/medical-appointment.svg" alt="appointment">
+            </div>
+        </div>
+        <div class="afternoon-content">
+            <div (click)="pickSlot(index,undefined,false)" class="slot"
+                *ngFor="let slot of afternoonSlots;let index=index;" [style.backgroundColor]="slot.color">
+                <p *ngIf="slot.isReserved">{{getInitials(slot.reservedBy)}}</p>
+                <img *ngIf="!slot.isReserved" src="assets/images/medical-appointment.svg" alt="appointment">
+            </div>
+        </div>
+
+        <div class="break">
+            <img src="assets/images/break-time-man.svg" alt="">
+            <img src="assets/images/break-time.svg" alt="">
+            <img src="assets/images/break-time-man.svg" alt="">
+        </div>
+
+
+    </div>
+</app-page-background>

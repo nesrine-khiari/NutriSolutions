@@ -1,0 +1,36 @@
+form h1 {
+  font-size: 2.1rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.background .logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: clamp(100px, 20%, 150px);
+}
+
+form {
+  width: 60%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+form .inputs {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  form {
+    width: max(80%, 500px);
+  }
+}

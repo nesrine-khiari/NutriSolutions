@@ -1,0 +1,35 @@
+<div
+  class="uploaded-image-wrapper"
+  *ngIf="uploadedImage"
+  (click)="triggerFileInput()"
+>
+  <input
+    type="file"
+    #fileInput
+    accept="image/*"
+    (change)="onFileSelected($event)"
+    hidden
+  />
+  <div class="uploaded-image">
+    <img [src]="uploadedImage" alt="Uploaded Image" />
+    <div class="edit-icon">
+      <img src="assets/images/edit.png" alt="" />
+    </div>
+  </div>
+</div>
+
+  <app-svg-box *ngIf="!uploadedImage" (click)="triggerFileInput()">
+    <input
+      type="file"
+      #fileInput
+      accept="image/*"
+      (change)="onFileSelected($event)"
+      hidden
+    />
+    <div class="upload-image">
+      <img src="assets/images/upload-image.png" alt="upload" />
+      <h3>Upload Picture</h3>
+    </div>
+  </app-svg-box>
+  
+

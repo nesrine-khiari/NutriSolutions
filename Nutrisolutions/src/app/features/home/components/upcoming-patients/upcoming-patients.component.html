@@ -1,0 +1,51 @@
+<app-svg-box [width]="'95%'">
+    <div class="upcoming-patients-wrapper">
+        <div class="patients-list">
+            <h2>
+                Liste des patients
+            </h2>
+            <app-upcoming-patient [patient]="patients[index]" [index]="index" *ngFor="let i of patients;let index=index"
+                [isFirst]="index==0"></app-upcoming-patient>
+
+        </div>
+
+        <div class="next-patient-meet">
+            <h2>Consultation </h2>
+
+            <div class="next-meet-card">
+                <app-upcoming-patient></app-upcoming-patient>
+                <div class="detail">
+                    <h4>Objectif</h4>
+                    <img [src]="'assets/images/'+objectifImg+'.svg'" alt="">
+                </div>
+                <hr />
+
+                <div class="notes-wrapper">
+                    <div class="detail">
+                        <h4>Notes</h4>
+                        <div class="notes-content">
+                            <p class="note" *ngFor="let note of notes">- {{note}}</p>
+
+                        </div>
+
+                    </div>
+                    <div class="buttons">
+                        <app-button [onClick]="showPopup" [text]="'Ajouter Une Note'"></app-button>
+                        <app-button [text]="'Terminer La Consultation'"></app-button>
+                    </div>
+
+                </div>
+                <!-- Popup -->
+                <div class="modal" [style.display]="isPopupVisible?'block':'none'">
+                    <div class="modal-content">
+                        <span class="close-btn" (click)="closePopup()">&times;</span>
+                        <h4>Entrez une nouvelle note</h4>
+                        <app-input-field (enterPressed)="addNote($event)" [control]="newNoteControl"></app-input-field>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</app-svg-box>

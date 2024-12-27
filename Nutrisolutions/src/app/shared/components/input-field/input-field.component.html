@@ -1,0 +1,11 @@
+<div class="input-field-container">
+  <input
+    [formControl]="control"
+    type="text"
+    class="input-field"
+    [placeholder]="placeholder"
+    [ngStyle]="getStyles()"
+    [style.--placeholderColor]="placeholderColor"
+    (keydown.enter)="onEnter()"
+  />
+</div>

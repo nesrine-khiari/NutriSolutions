@@ -14,11 +14,25 @@ interface CustomHTMLDivElement extends HTMLDivElement {
 export class AppComponent implements AfterViewInit {
   coords = { x: 0, y: 0 };
   colors: string[] = [
-    "#cc5500", "#cc5500", "#cc5500", "#cc5500",
-    "#c05200", "#c05200", "#c05200", "#c05200",
-    "#b44e00", "#b44e00", "#a84b00", "#a84b00",
-    "#9d4700", "#9d4700", "#924400", "#924400",
-    "#874000", "#874000", "#7c3c00",
+    '#cc5500',
+    '#cc5500',
+    '#cc5500',
+    '#cc5500',
+    '#c05200',
+    '#c05200',
+    '#c05200',
+    '#c05200',
+    '#b44e00',
+    '#b44e00',
+    '#a84b00',
+    '#a84b00',
+    '#9d4700',
+    '#9d4700',
+    '#924400',
+    '#924400',
+    '#874000',
+    '#874000',
+    '#7c3c00',
   ];
 
   ngAfterViewInit(): void {
@@ -44,7 +58,9 @@ export class AppComponent implements AfterViewInit {
         circle.style.top = `${y - 12}px`;
 
         // Scale the circle based on its index
-        circle.style.transform = `scale(${(circles.length - index) / circles.length})`;
+        circle.style.transform = `scale(${
+          (circles.length - index) / circles.length
+        })`;
 
         circle.x = x; // Update the `x` property
         circle.y = y; // Update the `y` property

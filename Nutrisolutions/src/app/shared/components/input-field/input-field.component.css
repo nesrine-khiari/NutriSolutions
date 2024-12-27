@@ -1,0 +1,44 @@
+.input-field-container {
+  width: 100%;
+}
+
+.input-field {
+  width: 100%;
+  padding: 8px 40px 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 25px;
+  background-color: var(--background-color);
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(90deg, var(--primary-color), var(--secondary-color))
+      border-box;
+  outline: none;
+}
+.input-field::placeholder {
+  /* Standard syntax */
+  color: var(--placeholderColor);
+}
+
+.input-field:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: var(--placeholderColor);
+}
+
+.input-field::-ms-input-placeholder {
+  /* Microsoft Edge (legacy) */
+  color: var(--placeholderColor);
+}
+
+.input-field::-webkit-input-placeholder {
+  /* Chrome, Safari, Opera */
+  color: var(--placeholderColor);
+}
+
+.input-field:focus {
+  border: 1px solid transparent; /* Maintain gradient trick */
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(90deg, var(--secondary-color), var(--primary-color))
+      border-box; /* Slight color shift for focus */
+  box-shadow: 0 0 1px var(--primary-color), 0 0 1px var(--secondary-color),
+    0 0 1px var(--primary-color);
+  outline: none;
+}

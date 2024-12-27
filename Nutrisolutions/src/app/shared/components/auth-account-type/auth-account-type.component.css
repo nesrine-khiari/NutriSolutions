@@ -1,0 +1,47 @@
+.account-type-card {
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  background-color: #f9f6f2;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.account-type-card.selected {
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px var(--light-green);
+}
+
+.icon-container {
+  width: 100px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.icon-container.active {
+  background-color: var(--secondary-color);
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+}
+
+.account-info h3 {
+  margin: 0;
+  font-size: clamp(0.8rem, 2vw, 1.1rem);
+  color: var(--text-color);
+}
+
+.account-info p {
+  margin: 5px 0 0;
+  font-size: clamp(0.6rem, 2vw, 0.9rem);
+  color: var(--hint-text);
+}

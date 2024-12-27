@@ -1,0 +1,11 @@
+<div class="stats" (mouseenter)="hovered=true" (mouseleave)="hovered=false">
+    <p class="stat-object">{{statObject}}</p>
+    <div class="numbers">
+        <p class="stat-number">{{stat}}</p>
+        <div class="evolution" [class.active]="hovered"
+            [ngStyle]="{'backgroundColor':isIncreasing?'#DFFDDD':'#FBC3C3','color':isIncreasing?'#008000':'#df0404'}">
+            <p class="evolution-number"> {{evolutionPercent}}%</p>
+            <img [src]="'assets/images/'+(isIncreasing?'increase':'decrease')+'.svg'" alt="">
+        </div>
+    </div>
+</div>
