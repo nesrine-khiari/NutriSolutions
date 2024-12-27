@@ -1,0 +1,92 @@
+.right-container {
+  background-color: white;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 30px;
+  overflow-x: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 20px;
+}
+.right-container h2 {
+  color: var(--primary-color);
+}
+.right-container table {
+  width: 100%;
+  font-size: 0.8rem;
+  border-collapse: collapse;
+  /* table-layout: fixed; */
+}
+
+.right-container thead {
+  color: var(--hint-text);
+}
+
+.right-container th,
+td {
+  padding: 20px 15px;
+  text-align: left;
+  border-bottom: 1.3px solid #ddd;
+}
+
+.right-container th {
+  font-weight: 500;
+}
+.certificate-container {
+  justify-content: space-between;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.certificate-container .icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.right-container .status-approved,
+.right-container .status-rejected {
+  display: inline-block;
+  width: 100%;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  text-align: center;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.right-container .status-approved {
+  color: #5faa03;
+  background-color: var(--light-green);
+}
+
+.right-container .status-rejected {
+  color: red;
+  background-color: #ffc5c5;
+}
+.right-container .status-images {
+  display: flex;
+  gap: 27px;
+  justify-content: center;
+  align-items: center;
+}
+.status-images .icon {
+  width: 27px;
+  height: 27px;
+  cursor: pointer;
+}
+.right-container tr:hover {
+  background-color: #f9f9f9;
+}
+.filters {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+::ng-deep .highlight {
+  background-color: var(--light-green);
+  font-weight: 600;
+}

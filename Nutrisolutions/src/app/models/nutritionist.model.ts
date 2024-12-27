@@ -13,4 +13,23 @@ export interface NutritionistModel {
   consultationFee: number;
   ratings: number;
   appointments?: string[];
+
+  // New fields
+  address: string; // Full address
+  certificate: string; // File name of the certificate
+  status: string; // Status of the nutritionist, e.g., 'Approuvé'
+  addedAt: Date; // Date when the nutritionist was added
+}
+
+
+export enum TrieEnum {
+  ALL = 'Tous',
+  PlusRecents = 'Plus Récents',
+  PlusAnciens = 'Plus Anciens',
+}
+export enum StatusEnum {
+  ALL = 'Tous',
+  Approved = 'Approuvé',
+  Rejected = 'Rejeté',
+  Waiting = 'En attente',
 }

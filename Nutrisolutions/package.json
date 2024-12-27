@@ -23,6 +23,7 @@
     "@faker-js/faker": "^9.3.0",
     "angular-material-calendar": "^0.2.14",
     "faker": "^6.6.6",
+    "ngx-slider": "^0.0.4",
     "ngx-toastr": "^19.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^16.9.1",

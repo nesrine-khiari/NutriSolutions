@@ -12,6 +12,9 @@ import { UpcomingPatientsComponent } from './components/upcoming-patients/upcomi
 import { UpcomingPatientComponent } from './components/upcoming-patient/upcoming-patient.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { NutritionistsTableComponent } from './nutritionists-table/nutritionists-table.component';
+import { CoreModule } from 'src/app/core/core.module';
 @NgModule({
   declarations: [
     HomePageComponent,
@@ -20,6 +23,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     StatsComponent,
     UpcomingPatientsComponent,
     UpcomingPatientComponent,
+    AdminHomeComponent,
+    NutritionistsTableComponent,
   ],
   imports: [
     CommonModule,
@@ -28,7 +33,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     NutritionistsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    CoreModule,
   ],
-  exports: [HomePageComponent, HomeNutritionisteComponent],
+  exports: [HomePageComponent, AdminHomeComponent, HomeNutritionisteComponent],
 })
 export class HomeModule {}

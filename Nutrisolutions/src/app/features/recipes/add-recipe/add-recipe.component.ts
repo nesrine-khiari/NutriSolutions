@@ -9,7 +9,8 @@ import {
 @Component({
   selector: 'app-add-recipe',
   templateUrl: './add-recipe.component.html',
-  styleUrls: ['./add-recipe.component.css'],
+  styleUrls: ['./add-recipe.component.css',
+    '../../../../assets/css/list-common.css',],
 })
 export class AddRecipeComponent {
   titleControl: FormControl= new FormControl('');

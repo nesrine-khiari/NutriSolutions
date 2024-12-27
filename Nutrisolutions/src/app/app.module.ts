@@ -11,6 +11,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { HomeModule } from './features/home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PlanningComponent } from './features/planning/planning.component';
+import { ProfileModule } from './features/profile/profile.module';
 
 @NgModule({
   declarations: [AppComponent, PlanningComponent],
@@ -22,6 +23,7 @@ import { PlanningComponent } from './features/planning/planning.component';
     RecipesModule,
     NutritionistsModule,
     SharedModule,
+    ProfileModule,
     ReactiveFormsModule,
     ToastrModule.forRoot({
       timeOut: 3000, // Notification duration (in ms)

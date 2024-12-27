@@ -24,13 +24,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 90%;
   height: 100%;
 }
 
 .uploaded-image {
-  width: 250px;
-  height: 250px;
+  width: 180px;
+  height: 180px;
   position: relative;
 }
 .uploaded-image > img {

@@ -1,0 +1,95 @@
+.img-container {
+  width: 35%;
+  display: flex;
+  justify-content: center;
+}
+
+.img-container img {
+  height: 250px;
+  width: 250px;
+}
+
+.recipe-details h2 {
+  align-self: flex-start;
+  color: var(--brown);
+  font-size: 26px;
+}
+
+.detail-item h3 {
+  font-weight: 500;
+  font-size: 18px;
+}
+.button-container {
+  display: flex;
+  gap: 35px;
+}
+.recipe-button {
+  display: flex;
+  gap: 10px;
+  background-color: var(--secondary-color);
+  border-radius: 10px;
+  color: white;
+  padding: 0.7rem 1rem 0.7rem 1rem;
+  align-items: center;
+  border: none;
+  cursor: "pointer";
+  transition: "border-color 0.3s ease";
+  position: relative;
+  overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+
+    transition: all 0.65s ease-in-out;
+  }
+  &:hover::before {
+    left: 100%;
+  }
+}
+
+.recipe-button img {
+  height: 20px;
+  width: 20px;
+}
+
+.checkbox {
+  display: flex;
+}
+.checkbox label {
+  margin-left: 5px;
+  color: var(--hint-text);
+}
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 30px;
+  height: 30px;
+  border: 2px solid var(--hint-text);
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" fill="none" stroke="white" stroke-width="2"/></svg>');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 25px;
+}
+
+.detail-list input[type="checkbox"]:checked + .detail-text {
+  text-decoration: line-through;
+}
