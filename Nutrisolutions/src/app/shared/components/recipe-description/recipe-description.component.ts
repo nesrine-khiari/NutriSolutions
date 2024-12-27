@@ -4,7 +4,8 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-recipe-description',
   templateUrl: './recipe-description.component.html',
-  styleUrls: ['./recipe-description.component.css'],
+  styleUrls: ['./recipe-description.component.css',
+    '../../../../assets/css/list-common.css',],
 })
 export class RecipeDescriptionComponent {
   @Input({ required: true }) title: string = 'Ingredients :';

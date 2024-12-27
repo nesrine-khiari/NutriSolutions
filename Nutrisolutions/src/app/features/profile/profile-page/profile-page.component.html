@@ -1,0 +1,47 @@
+<app-page-background>
+  <div class="first-section">
+    <img src="assets/images/profile-bg.png" alt="" />
+    <div class="under-img">
+      <div class="profile-pic">
+        <app-upload-image
+          [uploadedImage]="'assets/images/avatar.png'"
+        ></app-upload-image>
+      </div>
+      <div class="small-details">
+        <h3>{{ fullname }}</h3>
+        <p>{{ role }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="second-section">
+    <div class="propos">
+      <h3>A Propos</h3>
+      <div *ngFor="let item of clientInfoItems" class="propos-item">
+        <span class="icon-propos"><i [class]="item.icon"></i></span>
+        <p>{{ item.param }}</p>
+      </div>
+    </div>
+    <div class="right-section">
+      <div class="upper-right">
+        <div class="health-infos">
+          <h3>Données de santé</h3>
+          <app-health-infos></app-health-infos>
+        </div>
+        <div class="favorites">
+          <h3>Recettes préférées</h3>
+          <div *ngFor="let recette of recettes" class="propos-item">
+            <img [src]="recette.imageUrl" alt="" />
+            <p>{{ recette.name }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="lower-right">
+        <h3>Upcoming appointment</h3>
+        <button>
+          {{ client?.appointments?.[0] ?? 'No appointments available' }}
+        </button>
+        <p style="color: var(--brown)">Consultation with Dr. James</p>
+      </div>
+    </div>
+  </div>
+</app-page-background>

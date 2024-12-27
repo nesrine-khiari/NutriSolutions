@@ -1,0 +1,22 @@
+.number-box {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  color: var(--secondary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.number-box.active {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.detail-text.strikethrough {
+  text-decoration: line-through;
+}

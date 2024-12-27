@@ -1,0 +1,21 @@
+<div class="recipe-detail-item">
+  <h2>{{title}}</h2>
+  <ul>
+    <li *ngFor="let detail of details; let i = index">
+      <div class="detail-list" (click)="toggleDetail(i)">
+        <div
+          class="number-box"
+          [ngClass]="{ 'active' : isDetailChecked(i) }"
+        >
+          {{ i + 1 }}
+        </div>
+        <span
+          class="detail-text"
+          [class.strikethrough]="isDetailChecked(i)"
+        >
+          {{ detail}}
+        </span>
+      </div>
+    </li>
+  </ul>
+</div>

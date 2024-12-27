@@ -1,0 +1,52 @@
+.infos{
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  gap: 10px;
+}
+.infos svg{
+  width: 160px;
+  height: 70.16px;
+}
+.health-infos-container{
+  display: flex;
+  gap: 10px;
+}
+.bmi{
+  position: relative;
+}
+.bmi svg{
+  width: 250px;
+  height: 162.54px;
+}
+.healthy-button {
+  background-color: #D6FFDD;
+  color: var(--brown);
+  border: none;
+  padding: 7px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.not-healthy-button {
+  background-color: var(--light-red);
+  color: red;
+  border: none;
+  padding: 7px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.underweight-button {
+  background-color: #F8DEBD;
+  color: var(--brown);
+  border: none;
+  padding: 7px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+.buttons{
+  position: absolute;
+  right: 8%;
+  top: 33%;
+}

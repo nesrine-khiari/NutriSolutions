@@ -10,6 +10,7 @@ import { NutritionistsModule } from './features/nutritionists/nutritionists.modu
 import { ToastrModule } from 'ngx-toastr';
 import { HomeModule } from './features/home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ProfileModule } from './features/profile/profile.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RecipesModule,
     NutritionistsModule,
     SharedModule,
+    ProfileModule,
     ReactiveFormsModule,
     ToastrModule.forRoot({
       timeOut: 3000, // Notification duration (in ms)

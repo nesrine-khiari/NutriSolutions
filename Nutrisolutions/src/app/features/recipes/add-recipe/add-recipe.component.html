@@ -1,67 +1,70 @@
-<app-page-background
-  [quote]="'Manger sain, c\'est prendre soin de soi avec chaque bouchée'"
->
-  <div class="add-recipe">
-    <div class="first-section">
-      <div class="upload"><app-upload-image></app-upload-image></div>
-      <div class="recipe-details">
-        <app-input-field
-          [placeholderColor]="'var(--brown)'"
-          [fontWeight]="'bold'"
-          [fontSize]="'26px'"
-          [color]="'var(--brown)'"
-          [control]="titleControl"
-        ></app-input-field>
-        <div class="details-grid-container">
-          <div class="detail-item">
-            <img src="assets/images/chef.png" alt="category" />
-            <app-dropdown
-              [name]="'Catégorie'"
-              [options]="categoryOptions"
-              [formControlName]="categoryControl"
-            ></app-dropdown>
+<app-page-background>
+  <div class="quote">
+    <h3>Manger sain, c'est prendre soin de soi avec chaque bouchée</h3>
+  </div>
+  <app-svg-box [height]="'100%'" [width]="'95%'">
+    <div class="recipe-container">
+      <div class="first-section-recipe">
+        <div class="upload"><app-upload-image></app-upload-image></div>
+        <div class="recipe-details">
+          <app-input-field
+            [placeholderColor]="'var(--brown)'"
+            [fontWeight]="'bold'"
+            [fontSize]="'26px'"
+            [color]="'var(--brown)'"
+            [control]="titleControl"
+          ></app-input-field>
+          <div class="details-grid-container">
+            <div class="detail-item">
+              <img src="assets/images/chef.png" alt="category" />
+              <app-dropdown
+                [name]="'Catégorie'"
+                [options]="categoryOptions"
+                [formControlName]="categoryControl"
+              ></app-dropdown>
+            </div>
+            <div class="detail-item">
+              <img src="assets/images/goal.png" alt="goal" />
+              <app-dropdown
+                [name]="'Objectif'"
+                [options]="objectifOptions"
+                [formControlName]="objectifControl"
+              ></app-dropdown>
+            </div>
+            <div class="detail-item" *ngFor="let item of items">
+              <img [src]="item.image" alt="goal" />
+              <app-input-field
+                [control]="item.formControlName"
+                [placeholder]="item.placeholder"
+              ></app-input-field>
+            </div>
           </div>
           <div class="detail-item">
-            <img src="assets/images/goal.png" alt="goal" />
+            <img src="assets/images/meal.png" alt="preptime" />
             <app-dropdown
-              [name]="'Objectif'"
-              [options]="objectifOptions"
-              [formControlName]="objectifControl"
+              [name]="'Temps de préparation'"
+              [options]="preptimeOptions"
+              [formControlName]="preptimeControl"
             ></app-dropdown>
           </div>
-          <div class="detail-item" *ngFor="let item of items">
-            <img [src]="item.image" alt="goal" />
-            <app-input-field
-              [control]="item.formControlName"
-              [placeholder]="item.placeholder"
-            ></app-input-field>
-          </div>
-        </div>
-        <div class="detail-item">
-          <img src="assets/images/meal.png" alt="preptime" />
-          <app-dropdown
-            [name]="'Temps de préparation'"
-            [options]="preptimeOptions"
-            [formControlName]="preptimeControl"
-          ></app-dropdown>
         </div>
       </div>
+      <div class="separation-line"></div>
+      <div class="second-section-recipe">
+        <app-recipe-description
+          [placeholder]="'Ajouter un ingrédient'"
+          [title]="'Ingrédients :'"
+        ></app-recipe-description>
+        <app-recipe-description
+          [placeholder]="'Ajouter une instruction'"
+          [title]="'Instructions :'"
+        ></app-recipe-description>
+        <app-recipe-description
+          [placeholder]="'Ajouter une cooking Note'"
+          [title]="'Cooking Note :'"
+        ></app-recipe-description>
+      </div>
+      <app-button [text]="'Ajouter Recette'"></app-button>
     </div>
-    <div class="line-background"></div>
-    <div class="second-section">
-      <app-recipe-description
-        [placeholder]="'Ajouter un ingrédient'"
-        [title]="'Ingrédients :'"
-      ></app-recipe-description>
-      <app-recipe-description
-        [placeholder]="'Ajouter une instruction'"
-        [title]="'Instructions :'"
-      ></app-recipe-description>
-      <app-recipe-description
-        [placeholder]="'Ajouter une cooking Note'"
-        [title]="'Cooking Note :'"
-      ></app-recipe-description>
-    </div>
-    <app-button [text]="'Ajouter Recette'"></app-button>
-  </div>
+  </app-svg-box>
 </app-page-background>

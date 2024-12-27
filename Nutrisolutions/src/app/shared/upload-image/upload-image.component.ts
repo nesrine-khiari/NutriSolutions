@@ -1,13 +1,20 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'app-upload-image',
   templateUrl: './upload-image.component.html',
-  styleUrls: ['./upload-image.component.css']
+  styleUrls: ['./upload-image.component.css'],
 })
 export class UploadImageComponent {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
-  uploadedImage: string | null = null;
+  @Input() uploadedImage: string = '';
 
   @Output() imageSelected = new EventEmitter<File>();
 
