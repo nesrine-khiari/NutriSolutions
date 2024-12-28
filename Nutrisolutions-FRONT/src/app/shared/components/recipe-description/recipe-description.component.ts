@@ -12,7 +12,7 @@ import { FormControl } from '@angular/forms';
 export class RecipeDescriptionComponent {
   @Input({ required: true }) title: string = 'Ingredients :';
   @Input({ required: true }) placeholder: string = 'Ingredients :';
-  details: string[] = [];
+  @Input() details: string[] = [];
   detailControl: FormControl = new FormControl('');
 
   @Output() enterPressed = new EventEmitter<string[]>();

@@ -16,7 +16,7 @@ import { APP_API } from '../core/constants/constants.config';
 export class RecipesService {
   #recipes: RecipeModel[] = [];
 
-  apiUrl = APP_API.base_url + '/recipes/';
+  apiUrl = APP_API.base_url + '/recipes';
 
   constructor() {}
   http = inject(HttpClient);
@@ -33,9 +33,8 @@ export class RecipesService {
   addRecipe(recipe: RecipeModel): Observable<RecipeModel> {
     return this.http.post<RecipeModel>(this.apiUrl, recipe);
   }
-
-  updateRecipe(recipe: RecipeModel): Observable<RecipeModel> {
-    return this.http.patch<RecipeModel>(`${this.apiUrl}/${recipe.id}`, recipe);
+  updateRecipe(id: string,recipe: RecipeModel): Observable<RecipeModel> {
+    return this.http.patch<RecipeModel>(`${this.apiUrl}/${id}`, recipe);
   }
 
   /**

@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PlanningComponent } from './features/planning/planning.component';
 import { ProfileModule } from './features/profile/profile.module';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 
 @NgModule({
   declarations: [AppComponent, PlanningComponent],
@@ -35,6 +36,9 @@ import { HttpClientModule } from '@angular/common/http';
     HomeModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    RouterModule,
+    RouterOutlet,
+    RouterLink
   ],
   providers: [],
   bootstrap: [AppComponent],

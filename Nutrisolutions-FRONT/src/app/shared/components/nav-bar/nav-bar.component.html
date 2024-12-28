@@ -17,6 +17,7 @@
             *ngFor="let item of menuItems; let i = index"
             [class.selected]="selectedItem === i"
             (click)="selectItem(i)"
+            [routerLink]="item.route"
           >
             <span class="icon"><i [class]="item.iconClass"></i></span>
           </li>
@@ -27,6 +28,7 @@
             *ngFor="let item of menuItems; let i = index"
             [class.selected]="selectedItem === i"
             (click)="selectItem(i)"
+            [routerLink]="item.route"
           >
             <span class="title">{{ item.title }}</span>
           </li>

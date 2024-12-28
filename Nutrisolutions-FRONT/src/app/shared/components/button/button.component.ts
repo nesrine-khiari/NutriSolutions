@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppUtils } from 'src/app/core/utils/functions.utils';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-button',
@@ -7,6 +9,7 @@ import { AppUtils } from 'src/app/core/utils/functions.utils';
   styleUrls: ['./button.component.css'],
 })
 export class ButtonComponent implements OnInit {
+  router = inject(Router);
   @Input() text: string = '';
   @Input() type: string = 'button';
   @Input() width: string = '100%';
@@ -18,7 +21,6 @@ export class ButtonComponent implements OnInit {
   @Input() disabled: boolean = false;
   @Input() hasBorder: boolean = false;
   @Input() onClick: () => void = () => {};
-
   isHovered: boolean = false;
 
   ngOnInit(): void {
@@ -45,4 +47,5 @@ export class ButtonComponent implements OnInit {
         : 'none',
     };
   }
+
 }

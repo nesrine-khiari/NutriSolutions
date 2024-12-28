@@ -5,10 +5,11 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SignupComponent } from './signup/signup.component';
 import { FormsModule, NgModel } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [LoginComponent, ResetPasswordComponent, SignupComponent],
-  imports: [CommonModule, SharedModule, FormsModule],
+  imports: [CommonModule,SharedModule, FormsModule,RouterModule],
   exports: [LoginComponent, ResetPasswordComponent, SignupComponent],
 })
 export class AuthModule {}

@@ -8,6 +8,25 @@ import { AddRecipeComponent } from './add-recipe/add-recipe.component';
 import { RecetteItemComponent } from './recette-item/recette-item.component';
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 import { RecipeDetailsItemComponent } from './recipe-details-item/recipe-details-item.component';
+import { RouterModule, Routes } from '@angular/router';
+const routes: Routes = [
+  {
+    path: '',
+    component: RecipesListComponent,
+  },
+  {
+    path: 'add-recipe',
+    component: AddRecipeComponent,
+  },
+  {
+    path: 'edit-recipe',
+    component: AddRecipeComponent,
+  },
+  {
+    path: 'recipe-details/:id',
+    component: RecipeDetailsComponent, // Recipe details route with parameter
+  },
+];
 
 @NgModule({
   declarations: [
@@ -16,13 +35,18 @@ import { RecipeDetailsItemComponent } from './recipe-details-item/recipe-details
     RecipeDetailsComponent,
     RecipeDetailsItemComponent,
   ],
-  imports: [CommonModule, SharedModule, CoreModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    CoreModule,
+    RouterModule.forChild(routes),
+  ],
   exports: [
     RecipesListComponent,
     LandingModule,
     AddRecipeComponent,
     RecetteItemComponent,
-    RecipeDetailsComponent
+    RecipeDetailsComponent,
   ],
 })
 export class RecipesModule {}

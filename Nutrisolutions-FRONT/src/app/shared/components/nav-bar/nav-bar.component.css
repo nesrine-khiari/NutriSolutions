@@ -82,6 +82,7 @@
 
 .menu-item .icon,
 .menu-item .title {
+  z-index: 1000;
   transition: color 0.3s ease;
 }
 

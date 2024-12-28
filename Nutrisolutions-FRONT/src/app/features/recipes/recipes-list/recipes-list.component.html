@@ -6,21 +6,35 @@
     <h2 class="title">Nos Recettes:</h2>
     <div class="filters">
       <app-search [formControlName]="searchControl"></app-search>
-      <app-dropdown [name]="'Objectif'" [options]="objectifOptions" [formControlName]="objectifControl"></app-dropdown>
-      <app-dropdown [name]="'Catégorie'" [options]="categoryOptions" [formControlName]="categoryControl"></app-dropdown>
+      <app-dropdown
+        [name]="'Objectif'"
+        [options]="objectifOptions"
+        [formControlName]="objectifControl"
+      ></app-dropdown>
+      <app-dropdown
+        [name]="'Catégorie'"
+        [options]="categoryOptions"
+        [formControlName]="categoryControl"
+      ></app-dropdown>
       <div style="margin-left: auto">
-        <app-button [text]="'Ajouter Recette'"></app-button>
+        <app-button
+          [text]="'Ajouter Recette'"
+          [routerLink]="'add-recipe'"
+        ></app-button>
       </div>
     </div>
     <div class="grid-container">
-      <app-recipe-item *ngFor="
+      <app-recipe-item
+        [recipe]="recipe"
+        *ngFor="
           let recipe of recipes
             | recipeFilter
               : searchControl.value
               : categoryControl.value
               : objectifControl.value
-        " [name]="recipe.name" [description]="recipe.description" [calories]="recipe.calories"
-        [imageUrl]="recipe.imageUrl" [category]="recipe.category" [objectif]="recipe.objectif"></app-recipe-item>
+        "
+      
+      ></app-recipe-item>
     </div>
     <div class="pagination">
       <app-pagination (pageChanged)="updatePage($event)"></app-pagination>

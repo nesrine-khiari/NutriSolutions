@@ -19,6 +19,7 @@ import { UploadImageComponent } from './upload-image/upload-image.component';
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { RecipeDescriptionComponent } from './components/recipe-description/recipe-description.component';
 import { SearchHeaderComponent } from './components/search-header/search-header.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -40,7 +41,7 @@ import { SearchHeaderComponent } from './components/search-header/search-header.
     RecipeDescriptionComponent,
     SearchHeaderComponent,
   ],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule,RouterModule],
   exports: [
     AuthBackgroundComponent,
     AuthInputFieldComponent,

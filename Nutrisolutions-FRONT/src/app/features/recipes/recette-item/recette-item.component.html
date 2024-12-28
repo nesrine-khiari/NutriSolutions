@@ -1,17 +1,14 @@
 <app-svg-box [height]="'100%'" [width]="'100%'">
-    <div class="recette-item">
-        <div class="recette-img">
-            <img [src]="'http://localhost:3000'+imageUrl" alt="" />
-        </div>
-        <div class="recette-content">
-            <h2>{{ name }}</h2>
-            <p>
-                {{ description }}
-            </p>
-            <!-- <p>{{category}}</p>
-            <p>{{objectif}}</p> -->
-            <h4>{{ calories }} Calories</h4>
-        </div>
-
+  <div class="recette-item" [routerLink]="['recipe-details', recipe.id]">
+    <div class="recette-img">
+      <img [src]="base_url + recipe.imageUrl" alt="" />
     </div>
+    <div class="recette-content">
+      <h2>{{ recipe.name }}</h2>
+      <p>
+        {{ recipe.description }}
+      </p>
+      <h4>{{ recipe.calories }} Calories</h4>
+    </div>
+  </div>
 </app-svg-box>
