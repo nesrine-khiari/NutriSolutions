@@ -16,10 +16,12 @@ import {
 export class CreateRecipeDto {
   @IsString()
   name: string;
+  @IsString()
+  description: string;
 
   @IsArray()
   ingredients: string[];
-  
+
   @IsOptional()
   @IsString()
   imageUrl: string;

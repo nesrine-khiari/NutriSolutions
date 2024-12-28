@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import {
   CategoryEnum,
   ObjectifEnum,
@@ -17,7 +18,6 @@ import { RecipesService } from 'src/app/services/recipe.service';
 })
 export class RecipesListComponent {
   recipes: RecipeModel[] = [];
-  recipesService = inject(RecipesService);
   currentPage: number = 0;
 
   updatePage(index: number) {
@@ -28,12 +28,25 @@ export class RecipesListComponent {
   searchControl: FormControl = new FormControl('');
   categoryControl!: FormControl;
   objectifControl!: FormControl;
+
+  toastr = inject(ToastrService);
+  recipesService = inject(RecipesService);
+
   ngOnInit() {
     this.categoryControl = new FormControl(CategoryEnum.ALL);
     this.objectifControl = new FormControl(ObjectifEnum.ALL);
   }
   constructor() {
-    this.recipes = this.recipesService.getAllRecipes();
+    this.recipesService.getAllRecipes().subscribe({
+      next: (recipes) => {
+        this.recipes = recipes;
+      },
+      error: (err) => {
+        this.toastr.error(`
+          Il y a une erreur dans le serveur merci de
+          contacter l'admin :(`);
+      },
+    });
   }
   objectifOptions = Object.values(ObjectifEnum);
   selectedObjectif: string = '';

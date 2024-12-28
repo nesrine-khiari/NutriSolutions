@@ -5,6 +5,8 @@ import { RecipeModule } from './recipe/recipe.module';
 import { UserModule } from './user/user.module';
 import { PlanningModule } from './planning/planning.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { FileUploadController } from './common/upload/upload.controller';
+import { UploadModule } from './common/upload/upload.module';
 
 @Module({
   imports: [
@@ -22,8 +24,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       synchronize: true,
       logging: true,
     }),
+    UploadModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, FileUploadController],
   providers: [AppService],
 })
 export class AppModule {}

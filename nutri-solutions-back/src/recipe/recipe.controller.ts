@@ -51,36 +51,4 @@ export class RecipeController {
   async remove(@Param('id') id: string) {
     return this.recipesService.remove(id);
   }
-
-  @Post('upload')
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-        destination: './uploads/recipes',
-        filename: (req, file, callback) => {
-          const uniqueName = `recipe${uuidv4()}${path.extname(file.originalname)}`;
-          callback(null, uniqueName);
-        },
-      }),
-      fileFilter: (req, file, callback) => {
-        const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
-        if (
-          !allowedExtensions.includes(
-            path.extname(file.originalname).toLowerCase(),
-          )
-        ) {
-          return callback(new Error('Only image files are allowed!'), false);
-        }
-        callback(null, true);
-      },
-    }),
-  )
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return {
-      message: 'File uploaded successfully!',
-      filename: file.filename,
-      path: `/uploads/recipes/${file.filename}`,
-    };
-  }
-
 }

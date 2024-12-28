@@ -1,25 +1,57 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { NutritionistModel } from '../models/nutritionist.model';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
 import {
   generateFakeNutritionist,
   generateFakeRecipe,
 } from '../core/helpers/faker.helper';
 import { RecipeModel } from '../models/recipe.model';
+import { Observable } from 'rxjs';
+import { APP_API } from '../core/constants/constants.config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipesService {
-  private recipes: RecipeModel[] = [];
+  #recipes: RecipeModel[] = [];
+
+  apiUrl = APP_API.base_url + '/recipes/';
 
   constructor() {}
+  http = inject(HttpClient);
+
+  getAllRecipes(): Observable<RecipeModel[]> {
+    return this.http.get<RecipeModel[]>(this.apiUrl);
+  }
+  getRecipeById(id: string): Observable<RecipeModel> {
+    return this.http.get<RecipeModel>(`${this.apiUrl}/${id}`);
+  }
+  deleteRecipe(id: string): Observable<{ count: number }> {
+    return this.http.delete<{ count: number }>(`${this.apiUrl}/${id}`);
+  }
+  addRecipe(recipe: RecipeModel): Observable<RecipeModel> {
+    return this.http.post<RecipeModel>(this.apiUrl, recipe);
+  }
+
+  updateRecipe(recipe: RecipeModel): Observable<RecipeModel> {
+    return this.http.patch<RecipeModel>(`${this.apiUrl}/${recipe.id}`, recipe);
+  }
+
+  /**
+   *
+   * Retourne un liste fictive de cvs
+   *
+   * @returns RecipeModel[]
+   *
+   */
 
   // Get all recipes
-  getAllRecipes(): RecipeModel[] {
-    return this.recipes.length
-      ? this.recipes
-      : this.generateFakeRecipesList(12);
-  }
+  // getAllRecipes(): RecipeModel[] {
+  //   return this.recipes.length
+  //     ? this.recipes
+  //     : this.generateFakeRecipesList(12);
+  // }
 
   getPopularRecipes(): RecipeModel[] {
     return this.generateFakeRecipesList(4);
@@ -29,29 +61,26 @@ export class RecipesService {
     return Array.from({ length: count }, () => generateFakeRecipe());
   }
 
-  // Add a new nutritionist
-  addRecipe(recipe: RecipeModel): void {
-    this.recipes.push(recipe);
-  }
+  // addRecipe(recipe: RecipeModel): void {
+  //   this.recipes.push(recipe);
+  // }
 
   // Find nutritionist by ID
-  getRecipeById(id: string): RecipeModel | undefined {
-    return this.recipes.find((recipe) => recipe.id === id);
-  }
+  // getRecipeById(id: string): RecipeModel | undefined {
+  //   return this.recipes.find((recipe) => recipe.id === id);
+  // }
 
-  // Update a nutritionist
-  updateRecipe(id: string, updatedData: Partial<NutritionistModel>): void {
-    const index = this.recipes.findIndex((recipe) => recipe.id === id);
-    if (index > -1) {
-      this.recipes[index] = {
-        ...this.recipes[index],
-        ...updatedData,
-      };
-    }
-  }
+  // updateRecipe(id: string, updatedData: Partial<NutritionistModel>): void {
+  //   const index = this.recipes.findIndex((recipe) => recipe.id === id);
+  //   if (index > -1) {
+  //     this.recipes[index] = {
+  //       ...this.recipes[index],
+  //       ...updatedData,
+  //     };
+  //   }
+  // }
 
-  // Delete a nutritionist
-  deleteRecipesist(id: string): void {
-    this.recipes = this.recipes.filter((recipe) => recipe.id !== id);
-  }
+  // deleteRecipesist(id: string): void {
+  //   this.recipes = this.recipes.filter((recipe) => recipe.id !== id);
+  // }
 }

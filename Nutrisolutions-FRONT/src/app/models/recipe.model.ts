@@ -1,6 +1,5 @@
-
 export interface RecipeModel {
-  id: string; // Unique identifier for the recipe
+  id?: string; // Unique identifier for the recipe
   name: string; // Name of the recipe
   description: string; // Brief description of the recipe
   ingredients: string[]; // List of ingredients
@@ -14,8 +13,8 @@ export interface RecipeModel {
   protein: number; // Protein content in grams
   fat: number; // Fat content in grams
   carbohydrates: number; // Carbohydrates content in grams
-  instructions: string[]; 
-  cookingNotes: string[]; 
+  instructions: string[];
+  cookingNotes: string[];
 }
 
 export enum ObjectifEnum {

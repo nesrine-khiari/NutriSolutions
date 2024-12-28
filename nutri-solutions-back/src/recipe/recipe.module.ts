@@ -9,11 +9,12 @@ import { join } from 'path';
 @Module({
   controllers: [RecipeController],
   providers: [RecipesService],
-  imports: [  TypeOrmModule.forFeature([RecipeEntity]),
-  ServeStaticModule.forRoot({
-    rootPath: join(process.cwd(), 'uploads', 'recipes'),
-    serveRoot: '/uploads/recipes',
-  }),
-],
+  imports: [
+    TypeOrmModule.forFeature([RecipeEntity]),
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), 'uploads', 'recipes'),
+      serveRoot: '/uploads/recipes',
+    }),
+  ],
 })
 export class RecipeModule {}

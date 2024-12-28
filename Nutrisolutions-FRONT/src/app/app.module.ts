@@ -12,6 +12,7 @@ import { HomeModule } from './features/home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PlanningComponent } from './features/planning/planning.component';
 import { ProfileModule } from './features/profile/profile.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, PlanningComponent],
@@ -33,6 +34,7 @@ import { ProfileModule } from './features/profile/profile.module';
     }),
     HomeModule,
     BrowserAnimationsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

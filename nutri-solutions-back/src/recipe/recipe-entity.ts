@@ -16,9 +16,11 @@ export class RecipeEntity extends TimeStampEntity {
   @Column()
   name: string;
 
+  @Column()
+  description: string;
+
   @Column('simple-array')
   ingredients: string[];
-
 
   @Column({ nullable: true })
   imageUrl: string;
