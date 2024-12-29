@@ -1,4 +1,4 @@
-import { GenderEnum } from 'src/enums/user-enums';
+import { GenderEnum, UserRoleEnum } from 'src/enums/user-enums';
 import {
   IsEnum,
   IsNotEmpty,
@@ -45,4 +45,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsNumber()
   height: number;
+
+  @IsEnum(UserRoleEnum)
+  role: UserRoleEnum;
 }
