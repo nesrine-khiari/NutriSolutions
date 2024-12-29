@@ -28,6 +28,47 @@ form .inputs {
   justify-content: center;
   gap: 10px;
 }
+input {
+  width: 100%;
+  padding: 0.7rem 0rem 0.7rem 0.5rem;
+  font-size: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  position: relative;
+}
+
+input:focus {
+  border: 2px solid var(--secondary-color);
+  box-shadow: 0 0 10px var(--light-green);
+  outline: none;
+}
+
+input.ng-valid.ng-dirty {
+  border-bottom: 5px solid var(--secondary-color);
+}
+
+input.valid.ng-dirty {
+  border-bottom: 5px solid var(--secondary-color) !important;
+}
+
+input.ng-invalid.ng-dirty {
+  border-bottom: 5px solid red;
+}
+input.ng-invalid.ng-dirty:focus {
+  border: 2px solid red;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+}
+input.invalid.ng-dirty {
+  border-bottom: 5px solid red !important;
+}
+input.invalid.ng-dirty:focus {
+  border: 2px solid red;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+}
+
+input::placeholder {
+  color: var(--hint-text);
+}
 
 @media screen and (max-width: 768px) {
   form {

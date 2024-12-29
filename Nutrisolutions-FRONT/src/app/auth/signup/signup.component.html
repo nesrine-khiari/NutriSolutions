@@ -40,8 +40,14 @@
       <div class="dropdowns">
         <app-auth-dropdown [options]="genderOptions" class="dropdown" [label]="'Gender'"
           [selectedOption]="selectedGender" (onInputChange)="selectGender($event)"></app-auth-dropdown>
-        <app-auth-dropdown [options]="ageOptions" class="dropdown" [label]="'Age'" [selectedOption]="selectedAge"
-          (onInputChange)="selectAge($event)"></app-auth-dropdown>
+        <!-- <app-auth-dropdown [options]="ageOptions" class="dropdown" [label]="'Age'" [selectedOption]="selectedAge"
+          (onInputChange)="selectAge($event)"></app-auth-dropdown> -->
+        <div class="birthdate">
+          <label class="input-label">Date de naissance</label>
+
+          <input type="date" [(ngModel)]="selectedBirthDate.toISOString().split('T')[0]" ngModel />
+        </div>
+
       </div>
       <app-auth-input-field label="Phone Number" [inputValue]="phoneNumber" (onInputChange)="setPhoneNumber($event)"
         placeholder="+216" type="text" [required]="true"></app-auth-input-field>

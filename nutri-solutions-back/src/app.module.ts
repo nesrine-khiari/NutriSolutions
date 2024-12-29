@@ -7,6 +7,7 @@ import { PlanningModule } from './planning/planning.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FileUploadController } from './common/upload/upload.controller';
 import { UploadModule } from './common/upload/upload.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { UploadModule } from './common/upload/upload.module';
       logging: true,
     }),
     UploadModule,
+    AuthModule,
   ],
   controllers: [AppController, FileUploadController],
   providers: [AppService],

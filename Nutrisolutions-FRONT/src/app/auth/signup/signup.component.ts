@@ -23,7 +23,7 @@ export class SignupComponent {
   valid: boolean = true;
 
   constructor() {
-    this.populateAgeOptions();
+    // this.populateAgeOptions();
     this.populatePoidsActuelOptions();
     this.populateTailleOptions();
   }
@@ -142,20 +142,21 @@ export class SignupComponent {
     this.selectedGender = gender;
     console.log('new gender selected' + this.selectedGender);
   }
-  ageOptions: number[] = [];
-  selectedAge: string = '';
-  selectAge(age: string) {
-    this.selectedAge = age;
-  }
+  // ageOptions: number[] = [];
+  // selectedAge: string = '';
+  selectedBirthDate: Date = new Date();
+  // selectAge(age: string) {
+  //   this.selectedAge = age;
+  // }
 
-  populateAgeOptions(): void {
-    const minAge = 18; // Minimum age
-    const maxAge = 80; // Maximum age
+  // populateAgeOptions(): void {
+  //   const minAge = 18; // Minimum age
+  //   const maxAge = 80; // Maximum age
 
-    for (let age = minAge; age <= maxAge; age++) {
-      this.ageOptions.push(age);
-    }
-  }
+  //   for (let age = minAge; age <= maxAge; age++) {
+  //     this.ageOptions.push(age);
+  //   }
+  // }
 
   phoneNumber: string = '';
 

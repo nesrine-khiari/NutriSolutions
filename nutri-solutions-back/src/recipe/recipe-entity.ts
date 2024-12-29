@@ -6,7 +6,8 @@ import {
   ObjectifEnum,
   PreparationTimeEnum,
 } from 'src/enums/recipe-enums';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { ClientEntity } from 'src/user/client/client.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
 
 @Entity()
 export class RecipeEntity extends TimeStampEntity {
@@ -66,4 +67,7 @@ export class RecipeEntity extends TimeStampEntity {
 
   @Column('simple-array')
   cookingNotes: string[];
+
+  @ManyToMany(() => ClientEntity, (client) => client.favoriteRecipes)
+  favoritedByClient: ClientEntity[];
 }

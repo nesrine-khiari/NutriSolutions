@@ -27,16 +27,16 @@ export class ProfilePageComponent implements OnInit {
       { icon: 'fa-solid fa-user', param: this.client?.gender ?? 'N/A' },
       {
         icon: 'fa-solid fa-cake-candles',
-        param: this.client?.age ? this.client?.age.toString() + ' ans' : 'N/A',
+        param: this.client?.getAge()
+          ? this.client?.getAge().toString() + ' ans'
+          : 'N/A',
       },
-      {
-        icon: 'fa-solid fa-location-dot',
-        param: this.client?.address ?? 'N/A',
-      },
+      // {
+      //   icon: 'fa-solid fa-location-dot',
+      //   param: this.client?.address ?? 'N/A',
+      // },
       { icon: 'fa-solid fa-envelope', param: this.client?.email ?? 'N/A' },
       { icon: 'fa-solid fa-phone', param: this.client?.phone ?? 'N/A' },
     ];
   }
-
-
 }

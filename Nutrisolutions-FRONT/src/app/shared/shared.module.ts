@@ -15,7 +15,7 @@ import { StarComponent } from './components/star/star.component';
 import { SearchComponent } from './components/search/search.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
-import { UploadImageComponent } from './upload-image/upload-image.component';
+import { UploadImageComponent } from './components/upload-image/upload-image.component';
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { RecipeDescriptionComponent } from './components/recipe-description/recipe-description.component';
 import { SearchHeaderComponent } from './components/search-header/search-header.component';
@@ -41,7 +41,7 @@ import { RouterModule } from '@angular/router';
     RecipeDescriptionComponent,
     SearchHeaderComponent,
   ],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule,RouterModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   exports: [
     AuthBackgroundComponent,
     AuthInputFieldComponent,

@@ -5,6 +5,19 @@
   color: var(--primary-color);
   margin-bottom: 1rem;
 }
+
+.birthdate {
+  display: flex;
+  flex-direction: column;
+}
+input[type="date"] {
+  width: 100%;
+  padding: 0.6rem 0rem 0.6rem 0.5rem;
+  font-size: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  position: relative;
+}
 /* .account-type-container {
   width: 100%;
   display: flex;

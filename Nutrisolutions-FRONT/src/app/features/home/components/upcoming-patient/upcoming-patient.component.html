@@ -6,7 +6,7 @@
     </div>
     <div class="profile">
         <h2>{{patient.name}}</h2>
-        <p>{{patient.gender}} -{{patient.age}}years</p>
+        <p>{{patient.gender}} -{{patient.getAge()}}years</p>
 
     </div>
     <div class="meet-time" [ngStyle]="{'backgroundColor':styleObject.backgroundColor,'color':styleObject.borderColor}">

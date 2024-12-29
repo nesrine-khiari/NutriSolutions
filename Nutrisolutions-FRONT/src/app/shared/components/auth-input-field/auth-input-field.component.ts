@@ -4,7 +4,10 @@ import { NgModel } from '@angular/forms';
 @Component({
   selector: 'app-auth-input-field',
   templateUrl: './auth-input-field.component.html',
-  styleUrls: ['./auth-input-field.component.css'],
+  styleUrls: [
+    './auth-input-field.component.css',
+    '../../../../assets/css/auth-common.css',
+  ],
 })
 export class AuthInputFieldComponent {
   @Input() label: string = '';
