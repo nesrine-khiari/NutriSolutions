@@ -8,7 +8,7 @@ export enum UserRoleEnum {
   ADMIN = 'admin',
 }
 export enum NutritionistStatusEnum {
-  APPROVED = 'approuvé',
-  WAITING = 'en_attente',
-  REJECTED = 'rejeté',
+  APPROVED = 'Approuvé',
+  REJECTED = 'Rejeté',
+  WAITING = 'En attente',
 }

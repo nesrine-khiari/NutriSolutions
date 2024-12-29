@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { generateFakeClient } from 'src/app/core/helpers/faker.helper';
+// import { generateFakeClient } from 'src/app/core/helpers/faker.helper';
 import { AppUtils } from 'src/app/core/utils/functions.utils';
 import { ClientModel } from 'src/app/models/client.model';
 
@@ -10,7 +10,7 @@ import { ClientModel } from 'src/app/models/client.model';
 })
 export class UpcomingPatientComponent {
   @Input() isFirst: boolean = false;
-  @Input() patient: ClientModel = generateFakeClient();
+  @Input({ required: true }) patient!: ClientModel;
   @Input() index: number = 0;
 
   styleObject: { backgroundColor: string; borderColor: string } = {

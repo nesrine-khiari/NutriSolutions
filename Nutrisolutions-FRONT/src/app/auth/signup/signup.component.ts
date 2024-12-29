@@ -27,7 +27,9 @@ export class SignupComponent {
     this.populatePoidsActuelOptions();
     this.populateTailleOptions();
   }
-
+  ngOnInit(): void {
+    this.updateSlots(this.selectedDate.toDateString());
+  }
   goNext(): void {
     this.currentStep++;
     console.log(this.currentStep);
@@ -144,7 +146,17 @@ export class SignupComponent {
   }
   // ageOptions: number[] = [];
   // selectedAge: string = '';
-  selectedBirthDate: Date = new Date();
+  selectedDate: Date = new Date();
+  selectedBirthDate: string = new Date().toISOString().split('T')[0];
+  onBirthDateChange(event: any) {
+    console.log('====================================');
+    console.log("here's the event: " + event.value);
+    console.log('====================================');
+    this.selectedBirthDate = event.value;
+  }
+  updateSlots(selectedDate: string) {
+    this.selectedDate = new Date(selectedDate);
+  }
   // selectAge(age: string) {
   //   this.selectedAge = age;
   // }

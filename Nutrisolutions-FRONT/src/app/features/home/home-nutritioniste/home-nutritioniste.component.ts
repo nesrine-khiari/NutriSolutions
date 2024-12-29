@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { generateFakeClient } from 'src/app/core/helpers/faker.helper';
+import { Component, inject } from '@angular/core';
+// import { generateFakeClient } from 'src/app/core/helpers/faker.helper';
 import { ClientModel } from 'src/app/models/client.model';
 import { ObjectifEnum } from 'src/app/models/recipe.model';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-home-nutritioniste',
@@ -12,8 +13,10 @@ export class HomeNutritionisteComponent {
   name = 'Kim';
   patientsList: ClientModel[] = [];
   objectif: ObjectifEnum = ObjectifEnum.MUSCLER;
-
+  clientService = inject(ClientService);
   ngOnInit() {
-    this.patientsList = Array.from({ length: 8 }, () => generateFakeClient());
+    this.clientService.getAllclients().subscribe((clients: ClientModel[]) => {
+      this.patientsList = clients;
+    });
   }
 }

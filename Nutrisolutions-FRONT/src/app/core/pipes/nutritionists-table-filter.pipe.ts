@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TrieEnum, StatusEnum } from 'src/app/models/nutritionist.model';
+import { TrieEnum, StatusEnum, StatusEnumFilter } from 'src/app/models/nutritionist.model';
 
 @Pipe({
   name: 'nutritionistsTableFilter'
 })
 export class NutritionistsTableFilterPipe implements PipeTransform {
 
-  transform(nutritionists: any[], searchQuery: string, statusFilter: StatusEnum, dateFilter: TrieEnum): any[] {
+  transform(nutritionists: any[], searchQuery: string, statusFilter: StatusEnumFilter, dateFilter: TrieEnum): any[] {
     if (!nutritionists) {
       return [];
     }
@@ -27,7 +27,7 @@ export class NutritionistsTableFilterPipe implements PipeTransform {
     }
 
     // Filter by status
-    if (statusFilter && statusFilter !== StatusEnum.ALL) {
+    if (statusFilter && statusFilter !== StatusEnumFilter.ALL) {
       filteredNutritionists = filteredNutritionists.filter(nutritionist =>
         nutritionist.status.toLowerCase() === statusFilter.toLowerCase()
       );

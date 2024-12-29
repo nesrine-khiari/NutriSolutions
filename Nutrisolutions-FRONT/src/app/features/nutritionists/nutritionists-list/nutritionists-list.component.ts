@@ -22,7 +22,9 @@ export class NutritionistsListComponent {
   pageIndex: number = 0;
 
   constructor() {
-    this.nutritionists = this.nutritionistsService.getAllNutritionists();
+    this.nutritionistsService.getAllNutritionists().subscribe((data: NutritionistModel[]) => {
+      this.nutritionists = data;
+    });
     this.experienceControl = new FormControl(ExperienceEnum.ALL);
   }
 }

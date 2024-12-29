@@ -18,6 +18,10 @@ export class HomePageComponent {
 
   constructor() {
     this.popularRecipes = this.recipesService.getPopularRecipes();
-    this.bestNutritionists = this.nutritionistsService.getBestNutritionists();
+    this.nutritionistsService
+      .getAllNutritionists()
+      .subscribe((nutritionists: NutritionistModel[]) => {
+        this.bestNutritionists = nutritionists.slice(0, 4);
+      });
   }
 }

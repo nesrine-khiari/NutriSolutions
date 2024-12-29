@@ -3,11 +3,14 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  SetMetadata,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { jwtConstants } from 'src/common/constants/auth.constants';
+import { Reflector } from '@nestjs/core';
+import { extractTokenFromHeader } from 'src/common/utils/guards.utils';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -43,11 +46,6 @@ export class AuthGuard implements CanActivate {
     return true;
   }
 }
-
-//created a decorator Public to specify that a route is public
-import { SetMetadata } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { extractTokenFromHeader } from 'src/common/utils/guards.utils';
 
 export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);

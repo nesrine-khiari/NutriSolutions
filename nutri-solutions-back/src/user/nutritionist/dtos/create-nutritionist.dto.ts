@@ -8,12 +8,9 @@ export class CreateNutritionistDto extends CreateUserDto {
   experienceYears: number;
 
   @IsString()
-  certificate: string;
+  certificateUrl: string;
   @IsString()
   location: string;
-
-  @IsNumber()
-  height: number;
 
   @IsEnum(NutritionistStatusEnum)
   status: NutritionistStatusEnum;

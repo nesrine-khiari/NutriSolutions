@@ -26,24 +26,24 @@ export class NutritionistsFilterPipe implements PipeTransform {
       case ExperienceEnum.JUNIOR:
         filteredNutritionists = filteredNutritionists.filter(
           (nutritionist) =>
-            nutritionist.experience >= 1 && nutritionist.experience <= 3
+            nutritionist.experienceYears >= 1 && nutritionist.experienceYears <= 3
         );
         break;
       case ExperienceEnum.MID_LEVEL:
         filteredNutritionists = filteredNutritionists.filter(
           (nutritionist) =>
-            nutritionist.experience >= 4 && nutritionist.experience <= 6
+            nutritionist.experienceYears >= 4 && nutritionist.experienceYears <= 6
         );
         break;
       case ExperienceEnum.SENIOR:
         filteredNutritionists = filteredNutritionists.filter(
           (nutritionist) =>
-            nutritionist.experience >= 7 && nutritionist.experience <= 10
+            nutritionist.experienceYears >= 7 && nutritionist.experienceYears <= 10
         );
         break;
       case ExperienceEnum.SENIOR_PLUS:
         filteredNutritionists = filteredNutritionists.filter(
-          (nutritionist) => nutritionist.experience > 10
+          (nutritionist) => nutritionist.experienceYears > 10
         );
         break;
 

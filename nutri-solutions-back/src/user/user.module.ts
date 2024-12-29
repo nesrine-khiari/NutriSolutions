@@ -6,17 +6,22 @@ import { UserEntity } from './user.entity';
 import { ClientEntity } from './client/client.entity';
 import { NutritionistEntity } from './nutritionist/nutritionist.entity';
 import { AdminEntity } from './admin/admin.entity';
+import { ClientService } from './client/client.service';
+import { NutritionistService } from './nutritionist/nutritionist.service';
+import { RecipeEntity } from 'src/recipe/recipe-entity';
 
 @Module({
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, ClientService, NutritionistService],
   imports: [
     TypeOrmModule.forFeature([
       UserEntity,
       ClientEntity,
       NutritionistEntity,
+      RecipeEntity,
       AdminEntity,
     ]),
   ],
+  exports: [UserService, ClientService, NutritionistService],
 })
 export class UserModule {}

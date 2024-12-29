@@ -3,7 +3,6 @@ import { NutritionistModel } from '../models/nutritionist.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import {
-  generateFakeNutritionist,
   generateFakeRecipe,
 } from '../core/helpers/faker.helper';
 import { RecipeModel } from '../models/recipe.model';

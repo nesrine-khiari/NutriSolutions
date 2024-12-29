@@ -45,7 +45,9 @@
         ></td>
         <td
           [innerHTML]="highlightText(nutritionist.email, searchControl.value)"
-        ><span class="highlight">{{searchControl.value}}</span></td>
+        >
+          <span class="highlight">{{ searchControl.value }}</span>
+        </td>
 
         <td>
           <a [href]="nutritionist.certificate" download>
@@ -91,13 +93,13 @@
                 src="assets/images/accept.png"
                 alt="Accept"
                 class="icon"
-                (click)="updateStatus(nutritionist, 'Approuvé')"
+                (click)="updateStatus(nutritionist, statusEnum.Approved)"
               />
               <img
                 src="assets/images/cancel.png"
                 alt="Cancel"
                 class="icon"
-                (click)="updateStatus(nutritionist, 'Rejeté')"
+                (click)="updateStatus(nutritionist, statusEnum.Rejected)"
               />
             </div>
 

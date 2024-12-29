@@ -1,23 +1,32 @@
 import { ObjectifEnum, RecipeModel } from './recipe.model';
+import { UserModel } from './user.model';
 
-export class ClientModel {
+export class ClientModel extends UserModel {
   constructor(
-    private id: string,
-    public name: string,
-    public email: string,
-    public phone: string,
-    public profilePictureUrl: string, // Optional
-    public gender: 'Male' | 'Female',
-    public date: Date,
+    id: string,
+    name: string,
+    email: string,
+    password: string,
+    phoneNumber: string,
+    profilePictureUrl: string,
+    gender: GenderEnum,
+    birthDate: Date,
+    role: UserRoleEnum,
     public height: number,
     public weight: number,
     public favoriteRecipes: RecipeModel[],
-    public objectif: ObjectifEnum,
-    public appointments: string[]
-  ) {}
+    public objectif: ObjectifEnum
+  ) {
+    super(id, name, email, password, phoneNumber, profilePictureUrl, gender, birthDate, role);
+  }
+
+  /**
+   * Calculates the age of the client based on their birth date.
+   * @returns The calculated age as a number.
+   */
   getAge(): number {
     const today = new Date();
-    const birthDate = new Date(this.date);
+    const birthDate = new Date(this.birthDate);
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
 
@@ -32,7 +41,13 @@ export class ClientModel {
   }
 }
 
-export enum UserType {
+
+
+export enum GenderEnum {
+  MALE = 'homme',
+  FEMALE = 'femme',
+}
+export enum UserRoleEnum {
   CLIENT = 'client',
   NUTRITIONIST = 'nutritionist',
   ADMIN = 'admin',

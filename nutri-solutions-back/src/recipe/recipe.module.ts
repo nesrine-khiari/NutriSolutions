@@ -16,5 +16,6 @@ import { join } from 'path';
       serveRoot: '/uploads/recipes',
     }),
   ],
+  exports: [],
 })
 export class RecipeModule {}

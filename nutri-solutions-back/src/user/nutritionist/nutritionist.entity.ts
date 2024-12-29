@@ -15,7 +15,7 @@ export class NutritionistEntity extends UserEntity {
   @Column()
   experienceYears: number;
   @Column()
-  certificate: string;
+  certificateUrl: string;
   @Column()
   location: string;
 

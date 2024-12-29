@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { generateFakeNutritionist } from 'src/app/core/helpers/faker.helper';
+// import { generateFakeNutritionist } from 'src/app/core/helpers/faker.helper';
 import { AppUtils } from 'src/app/core/utils/functions.utils';
 
 @Component({

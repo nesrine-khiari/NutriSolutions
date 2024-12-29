@@ -8,60 +8,61 @@ import {
   RecipeModel,
 } from 'src/app/models/recipe.model';
 
-export function generateFakeNutritionist(): NutritionistModel {
-  return {
-    id: faker.string.uuid(),
-    name: 'Dr. ' + faker.name.firstName(),
-    email: faker.internet.email(),
-    phone: faker.phone.number(),
-    profilePictureUrl: faker.image.avatar(),
-    patientsNumber: faker.number.int({ min: 10, max: 500 }),
-    experience: faker.number.int({ min: 1, max: 20 }),
-    certifications: Array.from(
-      { length: faker.number.int({ min: 1, max: 5 }) },
-      () => faker.company.buzzNoun()
-    ),
-    bio: faker.lorem.sentences(2),
-    location: faker.address.city(),
-    consultationFee: faker.number.int({ min: 50, max: 300 }),
-    ratings: faker.number.int({ min: 0, max: 5 }),
+// export function generateFakeNutritionist(): NutritionistModel {
+//   return {
+//     id: faker.string.uuid(),
+//     name: 'Dr. ' + faker.name.firstName(),
+//     email: faker.internet.email(),
+//     phone: faker.phone.number(),
+//     profilePictureUrl: faker.image.avatar(),
+//     patientsNumber: faker.number.int({ min: 10, max: 500 }),
+//     experience: faker.number.int({ min: 1, max: 20 }),
+//     certifications: Array.from(
+//       { length: faker.number.int({ min: 1, max: 5 }) },
+//       () => faker.company.buzzNoun()
+//     ),
+//     bio: faker.lorem.sentences(2),
+//     location: faker.address.city(),
+//     consultationFee: faker.number.int({ min: 50, max: 300 }),
+//     ratings: faker.number.int({ min: 0, max: 5 }),
 
-    // New fields
-    address: faker.address.streetAddress(),
-    certificate: 'certif_' + faker.string.alpha(5) + '.pdf',
-    status: faker.helpers.arrayElement(['Approuvé', 'En attente', 'Rejeté']),
-    addedAt: faker.date.recent(), // Generates a recent date
-  };
-}
-export function generateFakeClient(): ClientModel {
-  return new ClientModel(
-    faker.string.uuid(),
-    faker.name.fullName(),
-    faker.internet.email(),
-    faker.phone.number(),
-    faker.image.avatar(),
+//     // New fields
+//     address: faker.address.streetAddress(),
+//     certificate: 'certif_' + faker.string.alpha(5) + '.pdf',
+//     status: faker.helpers.arrayElement(['Approuvé', 'En attente', 'Rejeté']),
+//     addedAt: faker.date.recent(), // Generates a recent date
+//   };
+// }
 
-    faker.helpers.arrayElement(['Male', 'Female']),
+// export function generateFakeClient(): ClientModel {
+//   return new ClientModel(
+//     faker.string.uuid(),
+//     faker.name.fullName(),
+//     faker.internet.email(),
+//     faker.phone.number(),
+//     faker.image.avatar(),
 
-    faker.date.between({ from: '1950-01-01', to: '2003-01-01' }),
+//     faker.helpers.arrayElement(['Male', 'Female']),
 
-    faker.number.int({ min: 150, max: 200 }),
-    faker.number.int({ min: 50, max: 100 }),
+//     faker.date.between({ from: '1950-01-01', to: '2003-01-01' }),
 
-    Array.from(
-      { length: faker.number.int({ min: 1, max: 3 }) },
-      generateFakeRecipe
-    ),
-    faker.helpers.arrayElement(
-      Object.values(ObjectifEnum).filter(
-        (objectif) => objectif != ObjectifEnum.ALL
-      )
-    ),
-    Array.from({ length: faker.number.int({ min: 1, max: 5 }) }, () =>
-      faker.date.future().toISOString()
-    )
-  );
-}
+//     faker.number.int({ min: 150, max: 200 }),
+//     faker.number.int({ min: 50, max: 100 }),
+
+//     Array.from(
+//       { length: faker.number.int({ min: 1, max: 3 }) },
+//       generateFakeRecipe
+//     ),
+//     faker.helpers.arrayElement(
+//       Object.values(ObjectifEnum).filter(
+//         (objectif) => objectif != ObjectifEnum.ALL
+//       )
+//     ),
+//     Array.from({ length: faker.number.int({ min: 1, max: 5 }) }, () =>
+//       faker.date.future().toISOString()
+//     )
+//   );
+// }
 
 export function generateFakeRecipe(): RecipeModel {
   return {

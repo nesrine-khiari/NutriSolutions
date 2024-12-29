@@ -1,26 +1,39 @@
-export interface NutritionistModel {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  profilePictureUrl: string; // Optional
-  patientsNumber: number;
-  experience: number;
-  certifications: string[]; // Array of certifications
-  bio: string;
-  workingHours?: string; // e.g., "9:00 AM - 5:00 PM"
-  location?: string;
-  consultationFee: number;
-  ratings: number;
-  appointments?: string[];
+import { GenderEnum, UserRoleEnum } from './client.model';
+import { UserModel } from './user.model';
 
-  // New fields
-  address: string; // Full address
-  certificate: string; // File name of the certificate
-  status: string; // Status of the nutritionist, e.g., 'Approuvé'
-  addedAt: Date; // Date when the nutritionist was added
+export class NutritionistModel extends UserModel {
+  constructor(
+    id: string,
+    name: string,
+    email: string,
+    password: string,
+    phoneNumber: string,
+    profilePictureUrl: string,
+    gender: GenderEnum,
+    birthDate: Date,
+    role: UserRoleEnum,
+    public patientsNumber: number,
+    public experienceYears: number,
+    public certificateUrl: string,
+    public status: StatusEnum,
+    public location?: string
+  ) // ratings: number,
+  // appointments?: string[],
+
+  {
+    super(
+      id,
+      name,
+      email,
+      password,
+      phoneNumber,
+      profilePictureUrl,
+      gender,
+      birthDate,
+      role
+    );
+  }
 }
-
 
 export enum TrieEnum {
   ALL = 'Tous',
@@ -28,6 +41,11 @@ export enum TrieEnum {
   PlusAnciens = 'Plus Anciens',
 }
 export enum StatusEnum {
+  Approved = 'Approuvé',
+  Rejected = 'Rejeté',
+  Waiting = 'En attente',
+}
+export enum StatusEnumFilter {
   ALL = 'Tous',
   Approved = 'Approuvé',
   Rejected = 'Rejeté',
