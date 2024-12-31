@@ -2,7 +2,7 @@ import { GenderEnum, UserRoleEnum } from './client.model';
 
 export class UserModel {
   constructor(
-    public id: string,
+    
     public name: string,
     public email: string,
     private password: string,
@@ -10,6 +10,7 @@ export class UserModel {
     public profilePictureUrl: string,
     public gender: GenderEnum,
     public birthDate: Date,
-    public role: UserRoleEnum
+    public role: UserRoleEnum,
+    private id?: string
   ) {}
 }

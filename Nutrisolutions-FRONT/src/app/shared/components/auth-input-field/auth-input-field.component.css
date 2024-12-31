@@ -57,6 +57,7 @@ input::placeholder {
   color: var(--hint-text);
 }
 
+
 .toggle-icon:hover {
   color: #555;
 }

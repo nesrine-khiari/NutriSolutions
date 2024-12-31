@@ -19,7 +19,8 @@ import { v4 as uuidv4 } from 'uuid';
 import * as path from 'path';
 import { existsSync } from 'fs';
 import { Response } from 'express';
-
+import { Public } from 'src/auth/guards/auth.guard';
+@Public()
 @Controller('recipes')
 export class RecipeController {
   constructor(private readonly recipesService: RecipesService) {}

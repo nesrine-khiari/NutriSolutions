@@ -16,13 +16,17 @@ import { APP_API } from 'src/app/core/constants/constants.config';
 export class UploadImageComponent {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
   @Input() uploadedImage: string = '';
-
-  @Output() imageSelected = new EventEmitter<File>();
+  @Input() acceptedFileTypes: string = 'image/*'; // Default to images
+  @Output() fileSelected = new EventEmitter<File>();
   base_url = APP_API.base_url;
+
+  @Input() uploadedFileName: string = ''; // For non-image file names
+  isImage: boolean = true; // Determines if the file is an image
+  ngOnInit() {
+    this.isImage = this.uploadedImage ? true : false;
+  }
   triggerFileInput(): void {
-    console.log('clicked');
     if (this.fileInput?.nativeElement) {
-      console.log('found fileInput');
       this.fileInput.nativeElement.click();
     }
   }
@@ -31,16 +35,26 @@ export class UploadImageComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-      this.imageSelected.emit(file); // Emit the selected file to the parent component
+      this.fileSelected.emit(file); // Emit the selected file to the parent component
 
-      // Preview the image
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.uploadedImage = e.target?.result as string;
-      };
-      reader.readAsDataURL(file);
+      const fileType = file.type;
+      this.isImage = fileType.startsWith('image/');
+
+      if (this.isImage) {
+        // Preview the image
+        const reader = new FileReader();
+        reader.onload = (e: ProgressEvent<FileReader>) => {
+          this.uploadedImage = e.target?.result as string;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        // Handle non-image files (e.g., PDFs)
+        this.uploadedImage = ''; // Clear the image preview
+        this.uploadedFileName = file.name;
+      }
     }
   }
+
   getImageUrl(): string {
     return this.uploadedImage.includes('/uploads')
       ? `${this.base_url}${this.uploadedImage}`

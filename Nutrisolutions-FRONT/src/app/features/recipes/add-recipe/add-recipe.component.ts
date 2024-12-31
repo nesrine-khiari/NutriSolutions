@@ -146,11 +146,10 @@ export class AddRecipeComponent {
       !this.objectifControl.value ||
       !this.categoryControl.value ||
       !this.descriptionControl.value ||
-      !this.imageUrl ||
+      !this.imageFile ||
       !this.ingredients.length ||
       !this.instructions.length ||
       this.items.some((item) => !item.formControlName.value);
-
     return this.isFormInvalid;
   }
 
@@ -160,18 +159,17 @@ export class AddRecipeComponent {
     } else {
       if (this.imageFile) {
         // Upload the image first
-        this.uploadImageService
-          .uploadImage('recipe', this.imageFile)
-          .subscribe({
-            next: (response) => {
-              this.imageUrl = response.path;
-              this.processRecipe(); // Handle the recipe after uploading the image
-            },
-            error: (err) => {
-              console.error('Upload Failed:', err);
-              this.toastr.error('Image upload failed. Please try again.');
-            },
-          });
+        this.uploadImageService.uploadImage(this.imageFile).subscribe({
+          next: (response) => {
+            console.log('Upload Success:', response);
+            this.imageUrl = response.path;
+            this.processRecipe(); // Handle the recipe after uploading the image
+          },
+          error: (err) => {
+            console.error('Upload Failed:', err);
+            this.toastr.error('Image upload failed. Please try again.');
+          },
+        });
       } else {
         this.processRecipe();
       }

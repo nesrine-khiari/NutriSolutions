@@ -9,7 +9,7 @@ import { ClientService } from 'src/user/client/client.service';
 import { NutritionistService } from 'src/user/nutritionist/nutritionist.service';
 import { UserEntity } from 'src/user/user.entity';
 import { UserRoleEnum } from 'src/enums/user-enums';
-
+@Public()
 @Controller('auth')
 export class AuthController {
   constructor(

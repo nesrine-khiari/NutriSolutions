@@ -1,33 +1,46 @@
 <div
   class="uploaded-image-wrapper"
-  *ngIf="uploadedImage"
+  *ngIf="uploadedImage || uploadedFileName"
   (click)="triggerFileInput()"
 >
   <input
     type="file"
     #fileInput
-    accept="image/*"
+    [accept]="acceptedFileTypes"
     (change)="onFileSelected($event)"
     hidden
   />
-  <div class="uploaded-image">
+
+  <div *ngIf="isImage" class="uploaded-image">
     <img [src]="getImageUrl()" alt="Uploaded Image" />
     <div class="edit-icon">
-      <img src="assets/images/edit.png" alt="" />
+      <img src="assets/images/edit.png" alt="Edit" />
+    </div>
+  </div>
+
+  <div *ngIf="!isImage" class="uploaded-file">
+    <img src="assets/images/pdf-file.png" alt="File Icon" />
+    <p>{{ uploadedFileName }}</p>
+    <div class="edit-icon">
+      <img src="assets/images/edit.png" alt="Edit" />
     </div>
   </div>
 </div>
 
-<app-svg-box *ngIf="!uploadedImage" (click)="triggerFileInput()">
+<app-svg-box *ngIf="!uploadedImage && !uploadedFileName" (click)="triggerFileInput()">
   <input
     type="file"
     #fileInput
-    accept="image/*"
+    [accept]="acceptedFileTypes"
     (change)="onFileSelected($event)"
     hidden
   />
   <div class="upload-image">
-    <img src="assets/images/upload-image.png" alt="upload" />
-    <h3>Upload Picture</h3>
+    <img src="assets/images/upload-image.png" alt="Upload" />
+    <h3 *ngIf="isImage; else uploadFile">Upload Picture</h3>
+    <ng-template #uploadFile>
+      <h3>Upload File</h3>
+    </ng-template>
   </div>
 </app-svg-box>
+

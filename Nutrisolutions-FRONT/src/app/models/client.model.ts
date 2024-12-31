@@ -3,7 +3,6 @@ import { UserModel } from './user.model';
 
 export class ClientModel extends UserModel {
   constructor(
-    id: string,
     name: string,
     email: string,
     password: string,
@@ -14,10 +13,21 @@ export class ClientModel extends UserModel {
     role: UserRoleEnum,
     public height: number,
     public weight: number,
-    public favoriteRecipes: RecipeModel[],
-    public objectif: ObjectifEnum
+    public favoriteRecipes: RecipeModel[] = [],
+    public objectif: ObjectifEnum,
+    id?: string
   ) {
-    super(id, name, email, password, phoneNumber, profilePictureUrl, gender, birthDate, role);
+    super(
+      name,
+      email,
+      password,
+      phoneNumber,
+      profilePictureUrl,
+      gender,
+      birthDate,
+      role,
+      id
+    );
   }
 
   /**
@@ -40,8 +50,6 @@ export class ClientModel extends UserModel {
     return age;
   }
 }
-
-
 
 export enum GenderEnum {
   MALE = 'homme',

@@ -3,7 +3,6 @@ import { UserModel } from './user.model';
 
 export class NutritionistModel extends UserModel {
   constructor(
-    id: string,
     name: string,
     email: string,
     password: string,
@@ -12,17 +11,17 @@ export class NutritionistModel extends UserModel {
     gender: GenderEnum,
     birthDate: Date,
     role: UserRoleEnum,
-    public patientsNumber: number,
+    
     public experienceYears: number,
     public certificateUrl: string,
     public status: StatusEnum,
-    public location?: string
-  ) // ratings: number,
-  // appointments?: string[],
+    public location?: string,
+    id?: string ,
+    public patientsNumber: number=0,
+  ) // appointments?: string[],
 
   {
     super(
-      id,
       name,
       email,
       password,
@@ -30,7 +29,8 @@ export class NutritionistModel extends UserModel {
       profilePictureUrl,
       gender,
       birthDate,
-      role
+      role,
+      id
     );
   }
 }

@@ -1,24 +1,44 @@
 <div class="input-field-container">
   <div class="input-header">
     <label class="input-label">{{ label }}</label>
-    <small *ngIf="inputNote" class="input-note" [ngClass]="{
-      'valid-input-note': valid && input.valid,
-      'error-input-note': !valid || input.invalid
-    }">{{inputNote}}</small>
+    <small
+      *ngIf="inputNote"
+      class="input-note"
+      [ngClass]="{
+        'valid-input-note': valid && input.valid,
+        'error-input-note': !valid || input.invalid
+      }"
+      >{{ inputNote }}</small
+    >
   </div>
   <div class="input-wrapper">
-    <input #input="ngModel" ngModel [type]="(isPassword && !isPasswordVisible) ? 'password' : 'text'"
-      [placeholder]="placeholder" [required]="required" [(ngModel)]="inputValue" [minlength]="isPassword?8:null"
-      [email]="type=='email'" (ngModelChange)="updateValue(input.control.value, input.control.errors)" [ngClass]="{
+    <input
+      #input="ngModel"
+      ngModel
+      [type]="isPassword && !isPasswordVisible ? 'password' : 'text'"
+      [placeholder]="placeholder"
+      [required]="required"
+      [(ngModel)]="inputValue"
+      [minlength]="isPassword ? 8 : null"
+      [email]="type == 'email'"
+      (ngModelChange)="updateValue(input.control.value, input.control.errors)"
+      [ngClass]="{
         'valid': valid && input.valid,
         'invalid': !valid || !input.valid,
-      }" />
-    <span class="toggle-icon" [hidden]="!isPassword" (click)="togglePasswordVisibility()">
-      <i class="fa" [ngClass]="{
-          'fa-eye': isPassword && !isPasswordVisible,
-          'fa-eye-slash': isPassword && isPasswordVisible
-        }"></i>
+      }"
+    />
+    <span
+      class="toggle-icon"
+      *ngIf="isPassword"
+      (click)="togglePasswordVisibility()"
+    >
+      <i
+        class="fa"
+        [ngClass]="{
+          'fa-eye': !isPasswordVisible,
+          'fa-eye-slash': isPasswordVisible
+        }"
+      ></i>
     </span>
   </div>
-
 </div>

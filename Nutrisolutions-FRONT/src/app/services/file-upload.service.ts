@@ -11,15 +11,25 @@ export class FileUploadService {
   constructor() {}
   http = inject(HttpClient);
 
-  uploadImage(theme: string, image: File): Observable<ImageUploadResponse> {
+  uploadImage(image: File): Observable<FileUploadResponse> {
     var formData: FormData = new FormData();
     formData.append('file', image);
     console.log(formData.get('file'));
 
-    return this.http.post<ImageUploadResponse>(`${this.apiUrl}`, formData);
+    return this.http.post<FileUploadResponse>(
+      `${this.apiUrl}/image`,
+      formData
+    );
+  }
+  uploadFile(file: File): Observable<FileUploadResponse> {
+    var formData: FormData = new FormData();
+    formData.append('file', file);
+    console.log(formData.get('file'));
+
+    return this.http.post<FileUploadResponse>(`${this.apiUrl}/file`, formData);
   }
 }
-export interface ImageUploadResponse {
+export interface FileUploadResponse {
   message: string;
   filename: string;
   path: string;

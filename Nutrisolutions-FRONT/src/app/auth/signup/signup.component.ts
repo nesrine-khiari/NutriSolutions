@@ -1,4 +1,20 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import {
+  ClientModel,
+  GenderEnum,
+  UserRoleEnum,
+} from 'src/app/models/client.model';
+import {
+  NutritionistModel,
+  StatusEnum,
+} from 'src/app/models/nutritionist.model';
+import { ObjectifEnum, RecipeModel } from 'src/app/models/recipe.model';
+import { UserModel } from 'src/app/models/user.model';
+import { ClientService } from 'src/app/services/client.service';
+import { FileUploadService } from 'src/app/services/file-upload.service';
+import { NutritionistsService } from 'src/app/services/nutritionists.service';
 
 @Component({
   selector: 'app-signup',
@@ -26,10 +42,9 @@ export class SignupComponent {
     // this.populateAgeOptions();
     this.populatePoidsActuelOptions();
     this.populateTailleOptions();
+    this.populateExpYearsOptions();
   }
-  ngOnInit(): void {
-    this.updateSlots(this.selectedDate.toDateString());
-  }
+
   goNext(): void {
     this.currentStep++;
     console.log(this.currentStep);
@@ -40,14 +55,15 @@ export class SignupComponent {
   }
 
   // __________ STEP 1 : ACCOUNT TYPE ___________
-
+  clientRole: UserRoleEnum = UserRoleEnum.CLIENT;
+  nutritionnistRole: UserRoleEnum = UserRoleEnum.NUTRITIONIST;
   accountTypes = [
     {
-      type: 'Nutritionniste',
+      type: UserRoleEnum.NUTRITIONIST,
       description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
     },
     {
-      type: 'Client',
+      type: UserRoleEnum.CLIENT,
       description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
     },
   ];
@@ -139,24 +155,14 @@ export class SignupComponent {
   }
 
   genderOptions = ['Homme', 'Femme'];
-  selectedGender: string = '';
+  selectedGender: string = 'Homme';
   selectGender(gender: string) {
     this.selectedGender = gender;
     console.log('new gender selected' + this.selectedGender);
   }
   // ageOptions: number[] = [];
   // selectedAge: string = '';
-  selectedDate: Date = new Date();
-  selectedBirthDate: string = new Date().toISOString().split('T')[0];
-  onBirthDateChange(event: any) {
-    console.log('====================================');
-    console.log("here's the event: " + event.value);
-    console.log('====================================');
-    this.selectedBirthDate = event.value;
-  }
-  updateSlots(selectedDate: string) {
-    this.selectedDate = new Date(selectedDate);
-  }
+  selectedDateControl = new FormControl('');
   // selectAge(age: string) {
   //   this.selectedAge = age;
   // }
@@ -175,7 +181,25 @@ export class SignupComponent {
   setPhoneNumber(phoneNumber: string) {
     this.phoneNumber = phoneNumber;
   }
+  // __________ STEP 4 : Nutritionist Details___________
+  experienceYearsOptions: number[] = [];
+  selectedExperienceYears: string = '';
+  populateExpYearsOptions(): void {
+    const minExpYears = 1;
+    const maxExpYears = 50;
 
+    for (let expYears = minExpYears; expYears <= maxExpYears; expYears++) {
+      this.experienceYearsOptions.push(expYears);
+    }
+  }
+  selectExperienceYears($event: string) {
+    this.selectedExperienceYears = $event;
+  }
+  location: string = '';
+
+  setLocation(event: string) {
+    this.location = event;
+  }
   // __________ STEP 4 : POIDS / TAILLE / ACTIVITE / OBJECTIF ___________
 
   poidsActuelOptions: string[] = [];
@@ -226,31 +250,158 @@ export class SignupComponent {
   selectObjectif(objectif: string) {
     this.selectedObjectif = objectif;
   }
-  //__________ STEP 5 : PHOTO  ___________
-  @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
-  triggerFileInput() {
-    console.log('clicked');
 
-    console.log('fileInput: ' + this.fileInput);
-
-    if (this.fileInput && this.fileInput.nativeElement) {
-      console.log('found fileInput');
-
-      this.fileInput.nativeElement.click();
-    }
+  // __________ STEP 5 : Image Upload ___________
+  imageFile?: File;
+  uploadedImage: string = '';
+  selectImage(selectedImage: File) {
+    this.imageFile = selectedImage;
+    const reader = new FileReader();
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      this.uploadedImage = e.target?.result as string;
+    };
+    reader.readAsDataURL(selectedImage);
+    console.log('Selected image:', selectedImage.name);
+  }
+  uploadedFile: string = '';
+  pdfFile?: File;
+  selectFile(selectedFile: File) {
+    this.pdfFile = selectedFile;
+    this.uploadedFile = selectedFile.name;
+  }
+  convertToEnum<T extends Record<string, string>>(
+    enumObj: T,
+    value: string
+  ): T[keyof T] {
+    const enumValues = Object.values(enumObj);
+    const matchedValue = enumValues.find(
+      (enumValue) => enumValue.toLowerCase() === value.toLowerCase()
+    );
+    return matchedValue as T[keyof T];
   }
 
-  uploadedImage: string | null = null;
-  // Handle file selection
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.uploadedImage = e.target?.result as string;
-      };
-      reader.readAsDataURL(file);
+  createUserModel(): UserModel {
+    let user: UserModel;
+    if (this.selectedType === UserRoleEnum.CLIENT) {
+      user = new ClientModel(
+        this.name,
+        this.email,
+        this.password,
+        this.phoneNumber,
+        this.uploadedImage,
+        this.convertToEnum(GenderEnum, this.selectedGender),
+        new Date(this.selectedDateControl.value ?? ''),
+        UserRoleEnum.CLIENT,
+        parseInt(this.selectedTaille),
+        parseInt(this.selectedPoids),
+        [],
+        this.convertToEnum(ObjectifEnum, this.selectedObjectif),
+        this.selectedActiviteJournaliere
+      );
+    } else {
+      user = new NutritionistModel(
+        this.name,
+        this.email,
+        this.password,
+        this.phoneNumber,
+        this.uploadedImage,
+        this.convertToEnum(GenderEnum, this.selectedGender),
+        new Date(this.selectedDateControl.value ?? ''),
+        UserRoleEnum.NUTRITIONIST,
+        parseInt(this.selectedExperienceYears),
+        this.uploadedFile,
+        StatusEnum.Waiting,
+        this.location
+      );
     }
+
+    return user;
   }
+  isFormInvalid: boolean = true;
+  isButtonDisabled() {
+    this.isFormInvalid =
+      !this.name ||
+      !this.email ||
+      !this.password ||
+      !this.confirmPassword ||
+      !this.selectedDateControl.value ||
+      !this.phoneNumber ||
+      !this.selectedType ||
+      !this.selectedPoids ||
+      !this.selectedTaille ||
+      !this.selectedActiviteJournaliere ||
+      !this.selectedObjectif ||
+      !this.selectedGender;
+    return this.isFormInvalid;
+  }
+  toastr = inject(ToastrService);
+  uploadFileService = inject(FileUploadService);
+  saveUser = () => {
+  
+      if (this.imageFile) {
+        // Upload the image first
+        this.uploadFileService.uploadImage(this.imageFile).subscribe({
+          next: (response) => {
+            console.log('Upload Success:', response);
+            this.uploadedImage = response.path;
+            this.processSignup(); // Handle the recipe after uploading the image
+          },
+          error: (err) => {
+            console.error('Upload Failed:', err);
+            this.toastr.error('Image upload failed. Please try again.');
+          },
+        });
+      
+    }
+  };
+
+  private processSignup = () => {
+    if (this.pdfFile) {
+      this.uploadFileService.uploadFile(this.pdfFile).subscribe({
+        next: (response) => {
+          console.log('Upload Success:', response);
+          this.uploadedFile = response.path;
+          this.finalizeSignup();
+        },
+        error: (err) => {
+          console.error('Upload Failed:', err);
+          this.toastr.error('File upload failed. Please try again.');
+        },
+      });
+    } else {
+      this.finalizeSignup();
+    }
+  };
+  clientService = inject(ClientService);
+  nutritionistService = inject(NutritionistsService);
+  finalizeSignup = () => {
+    const user = this.createUserModel();
+    if (this.selectedType === UserRoleEnum.CLIENT) {
+      this.clientService.addClient(user as ClientModel).subscribe({
+        next: (response) => {
+          console.log('Client created:', response);
+          this.toastr.success('Client created successfully');
+        },
+        error: (err) => {
+          console.error('Client creation failed:', err);
+          this.toastr.error('Client creation failed. Please try again.');
+        },
+      });
+    } else {
+      this.nutritionistService
+        .addNutritionist(user as NutritionistModel)
+        .subscribe({
+          next: (response) => {
+            console.log('Nutritionist created:', response);
+            this.toastr.success('Nutritionist created successfully');
+          },
+          error: (err) => {
+            console.error('Nutritionist creation failed:', err);
+            this.toastr.error(
+              'Nutritionist creation failed. Please try again.'
+            );
+          },
+        });
+    }
+  };
 }

@@ -11,10 +11,10 @@ import { UserModule } from 'src/user/user.module';
 @Module({
   providers: [
     AuthService,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard,
+    // },
   ],
   controllers: [AuthController],
   imports: [

@@ -8,7 +8,8 @@
         <div class="upload">
           <app-upload-image
             [uploadedImage]="recipe?.imageUrl ?? ''"
-            (imageSelected)="selectImage($event)"
+            (fileSelected)="selectImage($event)"
+            [acceptedFileTypes]="'image/*'"
           ></app-upload-image>
         </div>
         <div class="recipe-details">

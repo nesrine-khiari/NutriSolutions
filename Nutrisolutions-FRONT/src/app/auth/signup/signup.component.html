@@ -88,8 +88,12 @@
             (ngModelChange)="onBirthDateChange($event)"
             ngModel
           /> -->
-          <input id="date-input" type="date" class="date-input" [(ngModel)]="selectedDate.toISOString().split('T')[0]" ngModel
-        (ngModelChange)="updateSlots($event)" />
+          <input
+            id="date-input"
+            type="date"
+            class="date-input"
+            [formControl]="selectedDateControl"
+          />
         </div>
       </div>
       <app-auth-input-field
@@ -104,7 +108,7 @@
 
     <!-- __________ STEP 4 : POIDS / TAILLE / ACTIVITE / OBJECTIF ___________ -->
 
-    <div *ngIf="currentStep == 3" class="inputs">
+    <div *ngIf="currentStep == 3 && selectedType == clientRole" class="inputs">
       <div class="dropdowns">
         <app-auth-dropdown
           [options]="poidsActuelOptions"
@@ -137,13 +141,44 @@
         (onInputChange)="selectObjectif($event)"
       ></app-auth-dropdown>
     </div>
+    <div
+      *ngIf="currentStep == 3 && selectedType == nutritionnistRole"
+      class="inputs"
+    >
+      <div class="dropdowns">
+        <app-auth-dropdown
+          [options]="experienceYearsOptions"
+          class="dropdown"
+          [label]="'Années d\'expérience'"
+          [selectedOption]="selectedExperienceYears"
+          (onInputChange)="selectExperienceYears($event)"
+        ></app-auth-dropdown>
+      </div>
+      <app-auth-input-field
+        label="Localisation"
+        [inputValue]="location"
+        (onInputChange)="setLocation($event)"
+        placeholder="Type your location here"
+        type="text"
+        name="location"
+        [required]="true"
+      ></app-auth-input-field>
+      <app-upload-image
+        [uploadedFileName]="uploadedFile"
+        [acceptedFileTypes]="'application/pdf'"
+        (fileSelected)="selectFile($event)"
+      ></app-upload-image>
+    </div>
 
     <!-- __________ STEP 5 : PHOTO  ___________ -->
 
     <div *ngIf="currentStep == 4" class="inputs">
-      <app-upload-image></app-upload-image>
+      <app-upload-image
+        [acceptedFileTypes]="'image/*'"
+        [uploadedImage]="uploadedImage"
+        (fileSelected)="selectImage($event)"
+      ></app-upload-image>
     </div>
-
     <div class="buttons">
       <app-button
         [text]="'Previous'"
@@ -164,6 +199,7 @@
         [text]="'Confirm'"
         *ngIf="currentStep == 4"
         [fontWeight]="'300'"
+        [onClick]="saveUser"
       ></app-button>
     </div>
   </form>

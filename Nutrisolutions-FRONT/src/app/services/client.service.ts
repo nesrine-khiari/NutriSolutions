@@ -12,7 +12,7 @@ export class ClientService {
 
   #clients: ClientModel[] = [];
 
-  apiUrl = APP_API.base_url + '/clients';
+  apiUrl = APP_API.base_url + '/users';
 
   constructor() {}
   http = inject(HttpClient);
@@ -26,10 +26,10 @@ export class ClientService {
   deleteclient(id: string): Observable<{ count: number }> {
     return this.http.delete<{ count: number }>(`${this.apiUrl}/${id}`);
   }
-  addNutritionnist(
-    nutritionnist: ClientModel
+  addClient(
+    client: ClientModel
   ): Observable<ClientModel> {
-    return this.http.post<ClientModel>(this.apiUrl, nutritionnist);
+    return this.http.post<ClientModel>(this.apiUrl, client);
   }
   updateclient(
     id: string,
