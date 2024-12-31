@@ -31,7 +31,13 @@ export class UserService {
     }
     return user;
   }
-  async create(createDto: DeepPartial<UserEntity>): Promise<UserEntity> {
+  async create(createDto: CreateUserDto): Promise<UserEntity> {
+    if (createDto.password) {
+      // Hash the password before saving
+      const salt = await bcrypt.genSalt();
+      createDto.password = await bcrypt.hash(createDto.password, salt);
+    }
+
     const newEntity = this.userRepository.create(createDto);
     return this.userRepository.save(newEntity);
   }

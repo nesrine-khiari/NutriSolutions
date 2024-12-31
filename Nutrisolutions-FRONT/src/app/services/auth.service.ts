@@ -1,11 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { ClientModel } from '../models/client.model';
+import { ClientModel, UserRoleEnum } from '../models/client.model';
 import { NutritionistModel } from '../models/nutritionist.model';
 import { ToastrService } from 'ngx-toastr';
 import { UserModel } from '../models/user.model';
 import { APP_API } from '../core/constants/constants.config';
 import { Observable } from 'rxjs';
 import { HttpBackend, HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class AuthService {
   toastr = inject(ToastrService);
   http = inject(HttpClient);
   apiUrl = APP_API.base_url + '/auth';
-
+  router = inject(Router);
   private addUser(user: UserModel): Observable<UserModel> {
     return this.http.post<UserModel>(`${this.apiUrl}/signup`, user);
   }
@@ -51,11 +52,21 @@ export class AuthService {
     this.http.post(`${this.apiUrl}/login`, credentials).subscribe({
       next: (response: any) => {
         this.toastr.success('Login successful', 'Success');
-
         const token = response.access_token;
         const user = response.user as UserModel;
         localStorage.setItem('access_token', token);
         localStorage.setItem('role', user.role);
+        console.log('====================================');
+        console.log("role is", user.role);
+        console.log('====================================');
+        if (user.role === UserRoleEnum.CLIENT) {
+          this.router.navigate(['/client-home']);
+        } else if (user.role === UserRoleEnum.NUTRITIONIST) {
+          this.router.navigate(['/nutritionist-home']);
+        }
+        else {
+          this.router.navigate(['/admin-home']);
+        }
       },
       error: (error) => {
         this.toastr.error('An error occurred', 'Error');

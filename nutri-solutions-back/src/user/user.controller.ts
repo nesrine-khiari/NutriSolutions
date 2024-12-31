@@ -11,7 +11,7 @@
 // } from '@nestjs/common';
 // import { CreateUserDto } from './dtos/create-user.dto';
 // import { UpdateUserDto } from './dtos/update-user.dto';
-// import { ClientEntity } from './client/client.entity';
+// import { Client } from './client/client.entity';
 // import { CreateClientDto } from './client/dtos/create-client.dto';
 // import { ClientService } from './client/client.service';
 
@@ -28,7 +28,7 @@
 //   @Post()
 //   async create(
 //     @Body() createClientDto: CreateClientDto,
-//   ): Promise<ClientEntity> {
+//   ): Promise<Client> {
 //     return this.clientService.create(createClientDto);
 //   }
 //   @Get(':id')

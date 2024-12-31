@@ -6,10 +6,9 @@ import {
   Column,
   TableInheritance,
 } from 'typeorm';
-
 @Entity()
 @TableInheritance({
-  column: { type: 'enum', enum: UserRoleEnum, name: 'role' },
+  column: { name: 'role', type: 'enum', enum: UserRoleEnum }, // Reference the existing column
 })
 export class UserEntity extends TimeStampEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -45,5 +44,5 @@ export class UserEntity extends TimeStampEntity {
     enum: UserRoleEnum,
     default: UserRoleEnum.CLIENT,
   })
-  role: UserRoleEnum;
+  role: UserRoleEnum; // This column serves both as a property and the inheritance discriminator
 }

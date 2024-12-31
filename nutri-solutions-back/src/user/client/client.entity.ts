@@ -14,7 +14,7 @@ import { ObjectifEnum } from 'src/enums/recipe-enums';
 import { RecipeEntity } from 'src/recipe/recipe-entity';
 
 @ChildEntity()
-export class ClientEntity extends UserEntity {
+export class Client extends UserEntity {
   @Column({
     type: 'enum',
     enum: ObjectifEnum,

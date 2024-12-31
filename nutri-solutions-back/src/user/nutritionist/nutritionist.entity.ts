@@ -12,7 +12,7 @@ import { UserEntity } from '../user.entity';
 import { NutritionistStatusEnum } from 'src/enums/user-enums';
 
 @ChildEntity()
-export class NutritionistEntity extends UserEntity {
+export class Nutritionist extends UserEntity {
   @Column()
   experienceYears: number;
   @Column()

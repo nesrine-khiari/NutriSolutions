@@ -56,7 +56,7 @@ export enum GenderEnum {
   FEMALE = 'femme',
 }
 export enum UserRoleEnum {
-  CLIENT = 'client',
-  NUTRITIONIST = 'nutritionist',
-  ADMIN = 'admin',
+  CLIENT = 'Client',
+  NUTRITIONIST = 'Nutritionist',
+  ADMIN = 'Admin',
 }

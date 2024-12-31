@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ClientEntity } from './client.entity';
+import { Client } from './client.entity';
 import { RecipeEntity } from 'src/recipe/recipe-entity';
 import { CreateClientDto } from './dtos/create-client.dto';
 import { UpdateClientDto } from './dtos/update-client.dto';
@@ -11,8 +11,8 @@ import { UserEntity } from '../user.entity';
 @Injectable()
 export class ClientService extends UserService {
   constructor(
-    @InjectRepository(ClientEntity)
-    private readonly clientRepository: Repository<ClientEntity>,
+    @InjectRepository(Client)
+    private readonly clientRepository: Repository<Client>,
     @InjectRepository(RecipeEntity)
     private readonly recipeRepository: Repository<RecipeEntity>,
     @InjectRepository(UserEntity)
@@ -22,14 +22,14 @@ export class ClientService extends UserService {
   }
 
   // Get all clients
-  async findAll(): Promise<ClientEntity[]> {
+  async findAll(): Promise<Client[]> {
     return this.clientRepository.find({
       relations: ['favoriteRecipes'], // Include related favorite recipes
     });
   }
 
   // Get a specific client by ID
-  async findOneById(id: string): Promise<ClientEntity> {
+  async findOneById(id: string): Promise<Client> {
     const client = await this.clientRepository.findOne({
       where: { id },
       relations: ['favoriteRecipes'], // Include related favorite recipes
@@ -42,7 +42,7 @@ export class ClientService extends UserService {
   }
 
   // // Create a new client
-  // async create(createClientDto: CreateClientDto): Promise<ClientEntity> {
+  // async create(createClientDto: CreateClientDto): Promise<Client> {
   //   const newClient = this.clientRepository.create(createClientDto);
   //   return this.clientRepository.save(newClient);
   // }
@@ -51,7 +51,7 @@ export class ClientService extends UserService {
   // async update(
   //   id: string,
   //   updateClientDto: UpdateClientDto,
-  // ): Promise<ClientEntity> {
+  // ): Promise<Client> {
   //   const client = await this.findOneById(id); // Ensure client exists
   //   Object.assign(client, updateClientDto); // Merge updates
   //   return this.clientRepository.save(client);
@@ -61,7 +61,7 @@ export class ClientService extends UserService {
   async addFavoriteRecipe(
     clientId: string,
     recipeId: string,
-  ): Promise<ClientEntity> {
+  ): Promise<Client> {
     const client = await this.findOneById(clientId); // Ensure client exists
     const recipe = await this.recipeRepository.findOne({
       where: { id: recipeId },
@@ -96,7 +96,7 @@ export class ClientService extends UserService {
   async removeFavoriteRecipe(
     clientId: string,
     recipeId: string,
-  ): Promise<ClientEntity> {
+  ): Promise<Client> {
     const client = await this.findOneById(clientId); // Ensure client exists
     const recipeIndex = client.favoriteRecipes.findIndex(
       (r) => r.id === recipeId,

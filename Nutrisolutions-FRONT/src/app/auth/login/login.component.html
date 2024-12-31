@@ -7,11 +7,15 @@
         placeholder="Type your email here"
         type="email"
         name="email"
+        [inputValue]="email"
+        (onInputChange)="setEmail($event)"
         [required]="true"
       ></app-auth-input-field>
       <app-auth-input-field
         label="Password"
+        [inputValue]="password"
         placeholder="Type your password here"
+        (onInputChange)="setPassword($event)"
         [isPassword]="true"
         ngModel
         name="password"
@@ -24,10 +28,10 @@
         <a href="#" class="forgot-password">Forgot Password ?</a>
       </div>
       <app-button
-        [routerLink]="'/client-home'"
         [type]="'submit'"
         [disabled]="loginForm.invalid ?? false"
         [text]="'Connexion'"
+        [onClick]="connexion"
       ></app-button>
       <div class="signup">
         Don't have an account?

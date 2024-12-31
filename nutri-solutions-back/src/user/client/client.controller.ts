@@ -8,7 +8,7 @@
 //   Patch,
 //   Delete,
 // } from '@nestjs/common';
-// import { ClientEntity } from './client.entity';
+// import { Client } from './client.entity';
 // import { ClientService } from './client.service';
 // import { CreateClientDto } from './dtos/create-client.dto';
 // import { UpdateUserDto } from '../dtos/update-user.dto';
@@ -20,13 +20,13 @@
 // export class ClientController {
 //   constructor(protected readonly clientService: ClientService) {}
 //   @Get()
-//   async findAll(): Promise<ClientEntity[]> {
+//   async findAll(): Promise<Client[]> {
 //     return this.clientService.findAll();
 //   }
 //   @Post()
 //   async create(
 //     @Body() createClientDto: CreateClientDto,
-//   ): Promise<ClientEntity> {
+//   ): Promise<Client> {
 //     return this.clientService.create(createClientDto);
 //   }
 //   @Get(':id')
@@ -42,7 +42,7 @@
 //   async update(
 //     @Param('id') id: string,
 //     @Body() updateClientDto: UpdateClientDto,
-//   ): Promise<ClientEntity> {
+//   ): Promise<Client> {
 //     return this.clientService.update(id, updateClientDto);
 //   }
 

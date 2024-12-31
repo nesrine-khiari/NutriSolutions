@@ -12,20 +12,20 @@
 // import { UserEntity } from '../user.entity';
 // import { NutritionistService } from './nutritionist.service';
 // import { CreateNutritionistDto } from './dtos/create-nutritionist.dto';
-// import { NutritionistEntity } from './nutritionist.entity';
+// import { Nutritionist } from './nutritionist.entity';
 // import { UpdateNutritionistDto } from './dtos/update-nutritionist.dto';
 
 // @Controller('nutritionists')
 // export class NutritionistController {
 //   constructor(protected readonly nutritionistService: NutritionistService) {}
 //   @Get()
-//   async findAll(): Promise<NutritionistEntity[]> {
+//   async findAll(): Promise<Nutritionist[]> {
 //     return this.nutritionistService.findAll();
 //   }
 //   @Post()
 //   async create(
 //     @Body() createClientDto: CreateNutritionistDto,
-//   ): Promise<NutritionistEntity> {
+//   ): Promise<Nutritionist> {
 //     return this.nutritionistService.create(createClientDto);
 //   }
 //   @Get(':id')

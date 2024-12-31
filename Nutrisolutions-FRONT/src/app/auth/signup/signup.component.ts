@@ -374,6 +374,9 @@ export class SignupComponent {
   authService = inject(AuthService);
   finalizeSignup = () => {
     const user = this.createUserModel();
+    console.log('====================================');
+    console.log('User:', user);
+    console.log('====================================');
     this.authService.signupUser(user);
   };
 }

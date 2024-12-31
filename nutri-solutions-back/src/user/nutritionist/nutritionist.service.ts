@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RecipeEntity } from 'src/recipe/recipe-entity';
 import { UserService } from '../user.service';
-import { NutritionistEntity } from './nutritionist.entity';
+import { Nutritionist} from './nutritionist.entity';
 import { CreateNutritionistDto } from './dtos/create-nutritionist.dto';
 import { UpdateNutritionistDto } from './dtos/update-nutritionist.dto';
 import { UserEntity } from '../user.entity';
@@ -20,7 +20,7 @@ export class NutritionistService extends UserService {
   // Create a new client
   // async create(
   //   createNutritionistDto: CreateNutritionistDto,
-  // ): Promise<NutritionistEntity> {
+  // ): Promise<Nutritionist> {
   //   const newNutritionist = this.nutritionistRepository.create(
   //     createNutritionistDto,
   //   );
@@ -31,7 +31,7 @@ export class NutritionistService extends UserService {
   // async update(
   //   id: string,
   //   updateNutritionistDto: UpdateNutritionistDto,
-  // ): Promise<NutritionistEntity> {
+  // ): Promise<Nutritionist> {
   //   const nutritionist = await this.nutritionistRepository.findOne({
   //     where: { id },
   //   }); // Ensure client exists
