@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
@@ -11,7 +10,7 @@ import { NutritionistService } from './nutritionist/nutritionist.service';
 import { RecipeEntity } from 'src/recipe/recipe-entity';
 
 @Module({
-  controllers: [UserController],
+  controllers: [],
   providers: [UserService, ClientService, NutritionistService],
   imports: [
     TypeOrmModule.forFeature([

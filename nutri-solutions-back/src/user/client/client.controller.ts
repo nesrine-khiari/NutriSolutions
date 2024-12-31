@@ -6,9 +6,9 @@
 //   ParseUUIDPipe,
 //   Get,
 //   Patch,
+//   Delete,
 // } from '@nestjs/common';
 // import { ClientEntity } from './client.entity';
-// import { UserController } from '../user.controller';
 // import { ClientService } from './client.service';
 // import { CreateClientDto } from './dtos/create-client.dto';
 // import { UpdateUserDto } from '../dtos/update-user.dto';
@@ -17,23 +17,32 @@
 // import { Public } from 'src/auth/guards/auth.guard';
 // @Public()
 // @Controller('clients')
-// export class ClientController extends UserController {
-//   constructor(protected readonly clientService: ClientService) {
-//     super(clientService); // Call the parent constructor
+// export class ClientController {
+//   constructor(protected readonly clientService: ClientService) {}
+//   @Get()
+//   async findAll(): Promise<ClientEntity[]> {
+//     return this.clientService.findAll();
 //   }
-
 //   @Post()
 //   async create(
 //     @Body() createClientDto: CreateClientDto,
 //   ): Promise<ClientEntity> {
 //     return this.clientService.create(createClientDto);
 //   }
+//   @Get(':id')
+//   async findOne(@Param('id') id: string): Promise<UserEntity> {
+//     return this.clientService.findOne(id);
+//   }
 
+//   @Delete(':id')
+//   async remove(@Param('id') id: string): Promise<void> {
+//     return this.clientService.remove(id);
+//   }
 //   @Patch(':id')
 //   async update(
 //     @Param('id') id: string,
 //     @Body() updateClientDto: UpdateClientDto,
-//   ): Promise<UserEntity> {
+//   ): Promise<ClientEntity> {
 //     return this.clientService.update(id, updateClientDto);
 //   }
 

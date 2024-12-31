@@ -6,6 +6,7 @@ import { RecipeEntity } from 'src/recipe/recipe-entity';
 import { CreateClientDto } from './dtos/create-client.dto';
 import { UpdateClientDto } from './dtos/update-client.dto';
 import { UserService } from '../user.service';
+import { UserEntity } from '../user.entity';
 
 @Injectable()
 export class ClientService extends UserService {
@@ -14,8 +15,10 @@ export class ClientService extends UserService {
     private readonly clientRepository: Repository<ClientEntity>,
     @InjectRepository(RecipeEntity)
     private readonly recipeRepository: Repository<RecipeEntity>,
+    @InjectRepository(UserEntity)
+    protected readonly userRepository: Repository<UserEntity>,
   ) {
-    super(clientRepository);
+    super(userRepository);
   }
 
   // Get all clients
@@ -38,21 +41,21 @@ export class ClientService extends UserService {
     return client;
   }
 
-  // Create a new client
-  async create(createClientDto: CreateClientDto): Promise<ClientEntity> {
-    const newClient = this.clientRepository.create(createClientDto);
-    return this.clientRepository.save(newClient);
-  }
+  // // Create a new client
+  // async create(createClientDto: CreateClientDto): Promise<ClientEntity> {
+  //   const newClient = this.clientRepository.create(createClientDto);
+  //   return this.clientRepository.save(newClient);
+  // }
 
   // Update an existing client
-  async update(
-    id: string,
-    updateClientDto: UpdateClientDto,
-  ): Promise<ClientEntity> {
-    const client = await this.findOneById(id); // Ensure client exists
-    Object.assign(client, updateClientDto); // Merge updates
-    return this.clientRepository.save(client);
-  }
+  // async update(
+  //   id: string,
+  //   updateClientDto: UpdateClientDto,
+  // ): Promise<ClientEntity> {
+  //   const client = await this.findOneById(id); // Ensure client exists
+  //   Object.assign(client, updateClientDto); // Merge updates
+  //   return this.clientRepository.save(client);
+  // }
 
   // Add a favorite recipe for a client
   async addFavoriteRecipe(

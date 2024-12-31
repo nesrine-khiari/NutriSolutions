@@ -6,11 +6,12 @@ import {
   TableInheritance,
   ManyToMany,
   JoinTable,
+  ChildEntity,
 } from 'typeorm';
 import { UserEntity } from '../user.entity';
 import { NutritionistStatusEnum } from 'src/enums/user-enums';
 
-@Entity()
+@ChildEntity()
 export class NutritionistEntity extends UserEntity {
   @Column()
   experienceYears: number;

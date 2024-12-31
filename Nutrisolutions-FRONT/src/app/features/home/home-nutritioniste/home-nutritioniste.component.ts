@@ -15,7 +15,7 @@ export class HomeNutritionisteComponent {
   objectif: ObjectifEnum = ObjectifEnum.MUSCLER;
   clientService = inject(ClientService);
   ngOnInit() {
-    this.clientService.getAllclients().subscribe((clients: ClientModel[]) => {
+    this.clientService.getAllClients().subscribe((clients: ClientModel[]) => {
       this.patientsList = clients;
     });
   }

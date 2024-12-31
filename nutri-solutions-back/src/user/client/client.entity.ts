@@ -7,12 +7,13 @@ import {
   TableInheritance,
   ManyToMany,
   JoinTable,
+  ChildEntity,
 } from 'typeorm';
 import { UserEntity } from '../user.entity';
 import { ObjectifEnum } from 'src/enums/recipe-enums';
 import { RecipeEntity } from 'src/recipe/recipe-entity';
 
-@Entity()
+@ChildEntity()
 export class ClientEntity extends UserEntity {
   @Column({
     type: 'enum',

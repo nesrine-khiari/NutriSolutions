@@ -27,11 +27,11 @@ export class NutritionistsService {
   deleteNutritionist(id: string): Observable<{ count: number }> {
     return this.http.delete<{ count: number }>(`${this.apiUrl}/${id}`);
   }
-  addNutritionist(
-    nutritionnist: NutritionistModel
-  ): Observable<NutritionistModel> {
-    return this.http.post<NutritionistModel>(this.apiUrl, nutritionnist);
-  }
+  // addNutritionist(
+  //   nutritionnist: NutritionistModel
+  // ): Observable<NutritionistModel> {
+  //   return this.http.post<NutritionistModel>(this.apiUrl, nutritionnist);
+  // }
   updateNutritionist(
     id: string,
     nutritionnist: NutritionistModel
@@ -42,7 +42,6 @@ export class NutritionistsService {
     );
   }
 
-  // Get all nutritionists
   // getAllNutritionists(): NutritionistModel[] {
   //   return this.nutritionists.length
   //     ? this.nutritionists

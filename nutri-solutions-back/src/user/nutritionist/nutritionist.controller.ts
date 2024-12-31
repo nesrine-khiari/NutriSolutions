@@ -6,8 +6,8 @@
 //   ParseUUIDPipe,
 //   Get,
 //   Patch,
+//   Delete,
 // } from '@nestjs/common';
-// import { UserController } from '../user.controller';
 // import { UpdateUserDto } from '../dtos/update-user.dto';
 // import { UserEntity } from '../user.entity';
 // import { NutritionistService } from './nutritionist.service';
@@ -16,16 +16,26 @@
 // import { UpdateNutritionistDto } from './dtos/update-nutritionist.dto';
 
 // @Controller('nutritionists')
-// export class NutritionistController extends UserController {
-//   constructor(protected readonly nutritionistService: NutritionistService) {
-//     super(nutritionistService); // Call the parent constructor
+// export class NutritionistController {
+//   constructor(protected readonly nutritionistService: NutritionistService) {}
+//   @Get()
+//   async findAll(): Promise<NutritionistEntity[]> {
+//     return this.nutritionistService.findAll();
 //   }
-
 //   @Post()
 //   async create(
-//     @Body() createNutritionistDto: CreateNutritionistDto,
+//     @Body() createClientDto: CreateNutritionistDto,
 //   ): Promise<NutritionistEntity> {
-//     return this.nutritionistService.create(createNutritionistDto);
+//     return this.nutritionistService.create(createClientDto);
+//   }
+//   @Get(':id')
+//   async findOne(@Param('id') id: string): Promise<UserEntity> {
+//     return this.nutritionistService.findOne(id);
+//   }
+
+//   @Delete(':id')
+//   async remove(@Param('id') id: string): Promise<void> {
+//     return this.nutritionistService.remove(id);
 //   }
 
 //   @Patch(':id')

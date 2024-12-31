@@ -12,6 +12,7 @@ import {
 } from 'src/app/models/nutritionist.model';
 import { ObjectifEnum, RecipeModel } from 'src/app/models/recipe.model';
 import { UserModel } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { ClientService } from 'src/app/services/client.service';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { NutritionistsService } from 'src/app/services/nutritionists.service';
@@ -337,21 +338,19 @@ export class SignupComponent {
   toastr = inject(ToastrService);
   uploadFileService = inject(FileUploadService);
   saveUser = () => {
-  
-      if (this.imageFile) {
-        // Upload the image first
-        this.uploadFileService.uploadImage(this.imageFile).subscribe({
-          next: (response) => {
-            console.log('Upload Success:', response);
-            this.uploadedImage = response.path;
-            this.processSignup(); // Handle the recipe after uploading the image
-          },
-          error: (err) => {
-            console.error('Upload Failed:', err);
-            this.toastr.error('Image upload failed. Please try again.');
-          },
-        });
-      
+    if (this.imageFile) {
+      // Upload the image first
+      this.uploadFileService.uploadImage(this.imageFile).subscribe({
+        next: (response) => {
+          console.log('Upload Success:', response);
+          this.uploadedImage = response.path;
+          this.processSignup(); // Handle the recipe after uploading the image
+        },
+        error: (err) => {
+          console.error('Upload Failed:', err);
+          this.toastr.error('Image upload failed. Please try again.');
+        },
+      });
     }
   };
 
@@ -372,36 +371,9 @@ export class SignupComponent {
       this.finalizeSignup();
     }
   };
-  clientService = inject(ClientService);
-  nutritionistService = inject(NutritionistsService);
+  authService = inject(AuthService);
   finalizeSignup = () => {
     const user = this.createUserModel();
-    if (this.selectedType === UserRoleEnum.CLIENT) {
-      this.clientService.addClient(user as ClientModel).subscribe({
-        next: (response) => {
-          console.log('Client created:', response);
-          this.toastr.success('Client created successfully');
-        },
-        error: (err) => {
-          console.error('Client creation failed:', err);
-          this.toastr.error('Client creation failed. Please try again.');
-        },
-      });
-    } else {
-      this.nutritionistService
-        .addNutritionist(user as NutritionistModel)
-        .subscribe({
-          next: (response) => {
-            console.log('Nutritionist created:', response);
-            this.toastr.success('Nutritionist created successfully');
-          },
-          error: (err) => {
-            console.error('Nutritionist creation failed:', err);
-            this.toastr.error(
-              'Nutritionist creation failed. Please try again.'
-            );
-          },
-        });
-    }
+    this.authService.signupUser(user);
   };
 }

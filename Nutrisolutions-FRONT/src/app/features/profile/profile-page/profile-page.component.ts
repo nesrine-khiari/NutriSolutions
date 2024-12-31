@@ -20,7 +20,7 @@ export class ProfilePageComponent implements OnInit {
   clientInfoItems: { icon: string; param: string }[] = [];
   clientService = inject(ClientService);
   ngOnInit() {
-    this.clientService.getAllclients().subscribe(clients => {
+    this.clientService.getAllClients().subscribe((clients) => {
       this.client = clients[0];
       this.clientInfoItems = [
         { icon: 'fa-solid fa-user', param: this.client?.gender ?? 'N/A' },
