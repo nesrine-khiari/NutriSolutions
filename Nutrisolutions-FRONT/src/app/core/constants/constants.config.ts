@@ -1,3 +1,3 @@
 export const APP_API = {
-  base_url: 'http://localhost:3000',
+  base_url: 'http://10.0.2.12:3000',
 };
