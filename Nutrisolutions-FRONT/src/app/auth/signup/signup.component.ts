@@ -2,6 +2,7 @@ import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import {
+  ActivityLevelEnum,
   ClientModel,
   GenderEnum,
   UserRoleEnum,
@@ -297,7 +298,7 @@ export class SignupComponent {
         parseInt(this.selectedPoids),
         [],
         this.convertToEnum(ObjectifEnum, this.selectedObjectif),
-        this.selectedActiviteJournaliere
+        this.convertToEnum(ActivityLevelEnum, this.selectedActiviteJournaliere)
       );
     } else {
       user = new NutritionistModel(

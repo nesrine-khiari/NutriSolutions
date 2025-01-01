@@ -38,7 +38,7 @@ import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
     HttpClientModule,
     RouterModule,
     RouterOutlet,
-    RouterLink
+    RouterLink,
   ],
   providers: [],
   bootstrap: [AppComponent],
