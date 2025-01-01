@@ -15,6 +15,7 @@ export class ClientModel extends UserModel {
     public weight: number,
     public favoriteRecipes: RecipeModel[] = [],
     public objectif: ObjectifEnum,
+    public activityLevel: ActivityLevelEnum,
     id?: string
   ) {
     super(
@@ -59,4 +60,12 @@ export enum UserRoleEnum {
   CLIENT = 'Client',
   NUTRITIONIST = 'Nutritionist',
   ADMIN = 'Admin',
+}
+
+export enum ActivityLevelEnum {
+  SEDENTAIRE = 'Sédentaire',
+  LEG_ACTIF = 'Légèrement actif',
+  MOD_ACTIF = 'Modérément actif',
+  TRES_ACTIF = 'Très actif',
+  EXT_ACTIF = 'Extrêmement actif',
 }

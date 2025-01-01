@@ -10,7 +10,7 @@ import {
   ChildEntity,
 } from 'typeorm';
 import { UserEntity } from '../user.entity';
-import { ObjectifEnum } from 'src/enums/recipe-enums';
+import { ActivityLevelEnum, ObjectifEnum } from 'src/enums/recipe-enums';
 import { RecipeEntity } from 'src/recipe/recipe-entity';
 
 @ChildEntity()
@@ -21,6 +21,13 @@ export class Client extends UserEntity {
     default: ObjectifEnum.ALL,
   })
   objectif: ObjectifEnum;
+
+  @Column({
+    type: 'enum',
+    enum: ActivityLevelEnum,
+    default: ActivityLevelEnum.LEG_ACTIF,
+  })
+  activityLevel: ActivityLevelEnum;
 
   @Column()
   weight: number;

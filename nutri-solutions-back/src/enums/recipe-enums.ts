@@ -24,3 +24,11 @@ export enum PreparationTimeEnum {
   LONG = '45-60 minutes',
   VERY_LONG = 'Plus de 60 minutes',
 }
+
+export enum ActivityLevelEnum {
+  SEDENTAIRE = 'Sédentaire',
+  LEG_ACTIF = 'Légèrement actif',
+  MOD_ACTIF = 'Modérément actif',
+  TRES_ACTIF = 'Très actif',
+  EXT_ACTIF = 'Extrêmement actif',
+}
