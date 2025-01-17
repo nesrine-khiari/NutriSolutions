@@ -1,5 +1,13 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  inject,
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { ro } from '@faker-js/faker/.';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -54,4 +62,11 @@ export class NavBarComponent implements AfterViewInit {
     this.logout.nativeElement.classList.toggle('active');
     this.toggle.nativeElement.classList.toggle('active');
   }
+
+  authService = inject(AuthService);
+  router = inject(Router);
+  signout = (): void => {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  };
 }

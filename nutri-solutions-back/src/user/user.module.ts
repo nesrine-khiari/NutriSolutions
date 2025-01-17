@@ -8,9 +8,10 @@ import { AdminEntity } from './admin/admin.entity';
 import { ClientService } from './client/client.service';
 import { NutritionistService } from './nutritionist/nutritionist.service';
 import { RecipeEntity } from 'src/recipe/recipe-entity';
+import { NutritionistController } from './nutritionist/nutritionist.controller';
 
 @Module({
-  controllers: [],
+  controllers: [NutritionistController],
   providers: [UserService, ClientService, NutritionistService],
   imports: [
     TypeOrmModule.forFeature([

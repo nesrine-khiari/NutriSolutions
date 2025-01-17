@@ -12,8 +12,9 @@ import { HomeModule } from './features/home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PlanningComponent } from './features/planning/planning.component';
 import { ProfileModule } from './features/profile/profile.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { TokenInterceptor } from './core/interceptors/token.interceptor';
 
 @NgModule({
   declarations: [AppComponent, PlanningComponent],
@@ -40,7 +41,13 @@ import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
     RouterOutlet,
     RouterLink,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
