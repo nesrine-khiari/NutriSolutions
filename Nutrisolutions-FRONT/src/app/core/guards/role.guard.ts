@@ -10,7 +10,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
   const logger = inject(LoggerService);
   const requiredRoles = route.data?.['roles'] as string[]; // Get roles from route data
   const userRole = authService.getUserRole();
-
+  
   if (requiredRoles.includes(userRole)) {
     logger.log('Role guard granted access' + userRole);
     return true; // Grant access if user role matches

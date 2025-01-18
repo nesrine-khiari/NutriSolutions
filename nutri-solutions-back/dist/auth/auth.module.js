@@ -12,7 +12,10 @@ const auth_service_1 = require("./auth.service");
 const auth_controller_1 = require("./auth.controller");
 const jwt_1 = require("@nestjs/jwt");
 const auth_constants_1 = require("../common/constants/auth.constants");
+const core_1 = require("@nestjs/core");
+const auth_guard_1 = require("./guards/auth.guard");
 const user_module_1 = require("../user/user.module");
+const role_guard_1 = require("./guards/role.guard");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -20,6 +23,14 @@ exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         providers: [
             auth_service_1.AuthService,
+            {
+                provide: core_1.APP_GUARD,
+                useClass: auth_guard_1.AuthGuard,
+            },
+            {
+                provide: core_1.APP_GUARD,
+                useClass: role_guard_1.RolesGuard,
+            },
         ],
         controllers: [auth_controller_1.AuthController],
         imports: [

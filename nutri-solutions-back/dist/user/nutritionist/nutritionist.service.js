@@ -17,17 +17,27 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_service_1 = require("../user.service");
-const user_entity_1 = require("../user.entity");
+const nutritionist_entity_1 = require("./nutritionist.entity");
 let NutritionistService = class NutritionistService extends user_service_1.UserService {
-    constructor(userRepository) {
-        super(userRepository);
-        this.userRepository = userRepository;
+    constructor(nutritionistRepository) {
+        super(nutritionistRepository);
+        this.nutritionistRepository = nutritionistRepository;
+    }
+    async findAll() {
+        return this.nutritionistRepository.find();
+    }
+    async findOne(id) {
+        const user = await this.nutritionistRepository.findOneBy({ id });
+        if (!user) {
+            throw new common_1.NotFoundException(`User with ID ${id} not found`);
+        }
+        return user;
     }
 };
 exports.NutritionistService = NutritionistService;
 exports.NutritionistService = NutritionistService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.UserEntity)),
+    __param(0, (0, typeorm_1.InjectRepository)(nutritionist_entity_1.Nutritionist)),
     __metadata("design:paramtypes", [typeorm_2.Repository])
 ], NutritionistService);
 //# sourceMappingURL=nutritionist.service.js.map

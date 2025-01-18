@@ -55,7 +55,7 @@ export class AuthService {
         const token = response.accessToken;
         const user = response.user as UserModel;
         localStorage.setItem(APP_CONST.tokenLocalStorage, token);
-        localStorage.setItem('role', user.role);
+        localStorage.setItem(APP_CONST.role, user.role);
         console.log('====================================');
         console.log('role is', user.role);
         console.log('====================================');

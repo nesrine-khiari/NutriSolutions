@@ -30,7 +30,7 @@ let AuthController = class AuthController {
     async login(signInDto) {
         const user = await this.authService.validateUser(signInDto.email, signInDto.password);
         if (!user) {
-            throw new Error('Invalid email or password');
+            throw new common_1.UnauthorizedException('Invalid email or password');
         }
         return this.authService.login(user);
     }
