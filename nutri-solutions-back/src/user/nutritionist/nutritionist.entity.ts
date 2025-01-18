@@ -19,11 +19,14 @@ export class Nutritionist extends UserEntity {
   certificateUrl: string;
   @Column()
   location: string;
-
+  @Column({ default: 0 })
+  patientsNumber: number;
   @Column({
     type: 'enum',
     enum: NutritionistStatusEnum,
     default: NutritionistStatusEnum.WAITING,
   })
   status: NutritionistStatusEnum;
+  @Column({default: 4})
+  stars: number;
 }

@@ -1,8 +1,6 @@
 <app-page-background>
   <div class="quote">
-    <h3>
-      Un nutritionniste, votre allié pour une santé équilibrée et durable
-    </h3>
+    <h3>Un nutritionniste, votre allié pour une santé équilibrée et durable</h3>
   </div>
   <app-svg-box [height]="'100%'" [width]="'95%'">
     <h2 class="title">Nos Nutritionnistes:</h2>
@@ -23,10 +21,7 @@
               : searchControl.value
               : experienceControl.value
         "
-        [name]="nutritionist.name"
-        [imgUrl]="nutritionist.profilePictureUrl"
-        [patientsNumber]="nutritionist.patientsNumber"
-        [yearsOfExperience]="nutritionist.experienceYears"
+        [nutritionist]="nutritionist"
       ></app-nutritionist-item>
     </div>
   </app-svg-box>

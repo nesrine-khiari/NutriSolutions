@@ -29,6 +29,10 @@ __decorate([
     __metadata("design:type", String)
 ], Nutritionist.prototype, "location", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: 0 }),
+    __metadata("design:type", Number)
+], Nutritionist.prototype, "patientsNumber", void 0);
+__decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
         enum: user_enums_1.NutritionistStatusEnum,
@@ -36,6 +40,10 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Nutritionist.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 4 }),
+    __metadata("design:type", Number)
+], Nutritionist.prototype, "stars", void 0);
 exports.Nutritionist = Nutritionist = __decorate([
     (0, typeorm_1.ChildEntity)()
 ], Nutritionist);

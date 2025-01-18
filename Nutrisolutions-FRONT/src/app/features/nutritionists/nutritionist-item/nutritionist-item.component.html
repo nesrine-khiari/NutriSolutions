@@ -1,24 +1,22 @@
 <app-svg-box [height]="'100%'" [width]="'100%'">
-    <div class="nutritionist-item">
-        <div class="nutritionist-img">
-            <img [src]="imgUrl" alt="" />
-        </div>
-        <div class="nutritionist-content">
-            <div class="stars-container">
-                <app-star [selectedStars]="4"></app-star>
-            </div>
-            <h2>{{ name }}</h2>
-            <p>
-                {{ patientsNumber }}+ Patients
-            </p>
-            <p>
-                {{ yearsOfExperience }}+ Années d'expérience
-            </p>
-        </div>
-        <div class="button">
-            <app-button [text]="'Vois plus'" [fontWeight]="'400'" [width]="'100%'"></app-button>
-
-        </div>
-
+  <div class="nutritionist-item">
+    <div class="nutritionist-img">
+      <img [src]="base_url + nutritionist.profilePictureUrl" alt="" />
     </div>
+    <div class="nutritionist-content">
+      <div class="stars-container">
+        <app-star [selectedStars]="nutritionist.stars ?? 4"></app-star>
+      </div>
+      <h2>{{ nutritionist.name }}</h2>
+      <p>{{ nutritionist.patientsNumber }}+ Patients</p>
+      <p>{{ nutritionist.experienceYears }}+ Années d'expérience</p>
+    </div>
+    <div class="button">
+      <app-button
+        [text]="'Prendre RDV'"
+        [fontWeight]="'400'"
+        [width]="'100%'"
+      ></app-button>
+    </div>
+  </div>
 </app-svg-box>

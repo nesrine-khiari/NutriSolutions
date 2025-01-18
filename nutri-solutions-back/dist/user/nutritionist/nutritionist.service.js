@@ -33,6 +33,11 @@ let NutritionistService = class NutritionistService extends user_service_1.UserS
         }
         return user;
     }
+    async update(id, updateNutritionistDto) {
+        const user = await this.findOne(id);
+        Object.assign(user, updateNutritionistDto);
+        return this.userRepository.save(user);
+    }
 };
 exports.NutritionistService = NutritionistService;
 exports.NutritionistService = NutritionistService = __decorate([

@@ -12,10 +12,10 @@ import { RolesGuard } from './guards/role.guard';
 @Module({
   providers: [
     AuthService,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard,
+    // },
     {
       provide: APP_GUARD,
       useClass: RolesGuard,

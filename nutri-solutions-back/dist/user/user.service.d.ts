@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 export declare class UserService {
     protected readonly userRepository: Repository<UserEntity>;
     constructor(userRepository: Repository<UserEntity>);
+    private readonly logger;
     findAll(): Promise<UserEntity[]>;
     findOne(id: string): Promise<UserEntity>;
     findOneByEmail(email: string): Promise<UserEntity>;

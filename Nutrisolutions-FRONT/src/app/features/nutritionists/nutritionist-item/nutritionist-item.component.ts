@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { APP_API } from 'src/app/core/constants/constants.config';
+import { NutritionistModel } from 'src/app/models/nutritionist.model';
 
 @Component({
   selector: 'app-nutritionist-item',
@@ -6,8 +8,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./nutritionist-item.component.css'],
 })
 export class NutritionistItemComponent {
-  @Input() name: string = 'Houcem';
-  @Input() patientsNumber: number = 20;
-  @Input() yearsOfExperience: number = 5;
-  @Input() imgUrl: string = 'assets/images/nutritionist.jpg';
+  base_url = APP_API.base_url;
+  @Input({ required: true }) nutritionist!: NutritionistModel;
 }

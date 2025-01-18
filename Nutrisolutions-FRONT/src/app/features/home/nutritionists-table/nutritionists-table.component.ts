@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 // import { generateFakeNutritionist } from 'src/app/core/helpers/faker.helper';
 import {
   NutritionistModel,
@@ -25,7 +26,8 @@ export class NutritionistsTableComponent {
   trieOptions = Object.values(TrieEnum);
   statusEnum = StatusEnum;
   nutritionists: NutritionistModel[] = [];
- nutritionistService = inject(NutritionistsService);
+  nutritionistService = inject(NutritionistsService);
+  toastr = inject(ToastrService);
   constructor() {
     this.generateNutritionists(10); // Generate 10 fake nutritionists
   }
@@ -38,6 +40,18 @@ export class NutritionistsTableComponent {
 
   updateStatus(nutritionist: NutritionistModel, newStatus: StatusEnum): void {
     nutritionist.status = newStatus;
+    this.nutritionistService
+      .updateNutritionist(nutritionist.id!, nutritionist)
+      .subscribe({
+        next: (response) => {
+          // Success callback
+          this.toastr.success('Status updated successfully!');
+        },
+        error: (error) => {
+          // Error callback
+          this.toastr.error('Error updating status', 'Error');
+        },
+      });
   }
   highlightText(content: string, search: string): string {
     if (!search) {

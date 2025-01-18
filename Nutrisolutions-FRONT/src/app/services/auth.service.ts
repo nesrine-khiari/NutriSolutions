@@ -7,6 +7,7 @@ import { APP_API, APP_CONST } from '../core/constants/constants.config';
 import { Observable } from 'rxjs';
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AppUtils } from '../core/utils/functions.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,7 @@ export class AuthService {
         this.login(user.email, user.getPass());
       },
       error: (error) => {
-        this.toastr.error('An error occurred', 'Error');
+        this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
       },
     });
     this.userRole = user.role;
@@ -40,7 +41,7 @@ export class AuthService {
         this.login(nutritionist.email, nutritionist.getPass());
       },
       error: (error) => {
-        this.toastr.error('An error occurred', 'Error');
+        this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
       },
     });
 
@@ -68,8 +69,7 @@ export class AuthService {
         }
       },
       error: (error) => {
-        const errorMessage = error?.error?.message || 'An error occurred';
-        this.toastr.error(errorMessage, 'Error');
+        this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
       },
     });
     this.isAuthenticated = true;

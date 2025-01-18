@@ -11,16 +11,15 @@ export class NutritionistModel extends UserModel {
     gender: GenderEnum,
     birthDate: Date,
     role: UserRoleEnum,
-    
+
     public experienceYears: number,
     public certificateUrl: string,
     public status: StatusEnum,
     public location?: string,
-    id?: string ,
-    public patientsNumber: number=0,
-  ) // appointments?: string[],
-
-  {
+    id?: string,
+    public patientsNumber: number = 0,
+    public stars?: number, // appointments?: string[],
+  ) {
     super(
       name,
       email,
@@ -32,6 +31,7 @@ export class NutritionistModel extends UserModel {
       role,
       id
     );
+    this.stars = stars ?? 4;
   }
 }
 

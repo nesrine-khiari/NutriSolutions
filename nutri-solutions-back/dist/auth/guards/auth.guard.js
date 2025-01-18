@@ -38,6 +38,7 @@ let AuthGuard = class AuthGuard {
             const payload = await this.jwtService.verifyAsync(token, {
                 secret: this.configService.get('JWT_SECRET'),
             });
+            request['user'] = payload;
         }
         catch {
             throw new common_1.UnauthorizedException('You need to be authenticated2');

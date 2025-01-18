@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class StarComponent {
   @Input() number: number = 5;
-  @Input() selectedStars: number = 5;
+  @Input() selectedStars: number = 5 ;
 }

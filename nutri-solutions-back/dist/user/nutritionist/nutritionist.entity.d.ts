@@ -4,5 +4,7 @@ export declare class Nutritionist extends UserEntity {
     experienceYears: number;
     certificateUrl: string;
     location: string;
+    patientsNumber: number;
     status: NutritionistStatusEnum;
+    stars: number;
 }

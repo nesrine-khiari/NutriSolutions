@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var UserService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
@@ -18,9 +19,10 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const user_entity_1 = require("./user.entity");
 const bcrypt = require("bcrypt");
-let UserService = class UserService {
+let UserService = UserService_1 = class UserService {
     constructor(userRepository) {
         this.userRepository = userRepository;
+        this.logger = new common_1.Logger(UserService_1.name);
     }
     async findAll() {
         return this.userRepository.find();
@@ -40,12 +42,22 @@ let UserService = class UserService {
         return user;
     }
     async create(createDto) {
-        if (createDto.password) {
-            const salt = await bcrypt.genSalt();
-            createDto.password = await bcrypt.hash(createDto.password, salt);
+        try {
+            if (createDto.password) {
+                const salt = await bcrypt.genSalt();
+                createDto.password = await bcrypt.hash(createDto.password, salt);
+            }
+            const newEntity = this.userRepository.create(createDto);
+            const savedEntity = await this.userRepository.save(newEntity);
+            return savedEntity;
         }
-        const newEntity = this.userRepository.create(createDto);
-        return this.userRepository.save(newEntity);
+        catch (error) {
+            this.logger.error('Error creating user:', error);
+            if (error.code === '23505') {
+                throw new common_1.ConflictException('Email already exists');
+            }
+            throw error;
+        }
     }
     async update(id, updateUserDto) {
         const user = await this.findOne(id);
@@ -65,7 +77,7 @@ let UserService = class UserService {
     }
 };
 exports.UserService = UserService;
-exports.UserService = UserService = __decorate([
+exports.UserService = UserService = UserService_1 = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.UserEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository])
 ], UserService);

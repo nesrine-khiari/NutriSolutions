@@ -12,6 +12,7 @@ import { NutritionistService } from './nutritionist.service';
 import { Nutritionist } from './nutritionist.entity';
 import { Roles } from 'src/auth/guards/role.guard';
 import { UserRoleEnum } from 'src/enums/user-enums';
+import { UpdateNutritionistDto } from './dtos/update-nutritionist.dto';
 
 @Controller('nutritionists')
 export class NutritionistController {
@@ -32,11 +33,11 @@ export class NutritionistController {
   //     return this.nutritionistService.remove(id);
   //   }
 
-  //   @Patch(':id')
-  //   async update(
-  //     @Param('id') id: string,
-  //     @Body() updateNutritionistDto: UpdateNutritionistDto,
-  //   ): Promise<Nutritionist> {
-  //     return this.nutritionistService.update(id, updateNutritionistDto);
-  //   }
+    @Patch(':id')
+    async update(
+      @Param('id') id: string,
+      @Body() updateNutritionistDto: UpdateNutritionistDto,
+    ): Promise<Nutritionist> {
+      return this.nutritionistService.update(id, updateNutritionistDto);
+    }
 }

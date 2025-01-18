@@ -7,6 +7,7 @@ import { Nutritionist } from './nutritionist.entity';
 import { CreateNutritionistDto } from './dtos/create-nutritionist.dto';
 import { UpdateNutritionistDto } from './dtos/update-nutritionist.dto';
 import { UserEntity } from '../user.entity';
+import { UpdateUserDto } from '../dtos/update-user.dto';
 
 @Injectable()
 export class NutritionistService extends UserService {
@@ -26,6 +27,14 @@ export class NutritionistService extends UserService {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
     return user;
+  }
+  async update(
+    id: string,
+    updateNutritionistDto: UpdateNutritionistDto,
+  ): Promise<Nutritionist> {
+    const user = await this.findOne(id); // Ensure client exists
+    Object.assign(user, updateNutritionistDto); // Merge updates
+    return this.userRepository.save(user);
   }
   // Create a new client
   // async create(
