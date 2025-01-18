@@ -1,3 +1,8 @@
 export const APP_API = {
-  base_url: 'http://10.0.1.181:8080',
+  base_url: 'http://localhost:3000',
+};
+
+export const APP_CONST = {
+  tokenLocalStorage: 'accessToken',
+  role: 'role',
 };

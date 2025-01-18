@@ -185,7 +185,7 @@ export class SignupComponent {
   }
   // __________ STEP 4 : Nutritionist Details___________
   experienceYearsOptions: number[] = [];
-  selectedExperienceYears: string = '';
+  selectedExperienceYears: string = '1';
   populateExpYearsOptions(): void {
     const minExpYears = 1;
     const maxExpYears = 50;
@@ -210,10 +210,10 @@ export class SignupComponent {
     const poidsMax = 250; // Maximum age
 
     for (let poids = poidsMin; poids <= poidsMax; poids++) {
-      this.poidsActuelOptions.push(poids + ' Kg');
+      this.poidsActuelOptions.push(poids.toString());
     }
   }
-  selectedPoids: string = '';
+  selectedPoids: string = '40';
   selectPoids(poids: string) {
     this.selectedPoids = poids;
   }
@@ -226,7 +226,7 @@ export class SignupComponent {
       this.tailleOptions.push(taille);
     }
   }
-  selectedTaille: string = '';
+  selectedTaille: string = '150';
   selectTaille(taille: string) {
     this.selectedTaille = taille;
   }
@@ -238,7 +238,7 @@ export class SignupComponent {
     'Très actif',
     'Extrêmement actif',
   ];
-  selectedActiviteJournaliere: string = '';
+  selectedActiviteJournaliere: string = this.activiteJournaliereOptions[0];
   selectActiviteJournaliere(activiteJournaliere: string) {
     this.selectedActiviteJournaliere = activiteJournaliere;
   }
@@ -248,7 +248,7 @@ export class SignupComponent {
     'Se muscler',
     'Maintenir le poids',
   ];
-  selectedObjectif: string = '';
+  selectedObjectif: string = this.objectifOptions[0];
   selectObjectif(objectif: string) {
     this.selectedObjectif = objectif;
   }
