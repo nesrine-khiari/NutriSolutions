@@ -8,42 +8,51 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var RolesGuard_1;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RoleGuard = void 0;
+exports.Roles = exports.ROLES_KEY = exports.RolesGuard = void 0;
 const common_1 = require("@nestjs/common");
 const core_1 = require("@nestjs/core");
-const auth_constants_1 = require("../../common/constants/auth.constants");
-const user_enums_1 = require("../../enums/user-enums");
 const guards_utils_1 = require("../../common/utils/guards.utils");
-let RoleGuard = class RoleGuard {
-    constructor(reflector, role) {
+const jwt_1 = require("@nestjs/jwt");
+const config_1 = require("@nestjs/config");
+let RolesGuard = RolesGuard_1 = class RolesGuard {
+    constructor(reflector, jwtService, configService) {
         this.reflector = reflector;
-        this.role = role;
+        this.jwtService = jwtService;
+        this.configService = configService;
+        this.logger = new common_1.Logger(RolesGuard_1.name);
     }
     async canActivate(context) {
+        const requiredRoles = this.reflector.get(exports.ROLES_KEY, context.getHandler());
+        if (!requiredRoles) {
+            return true;
+        }
         const request = context.switchToHttp().getRequest();
         const token = (0, guards_utils_1.extractTokenFromHeader)(request);
         if (!token) {
-            throw new common_1.UnauthorizedException();
+            throw new common_1.UnauthorizedException('You are not authorized to access this resource');
         }
         try {
             const payload = await this.jwtService.verifyAsync(token, {
-                secret: auth_constants_1.jwtConstants.secret,
+                secret: this.configService.get('JWT_SECRET'),
             });
-            if (payload.role !== this.role) {
-                throw new common_1.UnauthorizedException();
-            }
-            request['user'] = payload;
+            this.logger.log(payload);
+            return requiredRoles.some((role) => payload.role === role);
         }
         catch {
-            throw new common_1.UnauthorizedException();
+            throw new common_1.UnauthorizedException('You are not authorized to access this resource');
         }
-        return true;
     }
 };
-exports.RoleGuard = RoleGuard;
-exports.RoleGuard = RoleGuard = __decorate([
+exports.RolesGuard = RolesGuard;
+exports.RolesGuard = RolesGuard = RolesGuard_1 = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [core_1.Reflector, String])
-], RoleGuard);
+    __metadata("design:paramtypes", [core_1.Reflector,
+        jwt_1.JwtService,
+        config_1.ConfigService])
+], RolesGuard);
+exports.ROLES_KEY = 'roles';
+const Roles = (...roles) => (0, common_1.SetMetadata)(exports.ROLES_KEY, roles);
+exports.Roles = Roles;
 //# sourceMappingURL=role.guard.js.map

@@ -17,12 +17,13 @@ const admin_entity_1 = require("./admin/admin.entity");
 const client_service_1 = require("./client/client.service");
 const nutritionist_service_1 = require("./nutritionist/nutritionist.service");
 const recipe_entity_1 = require("../recipe/recipe-entity");
+const nutritionist_controller_1 = require("./nutritionist/nutritionist.controller");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;
 exports.UserModule = UserModule = __decorate([
     (0, common_1.Module)({
-        controllers: [],
+        controllers: [nutritionist_controller_1.NutritionistController],
         providers: [user_service_1.UserService, client_service_1.ClientService, nutritionist_service_1.NutritionistService],
         imports: [
             typeorm_1.TypeOrmModule.forFeature([

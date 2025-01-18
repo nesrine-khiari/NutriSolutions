@@ -41,10 +41,9 @@ export class RecipesListComponent {
       next: (recipes) => {
         this.recipes = recipes;
       },
-      error: (err) => {
-        this.toastr.error(`
-          Il y a une erreur dans le serveur merci de
-          contacter l'admin :(`);
+      error: (error) => {
+        const errorMessage = error?.error?.message || 'An error occurred';
+        this.toastr.error(errorMessage, 'Error');
       },
     });
   }

@@ -20,7 +20,8 @@ import * as path from 'path';
 import { existsSync } from 'fs';
 import { Response } from 'express';
 import { Public } from 'src/auth/guards/auth.guard';
-@Public()
+import { Roles } from 'src/auth/guards/role.guard';
+import { UserRoleEnum } from 'src/enums/user-enums';
 @Controller('recipes')
 export class RecipeController {
   constructor(private readonly recipesService: RecipesService) {}
@@ -29,7 +30,7 @@ export class RecipeController {
   async create(@Body() createRecipeDto: CreateRecipeDto) {
     return this.recipesService.create(createRecipeDto);
   }
-
+  @Roles(UserRoleEnum.NUTRITIONIST)
   @Get()
   async findAll() {
     return this.recipesService.findAll();

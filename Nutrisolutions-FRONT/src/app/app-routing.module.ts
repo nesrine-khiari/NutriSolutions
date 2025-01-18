@@ -14,6 +14,7 @@ import { HomePageComponent } from './features/home/home-page/home-page.component
 import { HomeNutritionisteComponent } from './features/home/home-nutritioniste/home-nutritioniste.component';
 import { AddRecipeComponent } from './features/recipes/add-recipe/add-recipe.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { UserRoleEnum } from './models/client.model';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -23,7 +24,7 @@ const routes: Routes = [
   {
     path: 'nutritionists',
     component: NutritionistsListComponent,
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'recipes',
@@ -33,37 +34,32 @@ const routes: Routes = [
   {
     path: 'planning/:nutritionistId',
     component: PlanningComponent,
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'profile',
     component: ProfilePageComponent,
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'admin-home',
     component: AdminHomeComponent,
-    // canActivate: [authGuard, roleGuard],
-    data: { roles: ['admin'] },
+    canActivate: [authGuard, roleGuard],
+    data: { roles: [UserRoleEnum.ADMIN] },
   },
   {
     path: 'client-home',
     component: HomePageComponent,
-    // canActivate: [authGuard, roleGuard],
-    data: { roles: ['client'] },
+    canActivate: [authGuard, roleGuard],
+    data: { roles: [UserRoleEnum.CLIENT] },
   },
   {
     path: 'nutritionist-home',
     component: HomeNutritionisteComponent,
-    // canActivate: [authGuard, roleGuard],
-    data: { roles: ['nutritionist'] },
+    canActivate: [authGuard, roleGuard],
+    data: { roles: [UserRoleEnum.NUTRITIONIST] },
   },
-  {
-    path: 'add-recipe',
-    component: AddRecipeComponent,
-    // canActivate: [authGuard, roleGuard],
-    data: { roles: ['nutritionist'] },
-  },
+
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

@@ -32,16 +32,15 @@ let AuthGuard = class AuthGuard {
         const request = context.switchToHttp().getRequest();
         const token = (0, guards_utils_1.extractTokenFromHeader)(request);
         if (!token) {
-            throw new common_1.UnauthorizedException();
+            throw new common_1.UnauthorizedException('You need to be authenticated1');
         }
         try {
             const payload = await this.jwtService.verifyAsync(token, {
                 secret: this.configService.get('JWT_SECRET'),
             });
-            request['user'] = payload;
         }
         catch {
-            throw new common_1.UnauthorizedException();
+            throw new common_1.UnauthorizedException('You need to be authenticated2');
         }
         return true;
     }

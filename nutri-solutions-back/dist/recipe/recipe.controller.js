@@ -17,7 +17,8 @@ const common_1 = require("@nestjs/common");
 const recipe_service_1 = require("./recipe.service");
 const create_recipe_dto_1 = require("./dtos/create-recipe.dto");
 const update_recipe_dto_1 = require("./dtos/update-recipe.dto");
-const auth_guard_1 = require("../auth/guards/auth.guard");
+const role_guard_1 = require("../auth/guards/role.guard");
+const user_enums_1 = require("../enums/user-enums");
 let RecipeController = class RecipeController {
     constructor(recipesService) {
         this.recipesService = recipesService;
@@ -47,6 +48,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], RecipeController.prototype, "create", null);
 __decorate([
+    (0, role_guard_1.Roles)(user_enums_1.UserRoleEnum.NUTRITIONIST),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -75,7 +77,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], RecipeController.prototype, "remove", null);
 exports.RecipeController = RecipeController = __decorate([
-    (0, auth_guard_1.Public)(),
     (0, common_1.Controller)('recipes'),
     __metadata("design:paramtypes", [recipe_service_1.RecipesService])
 ], RecipeController);
