@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ClientModel } from 'src/app/models/client.model';
 
 @Component({
   selector: 'app-health-infos',
@@ -6,12 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./health-infos.component.css'],
 })
 export class HealthInfosComponent {
-  weight: string = '50';
-  height: string = '170';
-
+  @Input({ required: true }) client!: ClientModel;
   calculateBMI(): number {
-    const weightKg = parseFloat(this.weight);
-    const heightM = parseFloat(this.height) / 100; // Convert height to meters
+    const weightKg = this.client.weight;
+    const heightM = this.client.height / 100; // Convert height to meters
 
     if (!weightKg || !heightM) {
       throw new Error('Invalid weight or height values');

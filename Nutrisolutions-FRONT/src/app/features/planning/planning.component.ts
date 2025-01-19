@@ -140,9 +140,7 @@ export class PlanningComponent {
       slots[index].color = color;
     }
   }
-  getInitials(fullName: string) {
-    return AppUtils.getInitials(fullName);
-  }
+
 }
 
 export interface Slot {

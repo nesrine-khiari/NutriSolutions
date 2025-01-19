@@ -9,10 +9,7 @@
   <app-top-list [title]="'Les meilleurs nutritionistes'">
     <app-nutritionist-item
       *ngFor="let nutritionist of bestNutritionists"
-      [name]="nutritionist.name"
-      [imgUrl]="nutritionist.profilePictureUrl"
-      [patientsNumber]="nutritionist.patientsNumber"
-      [yearsOfExperience]="nutritionist.experienceYears"
+      [nutritionist]="nutritionist"
     ></app-nutritionist-item>
   </app-top-list>
 </app-page-background>

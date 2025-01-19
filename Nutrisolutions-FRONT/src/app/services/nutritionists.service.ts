@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { NutritionistModel } from '../models/nutritionist.model';
+import { NutritionistModel, StatusEnum } from '../models/nutritionist.model';
 // import { generateFakeNutritionist } from '../core/helpers/faker.helper';
 import { APP_API } from '../core/constants/constants.config';
 import { HttpClient } from '@angular/common/http';
@@ -34,11 +34,11 @@ export class NutritionistsService {
   // }
   updateNutritionist(
     id: string,
-    nutritionnist: NutritionistModel
+    nutritionist: NutritionistModel
   ): Observable<NutritionistModel> {
     return this.http.patch<NutritionistModel>(
       `${this.apiUrl}/${id}`,
-      nutritionnist
+      nutritionist
     );
   }
 

@@ -114,7 +114,7 @@ span.name {
 
 .stats {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: clamp(5px, 2vw, 10px);
   padding: clamp(3px, 1vw, 5px) clamp(5px, 2vw, 10px);
 }

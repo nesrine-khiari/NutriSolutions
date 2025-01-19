@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
@@ -12,7 +17,7 @@ export class UserService {
     @InjectRepository(UserEntity)
     protected readonly userRepository: Repository<UserEntity>,
   ) {}
-
+  private readonly logger = new Logger(UserService.name);
   async findAll(): Promise<UserEntity[]> {
     return this.userRepository.find();
   }
@@ -32,14 +37,33 @@ export class UserService {
     return user;
   }
   async create(createDto: CreateUserDto): Promise<UserEntity> {
-    if (createDto.password) {
-      // Hash the password before saving
-      const salt = await bcrypt.genSalt();
-      createDto.password = await bcrypt.hash(createDto.password, salt);
-    }
+    try {
+      // Hash the password if provided
+      if (createDto.password) {
+        const salt = await bcrypt.genSalt();
+        createDto.password = await bcrypt.hash(createDto.password, salt);
+      }
 
-    const newEntity = this.userRepository.create(createDto);
-    return this.userRepository.save(newEntity);
+      // Create a new entity from the DTO
+      const newEntity = this.userRepository.create(createDto);
+
+      // Save the entity and wait for the operation to complete
+      const savedEntity = await this.userRepository.save(newEntity);
+
+      // Return the saved entity
+      return savedEntity;
+    } catch (error) {
+      // Log the error for debugging
+      this.logger.error('Error creating user:', error);
+
+      // Handle PostgreSQL unique constraint violations
+      if (error.code === '23505') {
+        throw new ConflictException('Email already exists');
+      }
+
+      // Rethrow any other errors
+      throw error;
+    }
   }
   async update(id: string, updateUserDto: UpdateUserDto): Promise<UserEntity> {
     const user = await this.findOne(id); // Ensure client exists

@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { AppUtils } from 'src/app/core/utils/functions.utils';
 import {
   CategoryEnum,
   ObjectifEnum,
@@ -42,8 +43,7 @@ export class RecipesListComponent {
         this.recipes = recipes;
       },
       error: (error) => {
-        const errorMessage = error?.error?.message || 'An error occurred';
-        this.toastr.error(errorMessage, 'Error');
+        this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
       },
     });
   }

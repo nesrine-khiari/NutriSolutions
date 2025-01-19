@@ -10,7 +10,7 @@ export class UserModel {
     public gender: GenderEnum,
     public birthDate: Date,
     public role: UserRoleEnum,
-    private id?: string
+    public id?: string
   ) {}
 
   getPass() {

@@ -1,15 +1,20 @@
 import {
   Controller,
+  Get,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
+  Res,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { extname, join } from 'path';
 import { Public } from 'src/auth/guards/auth.guard';
 import { v4 as uuidv4 } from 'uuid';
+import { Response } from 'express';
 
 const createFileInterceptorOptions = (
   destination: string,
@@ -23,9 +28,7 @@ const createFileInterceptorOptions = (
     },
   }),
   fileFilter: (req, file, callback) => {
-    if (
-      !allowedExtensions.includes(extname(file.originalname).toLowerCase())
-    ) {
+    if (!allowedExtensions.includes(extname(file.originalname).toLowerCase())) {
       return callback(
         new Error(`Only ${allowedExtensions.join(', ')} files are allowed!`),
         false,
@@ -63,8 +66,25 @@ export class FileUploadController {
       path: `/uploads/files/${file.filename}`,
     };
   }
-}
-function isPublic(): (target: typeof FileUploadController) => void | typeof FileUploadController {
+  @Get('/:filename')
+  async getFile(@Param('filename') filename: string, @Res() res: Response) {
+    // Make sure to construct the file path with 'uploads/files/'
+    const filePath = join(__dirname,'..', '..', '..', 'uploads', 'files', filename);
+
+    // Validate the filename
+    if (!filename) {
+      throw new HttpException('Filename is required', HttpStatus.BAD_REQUEST);
+    }
+
+    // Check if the file exists before trying to send it
+    try {
+      res.sendFile(filePath);  // Send the file from the correct directory
+    } catch (error) {
+      throw new HttpException('File not found', HttpStatus.NOT_FOUND);
+    }
+  }}
+function isPublic(): (
+  target: typeof FileUploadController,
+) => void | typeof FileUploadController {
   throw new Error('Function not implemented.');
 }
-

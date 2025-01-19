@@ -38,10 +38,10 @@
           [innerHTML]="highlightText(nutritionist.name, searchControl.value)"
         ></td>
         <td
-          [innerHTML]="highlightText(nutritionist.address, searchControl.value)"
+          [innerHTML]="highlightText(nutritionist.location, searchControl.value)"
         ></td>
         <td
-          [innerHTML]="highlightText(nutritionist.phone, searchControl.value)"
+          [innerHTML]="highlightText(nutritionist.phoneNumber, searchControl.value)"
         ></td>
         <td
           [innerHTML]="highlightText(nutritionist.email, searchControl.value)"
@@ -50,22 +50,13 @@
         </td>
 
         <td>
-          <a [href]="nutritionist.certificate" download>
-            <div class="certificate-container">
-              <img
-                src="assets/images/pdf-file.png"
-                alt="Download"
-                class="icon"
-              />
-              <span>{{ nutritionist.certificate }}</span>
-              <img
-                src="assets/images/download-icon.png"
-                alt="Download"
-                class="icon"
-              />
-            </div>
-          </a>
+          <div class="certificate-container" (click)="downloadCertificate(nutritionist.certificateUrl.split('/').pop())">
+            <img src="assets/images/pdf-file.png" alt="Download" class="icon" />
+            <span>{{ nutritionist.certificate }}</span>
+            <img src="assets/images/download-icon.png" alt="Download" class="icon" />
+          </div>
         </td>
+        
 
         <td>
           <div [ngSwitch]="nutritionist.status">

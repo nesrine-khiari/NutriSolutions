@@ -5,4 +5,6 @@ export const APP_API = {
 export const APP_CONST = {
   tokenLocalStorage: 'accessToken',
   role: 'role',
+  payloadIdKey: 'sub',
+  defaultImageUrl: 'assets/images/avatar.png',
 };

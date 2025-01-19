@@ -32,7 +32,7 @@ const routes: Routes = [
       import('./features/recipes/recipes.module').then((m) => m.RecipesModule),
   },
   {
-    path: 'planning/:nutritionistId',
+    path: 'nutritionnists/:nutritionistId/planning',
     component: PlanningComponent,
     canActivate: [authGuard],
   },

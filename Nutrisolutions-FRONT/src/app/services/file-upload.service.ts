@@ -16,10 +16,7 @@ export class FileUploadService {
     formData.append('file', image);
     console.log(formData.get('file'));
 
-    return this.http.post<FileUploadResponse>(
-      `${this.apiUrl}/image`,
-      formData
-    );
+    return this.http.post<FileUploadResponse>(`${this.apiUrl}/image`, formData);
   }
   uploadFile(file: File): Observable<FileUploadResponse> {
     var formData: FormData = new FormData();
@@ -27,6 +24,9 @@ export class FileUploadService {
     console.log(formData.get('file'));
 
     return this.http.post<FileUploadResponse>(`${this.apiUrl}/file`, formData);
+  }
+  downloadCertificate(filename: string): Observable<Blob> {
+    return this.http.get(this.apiUrl +'/'+ filename, { responseType: 'blob' });
   }
 }
 export interface FileUploadResponse {

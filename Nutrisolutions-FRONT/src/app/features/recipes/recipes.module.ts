@@ -28,7 +28,9 @@ const routes: Routes = [
     path: 'edit-recipe',
     component: AddRecipeComponent,
     canActivate: [authGuard, roleGuard],
-    data: { roles: [UserRoleEnum.NUTRITIONIST] },
+    data: { roles: [UserRoleEnum.NUTRITIONIST]
+      
+     },
   },
   {
     path: 'recipe-details/:id',
