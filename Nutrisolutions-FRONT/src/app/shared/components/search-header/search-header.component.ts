@@ -1,5 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { APP_API, APP_CONST } from 'src/app/core/constants/constants.config';
+import { UserModel } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-search-header',
@@ -8,6 +13,25 @@ import { FormControl } from '@angular/forms';
 })
 export class SearchHeaderComponent {
   @Input() formControlName: FormControl = new FormControl('');
-  @Input() name: string = 'Charles Doe';
-  @Input() imageUrl: string = 'assets/images/avatar.png';
+  base_url = APP_API.base_url;
+  defaultImage = APP_CONST.defaultImageUrl;
+  user: UserModel | undefined = undefined;
+  authService = inject(AuthService);
+  toastr = inject(ToastrService);
+  ngOnInit() {
+    this.authService.getUserInfos()?.subscribe({
+      next: (response: UserModel) => {
+        this.user = response;
+      },
+      error: (error) => {
+        // Error callback
+        this.toastr.error('Error fetching user', 'Error');
+      },
+    });
+  }
+  router = inject(Router);
+  signout = (): void => {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  };
 }

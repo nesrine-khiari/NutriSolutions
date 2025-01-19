@@ -4,10 +4,12 @@ import { NutritionistModel } from '../models/nutritionist.model';
 import { ToastrService } from 'ngx-toastr';
 import { UserModel } from '../models/user.model';
 import { APP_API, APP_CONST } from '../core/constants/constants.config';
-import { Observable } from 'rxjs';
+import { Observable, subscribeOn } from 'rxjs';
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AppUtils } from '../core/utils/functions.utils';
+import { ClientService } from './client.service';
+import { NutritionistsService } from './nutritionists.service';
 
 @Injectable({
   providedIn: 'root',
@@ -57,6 +59,7 @@ export class AuthService {
         const user = response.user as UserModel;
         localStorage.setItem(APP_CONST.tokenLocalStorage, token);
         localStorage.setItem(APP_CONST.role, user.role);
+        localStorage.setItem(APP_CONST.payloadIdKey, user.id!);
         console.log('====================================');
         console.log('role is', user.role);
         console.log('====================================');
@@ -87,6 +90,22 @@ export class AuthService {
   }
 
   getUserRole(): string {
-    return localStorage.getItem('role') || 'client';
+    return localStorage.getItem(APP_CONST.role) || 'client';
+  }
+  getUserId(): string {
+    return localStorage.getItem(APP_CONST.payloadIdKey) || '';
+  }
+  clientService = inject(ClientService);
+  nutritionistService = inject(NutritionistsService);
+
+  getUserInfos(): Observable<UserModel> | undefined {
+    const role = this.getUserRole();
+    if (role === UserRoleEnum.CLIENT) {
+      return this.clientService.getClientById(this.getUserId());
+    } else if (role === UserRoleEnum.NUTRITIONIST) {
+      return this.nutritionistService.getNutritionistById(this.getUserId());
+    } else {
+      return undefined;
+    }
   }
 }

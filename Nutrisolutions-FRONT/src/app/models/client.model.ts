@@ -35,7 +35,7 @@ export class ClientModel extends UserModel {
    * Calculates the age of the client based on their birth date.
    * @returns The calculated age as a number.
    */
-  getAge(): number {
+  getClientAge(): number {
     const today = new Date();
     const birthDate = new Date(this.birthDate);
     let age = today.getFullYear() - birthDate.getFullYear();

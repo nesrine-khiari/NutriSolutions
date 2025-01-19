@@ -12,7 +12,7 @@ export class UpcomingPatientComponent {
   @Input() isFirst: boolean = false;
   @Input({ required: true }) patient!: ClientModel;
   @Input() index: number = 0;
-
+  age = AppUtils.getAge(this.patient.birthDate);
   styleObject: { backgroundColor: string; borderColor: string } = {
     backgroundColor: AppUtils.getCssVariable('--light-green'),
     borderColor: AppUtils.getCssVariable('--secondary-color'),

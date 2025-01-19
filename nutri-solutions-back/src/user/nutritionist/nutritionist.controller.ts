@@ -23,21 +23,21 @@ export class NutritionistController {
     return this.nutritionistService.findAll();
   }
 
-  //   @Get(':id')
-  //   async findOne(@Param('id') id: string): Promise<Nutritionist> {
-  //     return this.nutritionistService.findOne(id);
-  //   }
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<Nutritionist> {
+    return this.nutritionistService.findOne(id);
+  }
 
   //   @Delete(':id')
   //   async remove(@Param('id') id: string): Promise<void> {
   //     return this.nutritionistService.remove(id);
   //   }
 
-    @Patch(':id')
-    async update(
-      @Param('id') id: string,
-      @Body() updateNutritionistDto: UpdateNutritionistDto,
-    ): Promise<Nutritionist> {
-      return this.nutritionistService.update(id, updateNutritionistDto);
-    }
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateNutritionistDto: UpdateNutritionistDto,
+  ): Promise<Nutritionist> {
+    return this.nutritionistService.update(id, updateNutritionistDto);
+  }
 }
