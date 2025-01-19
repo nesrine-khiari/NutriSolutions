@@ -86,7 +86,7 @@ export class PlanningComponent {
         const date = new Date(
           selectedDate.setDate(selectedDate.getDate() + difference)
         );
-
+        //  if(this.reservedSlots.some(slot => slot.date?.toDateString() === date.toDateString() && slot.time === timeSlots[index % timeSlots.length])){}
         return {
           id: index,
           date: date,
@@ -140,7 +140,6 @@ export class PlanningComponent {
       slots[index].color = color;
     }
   }
-
 }
 
 export interface Slot {

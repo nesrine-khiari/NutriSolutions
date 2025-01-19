@@ -20,7 +20,7 @@ import { RecipesService } from 'src/app/services/recipe.service';
 export class RecipesListComponent {
   recipes: RecipeModel[] = [];
   currentPage: number = 0;
-
+  isLoading: boolean = true;
   updatePage(index: number) {
     this.currentPage = index;
     //api call for next page
@@ -41,9 +41,14 @@ export class RecipesListComponent {
     this.recipesService.getAllRecipes().subscribe({
       next: (recipes) => {
         this.recipes = recipes;
+        // H
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 1000);
       },
       error: (error) => {
         this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+        this.isLoading = false; // H
       },
     });
   }

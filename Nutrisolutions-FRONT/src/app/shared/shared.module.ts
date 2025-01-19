@@ -20,6 +20,7 @@ import { InputFieldComponent } from './components/input-field/input-field.compon
 import { RecipeDescriptionComponent } from './components/recipe-description/recipe-description.component';
 import { SearchHeaderComponent } from './components/search-header/search-header.component';
 import { RouterModule } from '@angular/router';
+import { PreloaderComponent } from './components/preloader/preloader.component';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -40,6 +41,7 @@ import { RouterModule } from '@angular/router';
     InputFieldComponent,
     RecipeDescriptionComponent,
     SearchHeaderComponent,
+    PreloaderComponent,
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   exports: [
@@ -61,6 +63,7 @@ import { RouterModule } from '@angular/router';
     InputFieldComponent,
     RecipeDescriptionComponent,
     SearchHeaderComponent,
+    PreloaderComponent,
   ],
 })
 export class SharedModule {}
