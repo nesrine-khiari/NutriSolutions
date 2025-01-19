@@ -1,7 +1,11 @@
 import { Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 // import { generateFakeNutritionist } from 'src/app/core/helpers/faker.helper';
 import { AppUtils } from 'src/app/core/utils/functions.utils';
+import { SlotModel } from 'src/app/models/slot.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { PlanningService } from 'src/app/services/planning.service';
 
 @Component({
   selector: 'app-planning',
@@ -12,6 +16,8 @@ import { AppUtils } from 'src/app/core/utils/functions.utils';
   ],
 })
 export class PlanningComponent {
+  actRoute = inject(ActivatedRoute);
+  nutritionistId = this.actRoute.snapshot.params['nutritionistId'];
   timeSlots: string[] = [
     '8:00',
     '9:00',
@@ -50,6 +56,21 @@ export class PlanningComponent {
     'Samedi',
   ];
   ngOnInit() {
+    this.planningService.getReservedSlots(this.nutritionistId).subscribe({
+      next: (slots) => {
+        this.reservedSlots = slots.map((slot) => {
+          return {
+            date: new Date(slot.date),
+            day: slot.day,
+            time: slot.time,
+            isReserved: true,
+            reservedBy: slot.clientId,
+            color: '#FFAD80',
+          };
+        });
+        this.updateSlots(this.selectedDate.toDateString());
+      },
+    });
     this.updateSlots(this.selectedDate.toDateString());
   }
   updateSlots(selectedDate: string) {
@@ -86,14 +107,21 @@ export class PlanningComponent {
         const date = new Date(
           selectedDate.setDate(selectedDate.getDate() + difference)
         );
-        //  if(this.reservedSlots.some(slot => slot.date?.toDateString() === date.toDateString() && slot.time === timeSlots[index % timeSlots.length])){}
+        const reservedBy =
+          this.reservedSlots.find(
+            (slot) =>
+              slot.date?.toDateString() === date.toDateString() &&
+              slot.time === timeSlots[index % timeSlots.length]
+          )?.reservedBy ?? '';
+        console.log('Reserved Slots', this.reservedSlots);
+        console.log(reservedBy);
+
         return {
-          id: index,
           date: date,
           day: this.workDaysOfWeek[dayIndex],
           time: timeSlots[index % timeSlots.length],
-          isReserved: false,
-          reservedBy: '',
+          isReserved: reservedBy !== '',
+          reservedBy: reservedBy,
           color: '#ebebeb',
         };
       });
@@ -114,6 +142,8 @@ export class PlanningComponent {
     // Return the color in rgb format
     return pickedSlotColors[randomIndex];
   }
+  planningService = inject(PlanningService);
+  authService = inject(AuthService);
   pickSlot(
     index: number,
     userName: string = 'Houcem Hbiri',
@@ -122,31 +152,45 @@ export class PlanningComponent {
     const slots = isMorning ? this.morningSlots : this.afternoonSlots;
     const slot = slots[index];
     if (slot && !slot.isReserved) {
-      slot.isReserved = true;
-      slot.reservedBy = userName;
-      var neighboursColors = [];
+      const slotModel = new SlotModel(
+        slot.date,
+        slot.day,
+        slot.time,
+        this.authService.getUserId(),
+        this.nutritionistId
+      );
+      this.planningService.reserveSlot(slotModel).subscribe({
+        next: (reservedSlot) => {
+          slot.isReserved = true;
+          slot.reservedBy = this.authService.getUserName();
+          var neighboursColors = [];
 
-      if (index % 4 > 0) {
-        neighboursColors.push(slots[index - 1].color);
-      }
-      if (index % 4 < 7) {
-        neighboursColors.push(slots[index + 1].color);
-      }
+          if (index % 4 > 0) {
+            neighboursColors.push(slots[index - 1].color);
+          }
+          if (index % 4 < 7) {
+            neighboursColors.push(slots[index + 1].color);
+          }
 
-      if (index + 4 < slots.length)
-        neighboursColors.push(slots[index + 4].color);
-      if (index - 4 >= 0) neighboursColors.push(slots[index - 4].color);
-      const color = this.getRandomCoolColor(neighboursColors);
-      slots[index].color = color;
+          if (index + 4 < slots.length)
+            neighboursColors.push(slots[index + 4].color);
+          if (index - 4 >= 0) neighboursColors.push(slots[index - 4].color);
+          const color = this.getRandomCoolColor(neighboursColors);
+          slots[index].color = color;
+          this.toastr.success('Slot Reserved Successfully');
+        },
+        error: (error) => {
+          this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+        },
+      });
     }
   }
 }
 
 export interface Slot {
-  id: number;
-  date: Date | null;
-  day: string | null;
-  time: string | null;
+  date: Date;
+  day: string;
+  time: string;
   isReserved: boolean;
   reservedBy: string;
   color: string;

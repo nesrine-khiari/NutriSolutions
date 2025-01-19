@@ -52,10 +52,10 @@ export class ReservedSlotService {
    * Retrieve all reserved slots with related client and nutritionist information.
    * @returns A list of all reserved slots.
    */
-  async findAll(): Promise<ReservedSlot[]> {
-    return this.reservedSlotRepository.find({
-      relations: ['client', 'nutritionist'],
-    });
+  async findAllByNutritionist(id: string): Promise<ReservedSlot[]> {
+    const nutritionist = await this.nutritionistService.findOne(id);
+    const reservedSlots = nutritionist.reservedSlots;
+    return reservedSlots;
   }
 
   /**

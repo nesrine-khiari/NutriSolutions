@@ -58,10 +58,7 @@ export class ClientService extends UserService {
   // }
 
   // Add a favorite recipe for a client
-  async addFavoriteRecipe(
-    clientId: string,
-    recipeId: string,
-  ): Promise<Client> {
+  async addFavoriteRecipe(clientId: string, recipeId: string): Promise<Client> {
     const client = await this.findOneById(clientId); // Ensure client exists
     const recipe = await this.recipeRepository.findOne({
       where: { id: recipeId },

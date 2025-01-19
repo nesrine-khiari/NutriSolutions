@@ -13,8 +13,7 @@ import { ReservedSlotService } from './reserved-slot.service';
 import { CreateSlotDto } from '../dtos/create-slot.dto';
 import { ReservedSlot } from '../reserved-slot.entity';
 
-
-@Controller('reserved-slots')
+@Controller('planning')
 export class ReservedSlotController {
   constructor(private readonly reservedSlotService: ReservedSlotService) {}
 
@@ -32,9 +31,11 @@ export class ReservedSlotController {
    * Get all reserved slots
    * @returns A list of all reserved slots
    */
-  @Get()
-  async findAll(): Promise<ReservedSlot[]> {
-    return this.reservedSlotService.findAll();
+  @Get(':nutritionistId')
+  async findAll(
+    @Param('nutritionistId') nutritionistId: string,
+  ): Promise<ReservedSlot[]> {
+    return this.reservedSlotService.findAllByNutritionist(nutritionistId);
   }
 
   /**

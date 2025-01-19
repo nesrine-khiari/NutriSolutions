@@ -60,6 +60,7 @@ export class AuthService {
         localStorage.setItem(APP_CONST.tokenLocalStorage, token);
         localStorage.setItem(APP_CONST.role, user.role);
         localStorage.setItem(APP_CONST.payloadIdKey, user.id!);
+        localStorage.setItem(APP_CONST.nameLocalStorage, user.name!);
         console.log('====================================');
         console.log('role is', user.role);
         console.log('====================================');
@@ -94,6 +95,9 @@ export class AuthService {
   }
   getUserId(): string {
     return localStorage.getItem(APP_CONST.payloadIdKey) || '';
+  }
+  getUserName(): string {
+    return localStorage.getItem(APP_CONST.nameLocalStorage) || '';
   }
   clientService = inject(ClientService);
   nutritionistService = inject(NutritionistsService);

@@ -22,9 +22,14 @@ export class NutritionistService extends UserService {
   }
 
   async findOne(id: string): Promise<Nutritionist> {
-    const user = await this.nutritionistRepository.findOneBy({ id } as any);
+    const user = await this.nutritionistRepository.findOne({
+      where: { id },
+      relations: ['reservedSlots'],
+    });
     if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`);
+      throw new NotFoundException(
+        `User with ID ${JSON.stringify(id)} not found`,
+      );
     }
     return user;
   }
