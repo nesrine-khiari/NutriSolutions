@@ -8,10 +8,12 @@ import {
   ManyToMany,
   JoinTable,
   ChildEntity,
+  OneToMany,
 } from 'typeorm';
 import { UserEntity } from '../user.entity';
 import { ActivityLevelEnum, ObjectifEnum } from 'src/enums/recipe-enums';
 import { RecipeEntity } from 'src/recipe/recipe-entity';
+import { ReservedSlot } from 'src/planning/reserved-slot.entity';
 
 @ChildEntity()
 export class Client extends UserEntity {
@@ -41,4 +43,8 @@ export class Client extends UserEntity {
     inverseJoinColumn: { name: 'recipe_id', referencedColumnName: 'id' },
   })
   favoriteRecipes: RecipeEntity[];
+
+  
+  @OneToMany(() => ReservedSlot, (reservedSlot) => reservedSlot.client)
+  reservedSlots: ReservedSlot[];
 }

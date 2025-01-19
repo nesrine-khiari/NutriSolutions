@@ -22,9 +22,9 @@ export class HomePageComponent {
       this.recetRecipes = recipes.slice(0, 4);
     });
     this.nutritionistsService
-      .getAllNutritionists()
+      .getBestNutritionists()
       .subscribe((nutritionists: NutritionistModel[]) => {
-        this.bestNutritionists = nutritionists.slice(0, 4);
+        this.bestNutritionists = nutritionists;
       });
   }
 

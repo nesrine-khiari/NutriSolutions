@@ -22,11 +22,15 @@ export class NutritionistController {
   async findAll(): Promise<Nutritionist[]> {
     return this.nutritionistService.findAll();
   }
-
+  @Get('top')
+  async getBestNutritionists(): Promise<Nutritionist[]> {
+    return this.nutritionistService.getBestNutritionists();
+  }
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Nutritionist> {
     return this.nutritionistService.findOne(id);
   }
+
 
   //   @Delete(':id')
   //   async remove(@Param('id') id: string): Promise<void> {

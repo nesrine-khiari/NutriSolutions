@@ -21,6 +21,9 @@ export class NutritionistsService {
   getAllNutritionists(): Observable<NutritionistModel[]> {
     return this.http.get<NutritionistModel[]>(this.apiUrl);
   }
+  getBestNutritionists(): Observable<NutritionistModel[]> {
+    return this.http.get<NutritionistModel[]>(this.apiUrl+'/top');
+  }
   getNutritionistById(id: string): Observable<NutritionistModel> {
     return this.http.get<NutritionistModel>(`${this.apiUrl}/${id}`);
   }

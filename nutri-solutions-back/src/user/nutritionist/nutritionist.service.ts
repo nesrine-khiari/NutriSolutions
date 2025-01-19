@@ -36,6 +36,15 @@ export class NutritionistService extends UserService {
     Object.assign(user, updateNutritionistDto); // Merge updates
     return this.userRepository.save(user);
   }
+  async getBestNutritionists(): Promise<Nutritionist[]> {
+    return this.nutritionistRepository
+      .createQueryBuilder('nutritionist')
+      .where('nutritionist.stars >= :stars', { stars: 4 })
+      .orderBy('nutritionist.stars', 'DESC')
+      .take(4)
+      .getMany();
+  }
+
   // Create a new client
   // async create(
   //   createNutritionistDto: CreateNutritionistDto,

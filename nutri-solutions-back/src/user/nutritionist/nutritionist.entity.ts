@@ -7,9 +7,11 @@ import {
   ManyToMany,
   JoinTable,
   ChildEntity,
+  OneToMany,
 } from 'typeorm';
 import { UserEntity } from '../user.entity';
 import { NutritionistStatusEnum } from 'src/enums/user-enums';
+import { ReservedSlot } from 'src/planning/reserved-slot.entity';
 
 @ChildEntity()
 export class Nutritionist extends UserEntity {
@@ -29,4 +31,7 @@ export class Nutritionist extends UserEntity {
   status: NutritionistStatusEnum;
   @Column({default: 4})
   stars: number;
+
+  @OneToMany(() => ReservedSlot, (reservedSlot) => reservedSlot.nutritionist)
+    reservedSlots: ReservedSlot[];
 }
