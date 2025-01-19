@@ -16,30 +16,28 @@
               <h3>{{ item.content }}</h3>
             </div>
           </div>
+          <div class="button-container">
+            <!-- <button class="recipe-button">
+              <img src="assets/images/downloads.png" alt="Button Icon" />
+              Download recipe
+            </button> -->
+            <button *ngIf="role=='Nutritionist'" class="recipe-button" (click)="deleteRecipe()">
+              <img src="assets/images/delete.png" alt="Button Icon" />
+              Delete recipe
+            </button>
+            <button *ngIf="showFavoriteButton() " class="recipe-button" (click)="addToFavourite()">
+              <img src="assets/images/favourite.png" alt="Button Icon" />
+              Add to favorite
+            </button>
+            <button *ngIf="role=='Nutritionist'" class="recipe-button" [routerLink]="'../../edit-recipe'"
+              [state]="{ recipe: recipe }">
+              <img src="assets/images/question.png" alt="Button Icon" />
+              Edit Recipe
+            </button>
+          </div>
         </div>
       </div>
-      <div class="button-container">
-        <!-- <button class="recipe-button">
-          <img src="assets/images/downloads.png" alt="Button Icon" />
-          Download recipe
-        </button> -->
-        <button class="recipe-button" (click)="deleteRecipe()">
-          <img src="assets/images/delete.png" alt="Button Icon" />
-          Delete recipe
-        </button>
-        <button class="recipe-button">
-          <img src="assets/images/favourite.png" alt="Button Icon" />
-          Add to favorite
-        </button>
-        <button
-          class="recipe-button"
-          [routerLink]="'../../edit-recipe'"
-          [state]="{ recipe: recipe }"
-        >
-          <img src="assets/images/question.png" alt="Button Icon" />
-          Edit Recipe
-        </button>
-      </div>
+
       <div class="separation-line"></div>
       <div class="second-section-recipe">
         <div class="recipe-detail-item">
@@ -53,14 +51,10 @@
             </li>
           </ul>
         </div>
-        <app-recipe-details-item
-          [title]="'Instructions :'"
-          [details]="recipe?.instructions || []"
-        ></app-recipe-details-item>
-        <app-recipe-details-item
-          [title]="'Cooking Notes :'"
-          [details]="recipe?.cookingNotes || []"
-        ></app-recipe-details-item>
+        <app-recipe-details-item [title]="'Instructions :'"
+          [details]="recipe?.instructions || []"></app-recipe-details-item>
+        <app-recipe-details-item [title]="'Cooking Notes :'"
+          [details]="recipe?.cookingNotes || []"></app-recipe-details-item>
       </div>
     </div>
   </app-svg-box>

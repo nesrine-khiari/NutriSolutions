@@ -1,5 +1,5 @@
 <app-svg-box [height]="'100%'" [width]="'100%'">
-  <div class="recette-item" [routerLink]="['recipe-details', recipe.id]">
+  <div class="recette-item" [routerLink]="['/recipes/recipe-details', recipe.id]">
     <div class="recette-img">
       <img [src]="base_url + recipe.imageUrl" alt="" />
     </div>

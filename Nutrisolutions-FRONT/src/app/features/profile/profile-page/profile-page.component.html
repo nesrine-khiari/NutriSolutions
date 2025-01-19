@@ -3,10 +3,8 @@
     <img src="assets/images/profile-bg.png" alt="" />
     <div class="under-img">
       <div class="profile-pic">
-        <app-upload-image
-        [acceptedFileTypes]="'image/*'"
-          [uploadedImage]="'assets/images/avatar.png'"
-        ></app-upload-image>
+        <app-upload-image [acceptedFileTypes]="'image/*'"
+          [uploadedImage]="'assets/images/avatar.png'"></app-upload-image>
       </div>
       <div class="small-details">
         <h3>{{ client?.name }}</h3>
@@ -30,8 +28,8 @@
         </div>
         <div class="favorites">
           <h3>Recettes préférées</h3>
-          <div *ngFor="let recette of recettes" class="propos-item">
-            <img [src]="recette.imageUrl" alt="" />
+          <div *ngFor="let recette of client?.favoriteRecipes" class="propos-item">
+            <img [src]="base_url+ recette.imageUrl" alt="" />
             <p>{{ recette.name }}</p>
           </div>
         </div>

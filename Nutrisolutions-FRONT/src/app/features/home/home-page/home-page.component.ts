@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { NutritionistModel } from 'src/app/models/nutritionist.model';
 import { RecipeModel } from 'src/app/models/recipe.model';
@@ -11,17 +12,27 @@ import { RecipesService } from 'src/app/services/recipe.service';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent {
-  popularRecipes: RecipeModel[] = [];
+  recetRecipes: RecipeModel[] = [];
   bestNutritionists: NutritionistModel[] = [];
   recipesService = inject(RecipesService);
   nutritionistsService = inject(NutritionistsService);
 
   constructor() {
-    this.popularRecipes = this.recipesService.getPopularRecipes();
+    this.recipesService.getAllRecipes().subscribe((recipes: RecipeModel[]) => {
+      this.recetRecipes = recipes.slice(0, 4);
+    });
     this.nutritionistsService
       .getAllNutritionists()
       .subscribe((nutritionists: NutritionistModel[]) => {
         this.bestNutritionists = nutritionists.slice(0, 4);
       });
+  }
+
+  router = inject(Router);
+  navigateToNutritionists() {
+    this.router.navigate(['/nutritionists']);
+  }
+  navigateToRecipes() {
+    this.router.navigate(['/recipes']);
   }
 }

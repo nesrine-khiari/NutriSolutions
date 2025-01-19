@@ -33,4 +33,13 @@ export class ClientService {
   ): Observable<ClientModel> {
     return this.http.patch<ClientModel>(`${this.apiUrl}/${id}`, nutritionnist);
   }
+
+  addRecipeToFavourite(
+    recipeID: string,
+    clientId: string
+  ): Observable<ClientModel> {
+    return this.http.post<ClientModel>(`${this.apiUrl}/${clientId}/favorites`, {
+      recipeId: recipeID,
+    });
+  }
 }
