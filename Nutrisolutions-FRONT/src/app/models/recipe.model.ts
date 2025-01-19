@@ -1,3 +1,5 @@
+import { ClientModel } from './client.model';
+
 export interface RecipeModel {
   id?: string; // Unique identifier for the recipe
   name: string; // Name of the recipe
@@ -15,6 +17,7 @@ export interface RecipeModel {
   carbohydrates: number; // Carbohydrates content in grams
   instructions: string[];
   cookingNotes: string[];
+  favoritedByClient?: ClientModel[];
 }
 
 export enum ObjectifEnum {

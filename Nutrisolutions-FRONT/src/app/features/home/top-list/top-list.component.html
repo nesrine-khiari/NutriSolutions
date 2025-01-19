@@ -2,7 +2,7 @@
   <div class="popular-items-container">
     <div class="popular-items-header">
       <h2>{{ title }}</h2>
-      <app-button [text]="'Voir plus'"></app-button>
+      <app-button [text]="'Voir plus'" [onClick]="onVoirPlusClicked"></app-button>
     </div>
     <div class="popular-items">
       <ng-content></ng-content>

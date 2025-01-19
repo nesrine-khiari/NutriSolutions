@@ -1,6 +1,7 @@
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { AppUtils } from 'src/app/core/utils/functions.utils';
 import {
   ActivityLevelEnum,
   ClientModel,
@@ -271,16 +272,6 @@ export class SignupComponent {
     this.pdfFile = selectedFile;
     this.uploadedFile = selectedFile.name;
   }
-  convertToEnum<T extends Record<string, string>>(
-    enumObj: T,
-    value: string
-  ): T[keyof T] {
-    const enumValues = Object.values(enumObj);
-    const matchedValue = enumValues.find(
-      (enumValue) => enumValue.toLowerCase() === value.toLowerCase()
-    );
-    return matchedValue as T[keyof T];
-  }
 
   createUserModel(): UserModel {
     let user: UserModel;
@@ -291,14 +282,17 @@ export class SignupComponent {
         this.password,
         this.phoneNumber,
         this.uploadedImage,
-        this.convertToEnum(GenderEnum, this.selectedGender),
+        AppUtils.convertToEnum(GenderEnum, this.selectedGender),
         new Date(this.selectedDateControl.value ?? ''),
         UserRoleEnum.CLIENT,
         parseInt(this.selectedTaille),
         parseInt(this.selectedPoids),
         [],
-        this.convertToEnum(ObjectifEnum, this.selectedObjectif),
-        this.convertToEnum(ActivityLevelEnum, this.selectedActiviteJournaliere)
+        AppUtils.convertToEnum(ObjectifEnum, this.selectedObjectif),
+        AppUtils.convertToEnum(
+          ActivityLevelEnum,
+          this.selectedActiviteJournaliere
+        )
       );
     } else {
       user = new NutritionistModel(
@@ -307,7 +301,7 @@ export class SignupComponent {
         this.password,
         this.phoneNumber,
         this.uploadedImage,
-        this.convertToEnum(GenderEnum, this.selectedGender),
+        AppUtils.convertToEnum(GenderEnum, this.selectedGender),
         new Date(this.selectedDateControl.value ?? ''),
         UserRoleEnum.NUTRITIONIST,
         parseInt(this.selectedExperienceYears),

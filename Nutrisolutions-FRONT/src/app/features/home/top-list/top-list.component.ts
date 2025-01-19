@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class TopListComponent {
   @Input() title: string = '';
+  @Input() onVoirPlusClicked: () => void = () => {};
 }

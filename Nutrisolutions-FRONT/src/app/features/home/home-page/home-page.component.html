@@ -1,15 +1,10 @@
 <app-page-background>
   <app-water-tracking></app-water-tracking>
-  <app-top-list [title]="'Les recettes les plus populaires'">
-    <app-recipe-item
-      [recipe]="recipe"
-      *ngFor="let recipe of popularRecipes"
-    ></app-recipe-item>
+  <app-top-list [title]="'Les recettes les plus populaires'" [onVoirPlusClicked]="navigateToRecipes">
+    <app-recipe-item [recipe]="recipe" *ngFor="let recipe of recetRecipes"></app-recipe-item>
   </app-top-list>
-  <app-top-list [title]="'Les meilleurs nutritionistes'">
-    <app-nutritionist-item
-      *ngFor="let nutritionist of bestNutritionists"
-      [nutritionist]="nutritionist"
-    ></app-nutritionist-item>
+  <app-top-list [title]="'Les meilleurs nutritionistes'" [onVoirPlusClicked]="navigateToNutritionists">
+    <app-nutritionist-item *ngFor="let nutritionist of bestNutritionists"
+      [nutritionist]="nutritionist"></app-nutritionist-item>
   </app-top-list>
 </app-page-background>

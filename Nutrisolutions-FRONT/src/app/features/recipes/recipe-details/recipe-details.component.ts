@@ -2,7 +2,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { APP_API } from 'src/app/core/constants/constants.config';
+import { AppUtils } from 'src/app/core/utils/functions.utils';
+import { UserRoleEnum } from 'src/app/models/client.model';
 import { RecipeModel } from 'src/app/models/recipe.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { ClientService } from 'src/app/services/client.service';
 import { RecipesService } from 'src/app/services/recipe.service';
 
 @Component({
@@ -21,6 +25,8 @@ export class RecipeDetailsComponent implements OnInit {
   route = inject(ActivatedRoute);
   router = inject(Router);
   toastr = inject(ToastrService);
+  clientService = inject(ClientService);
+  authService = inject(AuthService);
   buttons = [
     {
       image: 'assets/images/downloads.png',
@@ -54,11 +60,12 @@ export class RecipeDetailsComponent implements OnInit {
   isInstructionChecked(index: number): boolean {
     return this.checkedInstructions.has(index);
   }
-
+  role: string = UserRoleEnum.CLIENT;
   ngOnInit(): void {
     this.recipeId = this.route.snapshot.paramMap.get('id');
     console.log('Recipe ID:', this.recipeId);
     this.loadRecipe(this.recipeId || '');
+    this.role = this.authService.getUserRole();
   }
 
   private loadRecipe(id: string): void {
@@ -74,7 +81,7 @@ export class RecipeDetailsComponent implements OnInit {
     this.items = [
       {
         image: 'assets/images/doctor.png',
-        content: this.recipe.createdBy || 'Unknown',
+        content: 'Dr. ' + this.recipe.createdBy || 'Unknown',
       },
       {
         image: 'assets/images/goal.png',
@@ -119,5 +126,30 @@ export class RecipeDetailsComponent implements OnInit {
         }
       );
     }
+  }
+
+  addToFavourite() {
+    this.clientService
+      .addRecipeToFavourite(this.recipeId!, this.authService.getUserId())
+      .subscribe({
+        next: (client) => {
+          this.toastr.success('Recipe added to favourite');
+        },
+        error: (error) => {
+          this.toastr.error('Error adding recipe to favourite');
+          console.error('Error adding recipe to favourite:', error);
+        },
+      });
+  }
+
+  showFavoriteButton(): boolean {
+    if (this.recipe)
+      return (
+        this.role === UserRoleEnum.CLIENT &&
+        !this.recipe.favoritedByClient?.some(
+          (client) => client.id === this.authService.getUserId()
+        )
+      );
+    return true;
   }
 }

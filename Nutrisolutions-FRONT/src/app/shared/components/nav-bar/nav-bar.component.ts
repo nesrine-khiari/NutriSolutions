@@ -52,11 +52,7 @@ export class NavBarComponent implements AfterViewInit {
       this.menuItems = [
         { title: 'Acceuil', iconClass: 'fas fa-home', route: '/client-home' },
         { title: 'Recettes', iconClass: 'fas fa-utensils', route: '/recipes' },
-        {
-          title: 'Nutritionnistes',
-          iconClass: 'fas fa-user-md',
-          route: '/nutritionists',
-        },
+
         {
           title: 'Messenger',
           iconClass: 'fab fa-facebook-messenger',

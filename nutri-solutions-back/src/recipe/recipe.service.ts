@@ -22,7 +22,11 @@ export class RecipesService {
   }
 
   async findOne(id: string): Promise<RecipeEntity> {
-    const recipe = await this.recipeRepository.findOne({ where: { id } });
+    // Include related favorite recipes
+    const recipe = await this.recipeRepository.findOne({
+      where: { id },
+      relations: ['favoritedByClient'],
+    });
     if (!recipe) {
       throw new NotFoundException(`Recipe with ID ${id} not found`);
     }

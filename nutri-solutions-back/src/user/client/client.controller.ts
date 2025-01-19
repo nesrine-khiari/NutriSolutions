@@ -19,10 +19,10 @@ import { Public } from 'src/auth/guards/auth.guard';
 @Controller('clients')
 export class ClientController {
   constructor(protected readonly clientService: ClientService) {}
-    @Get()
-    async findAll(): Promise<Client[]> {
-      return this.clientService.findAll();
-    }
+  @Get()
+  async findAll(): Promise<Client[]> {
+    return this.clientService.findAll();
+  }
   //   @Post()
   //   async create(
   //     @Body() createClientDto: CreateClientDto,
@@ -46,15 +46,15 @@ export class ClientController {
   //     return this.clientService.update(id, updateClientDto);
   //   }
 
-  //   @Post(':clientId/favorites')
-  //   async addFavorite(
-  //     @Param('clientId') clientId: string,
-  //     @Body('recipeId') recipeId: string,
-  //   ) {
-  //     return this.clientService.addFavoriteRecipe(clientId, recipeId);
-  //   }
-  //   @Get(':clientId/favorites')
-  //   async getFavourites(@Param('clientId') clientId: string) {
-  //     return this.clientService.getFavouriteRecipes(clientId);
-  //   }
+  @Post(':clientId/favorites')
+  async addFavorite(
+    @Param('clientId') clientId: string,
+    @Body('recipeId') recipeId: string,
+  ) {
+    return this.clientService.addFavoriteRecipe(clientId, recipeId);
+  }
+  @Get(':clientId/favorites')
+  async getFavourites(@Param('clientId') clientId: string) {
+    return this.clientService.getFavouriteRecipes(clientId);
+  }
 }

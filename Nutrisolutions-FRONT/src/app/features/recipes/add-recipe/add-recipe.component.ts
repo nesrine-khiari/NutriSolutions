@@ -2,14 +2,18 @@ import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { firstValueFrom } from 'rxjs';
+import { AppUtils } from 'src/app/core/utils/functions.utils';
 import {
   CategoryEnum,
   ObjectifEnum,
   PreparationTimeEnum,
   RecipeModel,
 } from 'src/app/models/recipe.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { LoggerService } from 'src/app/services/logger.service';
+import { NutritionistsService } from 'src/app/services/nutritionists.service';
 import { RecipesService } from 'src/app/services/recipe.service';
 
 @Component({
@@ -45,7 +49,7 @@ export class AddRecipeComponent {
   imageFile?: File;
   imageUrl: string = '';
   uploadImageService = inject(FileUploadService);
-
+  nutritionstName: string = '';
   categoryOptions = Object.values(CategoryEnum).filter(
     (category) => category !== CategoryEnum.ALL
   );
@@ -93,6 +97,7 @@ export class AddRecipeComponent {
     this.imageUrl = recipe.imageUrl;
     this.titleControl.setValue(recipe.name);
     this.descriptionControl.setValue(recipe.description);
+    this.nutritionstName = recipe.createdBy;
     this.categoryControl.setValue(recipe.category);
     this.objectifControl.setValue(recipe.objectif);
     this.preptimeControl.setValue(recipe.preparationTime);
@@ -119,8 +124,19 @@ export class AddRecipeComponent {
     this.imageFile = selectedImage;
     console.log('Selected image:', selectedImage.name);
   }
+  authService = inject(AuthService);
+  async createRecipeModel(): Promise<RecipeModel> {
+    if (!this.isEditMode) {
+      try {
+        const response = await firstValueFrom(this.authService.getUserInfos()!);
+        this.nutritionstName = response?.name || '';
+        console.log('Nutritionist:', this.nutritionstName);
+      } catch (error) {
+        this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+        throw error; // Or handle error as needed
+      }
+    }
 
-  createRecipeModel(): RecipeModel {
     return {
       name: this.titleControl.value || '',
       description: this.descriptionControl.value || '',
@@ -130,7 +146,7 @@ export class AddRecipeComponent {
       category: this.categoryControl.value || CategoryEnum.DINER,
       objectif: this.objectifControl.value || ObjectifEnum.ALL,
       preparationTime: this.preptimeControl.value || PreparationTimeEnum.ALL,
-      createdBy: 'user-id',
+      createdBy: this.nutritionstName,
       createdAt: this.isEditMode ? this.recipe!.createdAt : new Date(),
       protein: parseInt(this.items[0].formControlName.value || '0'),
       fat: parseInt(this.items[1].formControlName.value || '0'),
@@ -139,6 +155,7 @@ export class AddRecipeComponent {
       cookingNotes: this.notes,
     };
   }
+
   isFormInvalid: boolean = true;
   isButtonDisabled() {
     this.isFormInvalid =
@@ -146,7 +163,7 @@ export class AddRecipeComponent {
       !this.objectifControl.value ||
       !this.categoryControl.value ||
       !this.descriptionControl.value ||
-      !this.imageFile ||
+      (!this.imageUrl && !this.imageFile) ||
       !this.ingredients.length ||
       !this.instructions.length ||
       this.items.some((item) => !item.formControlName.value);
@@ -176,8 +193,8 @@ export class AddRecipeComponent {
     }
   };
 
-  private processRecipe() {
-    const newRecipe: RecipeModel = this.createRecipeModel();
+  private async processRecipe() {
+    const newRecipe = await this.createRecipeModel();
 
     if (this.isEditMode) {
       newRecipe.id = this.recipe?.id; // Ensure the ID is set for updating
