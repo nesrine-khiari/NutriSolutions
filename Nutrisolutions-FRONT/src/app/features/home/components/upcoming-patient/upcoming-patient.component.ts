@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { GetAgePipe } from 'src/app/core/pipes/get-age.pipe';
 // import { generateFakeClient } from 'src/app/core/helpers/faker.helper';
 import { AppUtils } from 'src/app/core/utils/functions.utils';
 import { ClientModel } from 'src/app/models/client.model';
@@ -12,18 +13,12 @@ export class UpcomingPatientComponent {
   @Input() isFirst: boolean = false;
   @Input({ required: true }) patient!: ClientModel;
   @Input() index: number = 0;
-  age = AppUtils.getAge(this.patient.birthDate);
   styleObject: { backgroundColor: string; borderColor: string } = {
     backgroundColor: AppUtils.getCssVariable('--light-green'),
     borderColor: AppUtils.getCssVariable('--secondary-color'),
   };
-
   ngOnInit() {
     this.styleObject = this.getColor();
-  }
-
-  getInitals(fullName: string) {
-    return AppUtils.getInitials(fullName);
   }
 
   getColor() {

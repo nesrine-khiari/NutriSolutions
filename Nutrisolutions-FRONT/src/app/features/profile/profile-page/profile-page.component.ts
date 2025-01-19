@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { GetAgePipe } from 'src/app/core/pipes/get-age.pipe';
 import { AppUtils } from 'src/app/core/utils/functions.utils';
 import { ClientModel } from 'src/app/models/client.model';
 import { RecipeModel } from 'src/app/models/recipe.model';
@@ -20,7 +21,7 @@ export class ProfilePageComponent implements OnInit {
   authService = inject(AuthService);
   clientService = inject(ClientService);
   toastr = inject(ToastrService);
-  constructor() {
+  constructor(private getAgePipe: GetAgePipe) {
     this.clientService.getClientById(this.authService.getUserId()).subscribe({
       next: (response) => {
         this.client = response;
@@ -29,7 +30,6 @@ export class ProfilePageComponent implements OnInit {
       },
       error: (err) => {
         console.error('Upload Failed:', err);
-        this.toastr.error('Image upload failed. Please try again.');
       },
     });
   }
@@ -40,12 +40,11 @@ export class ProfilePageComponent implements OnInit {
 
   updateClientInfoItems() {
     if (this.client) {
-      const age = AppUtils.getAge(this.client.birthDate).toString() + ' ans';
       this.clientInfoItems = [
         { icon: 'fa-solid fa-user', param: this.client.gender ?? 'N/A' },
         {
           icon: 'fa-solid fa-cake-candles',
-          param: age,
+          param: this.getAgePipe.transform(this.client.birthDate),
         },
         { icon: 'fa-solid fa-envelope', param: this.client.email ?? 'N/A' },
         { icon: 'fa-solid fa-phone', param: this.client.phoneNumber ?? 'N/A' },

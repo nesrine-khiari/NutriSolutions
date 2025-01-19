@@ -19,10 +19,10 @@ import { Public } from 'src/auth/guards/auth.guard';
 @Controller('clients')
 export class ClientController {
   constructor(protected readonly clientService: ClientService) {}
-  //   @Get()
-  //   async findAll(): Promise<Client[]> {
-  //     return this.clientService.findAll();
-  //   }
+    @Get()
+    async findAll(): Promise<Client[]> {
+      return this.clientService.findAll();
+    }
   //   @Post()
   //   async create(
   //     @Body() createClientDto: CreateClientDto,

@@ -4,12 +4,12 @@
       class="initials-avatar"
       [style.backgroundColor]="styleObject.backgroundColor"
     >
-      {{ getInitals(patient.name) }}
+      {{ patient.name | getInitials }}
     </div>
   </div>
   <div class="profile">
     <h2>{{ patient.name }}</h2>
-    <p>{{ patient.gender }} -{{ age }}Ans</p>
+    <p>{{ patient.gender }} -{{ patient.birthDate | getAge }} Ans</p>
   </div>
   <div
     class="meet-time"

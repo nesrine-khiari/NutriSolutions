@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ro } from '@faker-js/faker/.';
+import { UserRoleEnum } from 'src/app/models/client.model';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -21,6 +22,56 @@ export class NavBarComponent implements AfterViewInit {
   @ViewChild('itemsIcons') itemsIcons!: ElementRef;
   @ViewChild('logo') logo!: ElementRef;
   @ViewChild('logout') logout!: ElementRef;
+  authService = inject(AuthService);
+  ngOnInit() {
+    const role = this.authService.getUserRole();
+    if (role == UserRoleEnum.CLIENT) {
+      this.menuItems = [
+        { title: 'Acceuil', iconClass: 'fas fa-home', route: '/client-home' },
+        { title: 'Profile', iconClass: 'fas fa-user', route: '/profile' },
+        { title: 'Recettes', iconClass: 'fas fa-utensils', route: '/recipes' },
+        {
+          title: 'Nutritionnistes',
+          iconClass: 'fas fa-user-md',
+          route: '/nutritionists',
+        },
+        {
+          title: 'Messenger',
+          iconClass: 'fab fa-facebook-messenger',
+          route: '/messenger',
+        },
+        { title: 'Gallery', iconClass: 'fas fa-image', route: '/gallery' },
+        {
+          title: 'Analytics',
+          iconClass: 'fas fa-chart-line',
+          route: '/analytics',
+        },
+        { title: 'Settings', iconClass: 'fas fa-cog', route: '/settings' },
+      ];
+    } else {
+      this.menuItems = [
+        { title: 'Acceuil', iconClass: 'fas fa-home', route: '/client-home' },
+        { title: 'Recettes', iconClass: 'fas fa-utensils', route: '/recipes' },
+        {
+          title: 'Nutritionnistes',
+          iconClass: 'fas fa-user-md',
+          route: '/nutritionists',
+        },
+        {
+          title: 'Messenger',
+          iconClass: 'fab fa-facebook-messenger',
+          route: '/messenger',
+        },
+        { title: 'Gallery', iconClass: 'fas fa-image', route: '/gallery' },
+        {
+          title: 'Analytics',
+          iconClass: 'fas fa-chart-line',
+          route: '/analytics',
+        },
+        { title: 'Settings', iconClass: 'fas fa-cog', route: '/settings' },
+      ];
+    }
+  }
   menuItems = [
     { title: 'Acceuil', iconClass: 'fas fa-home', route: '/client-home' },
     { title: 'Profile', iconClass: 'fas fa-user', route: '/profile' },
@@ -63,7 +114,6 @@ export class NavBarComponent implements AfterViewInit {
     this.toggle.nativeElement.classList.toggle('active');
   }
 
-  authService = inject(AuthService);
   router = inject(Router);
   signout = (): void => {
     this.authService.logout();

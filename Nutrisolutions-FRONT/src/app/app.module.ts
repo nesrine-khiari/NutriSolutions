@@ -15,6 +15,7 @@ import { ProfileModule } from './features/profile/profile.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
+import { CoreModule } from "./core/core.module";
 
 @NgModule({
   declarations: [AppComponent, PlanningComponent],
@@ -29,10 +30,10 @@ import { TokenInterceptor } from './core/interceptors/token.interceptor';
     ProfileModule,
     ReactiveFormsModule,
     ToastrModule.forRoot({
-      timeOut: 3000, // Notification duration (in ms)
-      positionClass: 'toast-top-right', // Position of notifications
-      preventDuplicates: true, // Prevent duplicate notifications
-      closeButton: true, // Show close button in the notification
+        timeOut: 3000, // Notification duration (in ms)
+        positionClass: 'toast-top-right', // Position of notifications
+        preventDuplicates: true, // Prevent duplicate notifications
+        closeButton: true, // Show close button in the notification
     }),
     HomeModule,
     BrowserAnimationsModule,
@@ -40,7 +41,8 @@ import { TokenInterceptor } from './core/interceptors/token.interceptor';
     RouterModule,
     RouterOutlet,
     RouterLink,
-  ],
+    CoreModule
+],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
