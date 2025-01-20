@@ -25,11 +25,13 @@ export class ReservedSlot extends TimeStampEntity {
 
   @ManyToOne(() => Client, (client) => client.reservedSlots, {
     onDelete: 'CASCADE',
+    eager: true,
   })
   client: Client;
 
   @ManyToOne(() => Nutritionist, (nutritionist) => nutritionist.reservedSlots, {
     onDelete: 'CASCADE',
+    eager: true,
   })
   nutritionist: Nutritionist;
 }

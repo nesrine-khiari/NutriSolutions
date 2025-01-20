@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 // import { generateFakeNutritionist } from 'src/app/core/helpers/faker.helper';
 import { AppUtils } from 'src/app/core/utils/functions.utils';
+import { ClientModel } from 'src/app/models/client.model';
 import { SlotModel } from 'src/app/models/slot.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { PlanningService } from 'src/app/services/planning.service';
@@ -64,7 +65,7 @@ export class PlanningComponent {
             day: slot.day,
             time: slot.time,
             isReserved: true,
-            reservedBy: slot.clientId,
+            reservedBy: (slot.client as ClientModel).name,
             color: '#FFAD80',
           };
         });
@@ -122,12 +123,12 @@ export class PlanningComponent {
           time: timeSlots[index % timeSlots.length],
           isReserved: reservedBy !== '',
           reservedBy: reservedBy,
-          color: '#ebebeb',
+          color: reservedBy ? this.getRandomCoolColor() : '#ebebeb',
         };
       });
   }
 
-  getRandomCoolColor(neighboursColors: string[]) {
+  getRandomCoolColor() { // index: number, isMorning: boolean
     const pickedSlotColors = [
       '#FFAD80',
       '#6FF9AA',
@@ -135,10 +136,22 @@ export class PlanningComponent {
       '#FEE8AD',
       '#94C6FC',
     ];
+    // var neighboursColors = [];
+    // const slots = isMorning ? this.morningSlots : this.afternoonSlots;
+
+    // if (index % 4 > 0) {
+    //   neighboursColors.push(slots[index - 1].color);
+    // }
+    // if (index % 4 < 7) {
+    //   neighboursColors.push(slots[index + 1].color);
+    // }
+
+    // if (index + 4 < slots.length) neighboursColors.push(slots[index + 4].color);
+    // if (index - 4 >= 0) neighboursColors.push(slots[index - 4].color);
+    // var randomIndex = Math.floor(Math.random() * pickedSlotColors.length);
+    // while (neighboursColors.includes(pickedSlotColors[randomIndex])) {
     var randomIndex = Math.floor(Math.random() * pickedSlotColors.length);
-    while (neighboursColors.includes(pickedSlotColors[randomIndex])) {
-      var randomIndex = Math.floor(Math.random() * pickedSlotColors.length);
-    }
+    // }
     // Return the color in rgb format
     return pickedSlotColors[randomIndex];
   }
@@ -151,6 +164,7 @@ export class PlanningComponent {
   ) {
     const slots = isMorning ? this.morningSlots : this.afternoonSlots;
     const slot = slots[index];
+
     if (slot && !slot.isReserved) {
       const slotModel = new SlotModel(
         slot.date,
@@ -163,19 +177,8 @@ export class PlanningComponent {
         next: (reservedSlot) => {
           slot.isReserved = true;
           slot.reservedBy = this.authService.getUserName();
-          var neighboursColors = [];
 
-          if (index % 4 > 0) {
-            neighboursColors.push(slots[index - 1].color);
-          }
-          if (index % 4 < 7) {
-            neighboursColors.push(slots[index + 1].color);
-          }
-
-          if (index + 4 < slots.length)
-            neighboursColors.push(slots[index + 4].color);
-          if (index - 4 >= 0) neighboursColors.push(slots[index - 4].color);
-          const color = this.getRandomCoolColor(neighboursColors);
+          const color = this.getRandomCoolColor();
           slots[index].color = color;
           this.toastr.success('Slot Reserved Successfully');
         },

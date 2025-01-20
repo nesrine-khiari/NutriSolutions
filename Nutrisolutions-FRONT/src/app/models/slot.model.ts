@@ -6,8 +6,8 @@ export class SlotModel {
     public date: Date,
     public day: string,
     public time: string,
-    public clientId: string,
-    public nutritionistId: string,
+    public client: ClientModel | string,
+    public nutritionist: NutritionistModel | string,
     public id?: string
   ) {}
 }
