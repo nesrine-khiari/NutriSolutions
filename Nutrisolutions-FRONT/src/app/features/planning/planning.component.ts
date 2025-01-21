@@ -12,6 +12,7 @@ import { PlanningService } from 'src/app/services/planning.service';
   selector: 'app-planning',
   templateUrl: './planning.component.html',
   styleUrls: [
+    '../../../assets/css/popup.css',
     './planning.component.css',
     '../../../assets/css/list-common.css',
   ],
@@ -56,6 +57,7 @@ export class PlanningComponent {
     'Vendredi',
     'Samedi',
   ];
+  isPopupVisible: boolean = false;
   ngOnInit() {
     this.planningService.getReservedSlots(this.nutritionistId).subscribe({
       next: (slots) => {
@@ -128,7 +130,8 @@ export class PlanningComponent {
       });
   }
 
-  getRandomCoolColor() { // index: number, isMorning: boolean
+  getRandomCoolColor() {
+    // index: number, isMorning: boolean
     const pickedSlotColors = [
       '#FFAD80',
       '#6FF9AA',
@@ -157,23 +160,19 @@ export class PlanningComponent {
   }
   planningService = inject(PlanningService);
   authService = inject(AuthService);
-  pickSlot(
-    index: number,
-    userName: string = 'Houcem Hbiri',
-    isMorning: boolean
-  ) {
+  pickSlot(index: number, isMorning: boolean) {
     const slots = isMorning ? this.morningSlots : this.afternoonSlots;
     const slot = slots[index];
-
     if (slot && !slot.isReserved) {
-      const slotModel = new SlotModel(
-        slot.date,
-        slot.day,
-        slot.time,
-        this.authService.getUserId(),
-        this.nutritionistId
-      );
-      this.planningService.reserveSlot(slotModel).subscribe({
+      const slotModelDto = {
+        date: slot.date,
+        day: slot.day,
+        time: slot.time,
+        clientId: this.authService.getUserId(),
+        nutritionistId: this.nutritionistId,
+      };
+
+      this.planningService.reserveSlot(slotModelDto).subscribe({
         next: (reservedSlot) => {
           slot.isReserved = true;
           slot.reservedBy = this.authService.getUserName();
@@ -187,6 +186,16 @@ export class PlanningComponent {
         },
       });
     }
+  }
+  // Method to show the popup
+  showPopup = (index: number, isMorning: boolean) => {
+    this.isPopupVisible = true;
+    this.pickSlot(index, isMorning);
+  };
+
+  // Method to hide the popup
+  closePopup() {
+    this.isPopupVisible = false;
   }
 }
 

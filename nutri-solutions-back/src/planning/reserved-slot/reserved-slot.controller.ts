@@ -12,10 +12,14 @@ import {
 import { ReservedSlotService } from './reserved-slot.service';
 import { CreateSlotDto } from '../dtos/create-slot.dto';
 import { ReservedSlot } from '../reserved-slot.entity';
+import { EmailService } from 'src/common/email/email.service';
 
 @Controller('planning')
 export class ReservedSlotController {
-  constructor(private readonly reservedSlotService: ReservedSlotService) {}
+  constructor(
+    private readonly reservedSlotService: ReservedSlotService,
+    private emailService: EmailService,
+  ) {}
 
   /**
    * Create a new reserved slot
@@ -24,7 +28,16 @@ export class ReservedSlotController {
    */
   @Post()
   async create(@Body() createSlotDto: CreateSlotDto): Promise<ReservedSlot> {
-    return this.reservedSlotService.createSlot(createSlotDto);
+    const slot = await this.reservedSlotService.createSlot(createSlotDto);
+    const date= new Date(slot.date);
+    const reservationDate = date.toLocaleDateString() + ' at ' + slot.time;
+    await this.emailService.sendReservationNotification(
+      slot.nutritionist.email,
+      slot.nutritionist.name,
+      slot.client.name,
+      reservationDate,
+    );
+    return slot;
   }
 
   /**

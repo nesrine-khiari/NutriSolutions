@@ -8,6 +8,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { UserService } from 'src/user/user.service';
 import { UserModule } from 'src/user/user.module';
 import { RolesGuard } from './guards/role.guard';
+import { EmailService } from 'src/common/email/email.service';
 
 @Module({
   providers: [
@@ -20,6 +21,7 @@ import { RolesGuard } from './guards/role.guard';
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
+    EmailService
   ],
   controllers: [AuthController],
   imports: [

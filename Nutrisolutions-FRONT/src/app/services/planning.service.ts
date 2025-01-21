@@ -3,7 +3,7 @@ import { APP_API } from '../core/constants/constants.config';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Slot } from '../features/planning/planning.component';
-import { SlotModel } from '../models/slot.model';
+import { SlotModel, CreateSlotModelDto } from '../models/slot.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ export class PlanningService {
   getReservedSlots(nutritionistId: string): Observable<SlotModel[]> {
     return this.http.get<SlotModel[]>(`${this.apiUrl}/${nutritionistId}`);
   }
-  reserveSlot(slot: SlotModel): Observable<SlotModel> {
+  reserveSlot(slot: CreateSlotModelDto): Observable<SlotModel> {
     return this.http.post<SlotModel>(`${this.apiUrl}`, slot);
   }
   // getClientById(id: string): Observable<ClientModel> {

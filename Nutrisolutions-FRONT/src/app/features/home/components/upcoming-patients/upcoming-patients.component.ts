@@ -6,7 +6,7 @@ import { ObjectifEnum } from 'src/app/models/recipe.model';
 @Component({
   selector: 'app-upcoming-patients',
   templateUrl: './upcoming-patients.component.html',
-  styleUrls: ['./upcoming-patients.component.css'],
+  styleUrls: ['../../../../../assets/css/popup.css','./upcoming-patients.component.css'],
 })
 export class UpcomingPatientsComponent {
   @Input() patients: ClientModel[] = [];

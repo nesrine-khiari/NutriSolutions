@@ -6,8 +6,15 @@ export class SlotModel {
     public date: Date,
     public day: string,
     public time: string,
-    public client: ClientModel | string,
-    public nutritionist: NutritionistModel | string,
+    public client: ClientModel,
+    public nutritionist: NutritionistModel,
     public id?: string
   ) {}
+}
+export interface CreateSlotModelDto {
+  date: Date;
+  day: string;
+  time: string;
+  clientId: string;
+  nutritionistId: string;
 }

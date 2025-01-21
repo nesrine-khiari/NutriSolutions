@@ -9,6 +9,7 @@ import { Client } from 'src/user/client/client.entity';
 import { Nutritionist } from 'src/user/nutritionist/nutritionist.entity';
 import { RecipeEntity } from 'src/recipe/recipe-entity';
 import { UserEntity } from 'src/user/user.entity';
+import { EmailService } from 'src/common/email/email.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -19,7 +20,7 @@ import { UserEntity } from 'src/user/user.entity';
       UserEntity,
     ]),
   ],
-  providers: [ReservedSlotService, ClientService, NutritionistService],
+  providers: [ReservedSlotService, ClientService, NutritionistService,EmailService],
   controllers: [ReservedSlotController],
 })
 export class PlanningModule {}

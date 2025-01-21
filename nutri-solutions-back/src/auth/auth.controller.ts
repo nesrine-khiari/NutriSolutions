@@ -16,6 +16,7 @@ import { ClientService } from 'src/user/client/client.service';
 import { NutritionistService } from 'src/user/nutritionist/nutritionist.service';
 import { UserEntity } from 'src/user/user.entity';
 import { UserRoleEnum } from 'src/enums/user-enums';
+import { EmailService } from 'src/common/email/email.service';
 @Public()
 @Controller('auth')
 export class AuthController {
@@ -23,6 +24,7 @@ export class AuthController {
     private authService: AuthService,
     private clientService: ClientService,
     private nutritionistService: NutritionistService,
+    private emailService: EmailService,
   ) {}
   @Public()
   @HttpCode(HttpStatus.OK)
@@ -35,6 +37,7 @@ export class AuthController {
     if (!user) {
       throw new UnauthorizedException('Invalid email or password');
     }
+    // this.emailService.sendWelcomeEmail(signInDto.email, 'Houcem Hbiri');
     return this.authService.login(user);
   }
   @Public()
@@ -56,7 +59,7 @@ export class AuthController {
       default:
         throw new Error('Invalid user type');
     }
-
+    this.emailService.sendWelcomeEmail(signupDto.email, signupDto.name);
     return this.authService.login(user);
   }
 }
