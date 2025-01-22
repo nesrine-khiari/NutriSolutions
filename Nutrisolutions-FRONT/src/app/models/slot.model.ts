@@ -11,10 +11,12 @@ export class SlotModel {
     public id?: string
   ) {}
 }
+
 export interface CreateSlotModelDto {
   date: Date;
   day: string;
   time: string;
   clientId: string;
-  nutritionistId: string;
+  nutritionistId: NutritionistModel | string;
+  id?: string;
 }

@@ -2,14 +2,8 @@
   <div class="quote">
     <h3>Un nutritionniste, votre allié pour une santé équilibrée et durable</h3>
   </div>
-  <input
-    id="date-input"
-    type="date"
-    class="date-input"
-    [(ngModel)]="selectedDate.toISOString().split('T')[0]"
-    ngModel
-    (ngModelChange)="updateSlots($event)"
-  />
+  <input id="date-input" type="date" class="date-input" [(ngModel)]="selectedDate.toISOString().split('T')[0]" ngModel
+    (ngModelChange)="updateSlots($event)" />
   <div class="planning">
     <!-- First Row: Empty slot + Time slots -->
     <div class="times-days-slot">
@@ -30,52 +24,87 @@
       </div>
     </div>
 
-    <div class="morning-content">
-      <div
-        (click)="showPopup(index, true)"
-        class="slot"
-        *ngFor="let slot of morningSlots; let index = index"
-        [style.backgroundColor]="slot.color"
-      >
+    <!-- <div class="morning-content">
+      <div class="slot" *ngFor="let slot of morningSlots; let index = index" [style.backgroundColor]="slot.color">
         <p *ngIf="slot.isReserved">{{ slot.reservedBy | getInitials }}</p>
-        <img
-          *ngIf="!slot.isReserved"
-          src="assets/images/medical-appointment.svg"
-          alt="appointment"
-        />
+        <img (click)="showReservationPopup(index, true)" *ngIf="!slot.isReserved"
+          src="assets/images/medical-appointment.svg" width="30px" height="30px" alt="appointment" />
+        <img (click)="showCancelPopup(index, true)" *ngIf="slot.isReserved && slot.reservedBy==clientUserName"
+          src="assets/images/cancel.png" width="30px" height="30px" alt="appointment" />
       </div>
     </div>
     <div class="afternoon-content">
-      <div
-        (click)="showPopup(index, false)"
-        class="slot"
-        *ngFor="let slot of afternoonSlots; let index = index"
-        [style.backgroundColor]="slot.color"
-      >
+      <div class="slot" *ngFor="let slot of afternoonSlots; let index = index" [style.backgroundColor]="slot.color">
         <p *ngIf="slot.isReserved">{{ slot.reservedBy | getInitials }}</p>
-        <img
-          *ngIf="!slot.isReserved"
-          src="assets/images/medical-appointment.svg"
-          alt="appointment"
-        />
+        <img (click)="showReservationPopup(index, false)" *ngIf="!slot.isReserved"
+          src="assets/images/medical-appointment.svg" width="30px" height="30px" alt="appointment" />
+        <img (click)="showCancelPopup(index, true)" *ngIf="slot.isReserved && slot.reservedBy==clientUserName"
+          src="assets/images/cancel.png" width="30px" height="30px" alt="appointment" />
+
       </div>
+    </div> -->
+    <div class="content">
+      <div class="slot" [class.break-slot]="index%9==4" *ngFor="let slot of allSlots; let index = index"
+        [style.backgroundColor]="slot.color">
+        <div *ngIf="index%9!=4">
+          <p *ngIf="slot.isReserved">{{ slot.reservedBy | getInitials }}</p>
+          <img (click)="showReservationPopup(index)" *ngIf="!slot.isReserved"
+            src="assets/images/medical-appointment.svg" width="30px" height="30px" alt="appointment" />
+          <img (click)="showCancelPopup(index)" *ngIf="slot.isReserved && slot.reservedBy==clientUserName"
+            src="assets/images/cancel.png" width="30px" height="30px" alt="appointment" />
+        </div>
+
+        <div *ngIf="index%9==4">
+          <img src="assets/images/break-time-man.svg" height="100px" alt="" />
+          <img src="assets/images/break-time.svg" alt="" />
+          <img src="assets/images/break-time-man.svg" alt="" />
+        </div>
+      </div>
+
     </div>
 
-    <div class="break">
-      <img src="assets/images/break-time-man.svg" alt="" />
-      <img src="assets/images/break-time.svg" alt="" />
-      <img src="assets/images/break-time-man.svg" alt="" />
-    </div>
+
   </div>
   <!-- Popup -->
-  <div class="modal" [style.display]="isPopupVisible ? 'block' : 'none'">
+  <div class="modal">
+    <app-popup [text]="'Confirmer la prise de rendez-vous'" [isPopupVisible]="isReservationPopupVisible"
+      (popupClosed)="isReservationPopupVisible=false">
+      <div style="display: flex; gap: 10px">
+        <app-button [text]="'Confirmer'" [onClick]="pickSlot"></app-button>
+        <app-button [boxShadow]="'0 4px 8px 2px #ffc5c5'" [backgroundColor]="'#df0404'"
+          [onClick]="closeReservationPopup" [text]="'Annuler'"></app-button>
+      </div>
+    </app-popup>
+    <app-popup [text]="'Confirmer l\'annulation du rendez-vous'" [isPopupVisible]="isCancelPopupVisible"
+      (popupClosed)="isCancelPopupVisible=false">
+      <div style="display: flex; gap: 10px">
+        <app-button [text]="'Confirmer'" [onClick]="cancelReservation"></app-button>
+        <app-button [boxShadow]="'0 4px 8px 2px #ffc5c5'" [backgroundColor]="'#df0404'" [onClick]="closeCancelnPopup"
+          [text]="'Annuler'"></app-button>
+      </div>
+    </app-popup>
+  </div>
+
+  <!-- <div class="modal" [style.display]="isReservationPopupVisible ? 'block' : 'none'">
     <div class="modal-content">
-      <span class="close-btn" (click)="closePopup()">&times;</span>
+      <span class="close-btn" (click)="closeReservationPopup()">&times;</span>
       <h4>Confirmer la prise de rendez-vous</h4>
       <div style="display: flex; gap: 10px">
-        <app-button [text]="'Oui'"></app-button
-        ><app-button [backgroundColor]="'red'" [text]="'Non'"></app-button>
+        <app-button [text]="'Confirmer'" [onClick]="pickSlot"></app-button><app-button
+          [boxShadow]="'0 4px 8px 2px #ffc5c5'" [backgroundColor]="'#df0404'" [onClick]="closeReservationPopup"
+          [text]="'Annuler'"></app-button>
       </div>
     </div>
   </div>
+  <div class="modal" [style.display]="isCancelPopupVisible ? 'block' : 'none'">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closeReservationPopup()">&times;</span>
+      <h4>Confirmer l'annulation du rendez-vous</h4>
+      <div style="display: flex; gap: 10px">
+        <app-button [text]="'Confirmer'" [onClick]="cancelReservation"></app-button><app-button
+          [boxShadow]="'0 4px 8px 2px #ffc5c5'" [backgroundColor]="'#df0404'" [onClick]="closeCancelnPopup"
+          [text]="'Annuler'"></app-button>
+      </div>
+    </div>
+  </div> -->
 </app-page-background>

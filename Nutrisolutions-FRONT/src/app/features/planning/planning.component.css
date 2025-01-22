@@ -1,19 +1,26 @@
 .planning {
   width: 100%;
   height: 100%;
+  position: relative;
   display: grid;
   grid-template-columns: repeat(10, minmax(50px, 1fr));
   grid-template-rows: repeat(6, minmax(70px, 1fr));
   grid-template-areas:
     "times-days horiz-header horiz-header horiz-header horiz-header horiz-header horiz-header horiz-header horiz-header horiz-header "
-    "vert-header mslot mslot mslot mslot break aslot aslot aslot aslot"
-    "vert-header mslot mslot mslot mslot break aslot aslot aslot aslot"
-    "vert-header mslot mslot mslot mslot break aslot aslot aslot aslot"
-    "vert-header mslot mslot mslot mslot break aslot aslot aslot aslot"
-    "vert-header mslot mslot mslot mslot break aslot aslot aslot aslot";
+    "vert-header slot slot slot slot slot slot slot slot slot"
+    "vert-header slot slot slot slot slot slot slot slot slot"
+    "vert-header slot slot slot slot slot slot slot slot slot"
+    "vert-header slot slot slot slot slot slot slot slot slot"
+    "vert-header slot slot slot slot slot slot slot slot slot";
 
   justify-content: center;
   gap: 7px;
+}
+.slot.break-slot {
+  grid-column: 5 / 6; /* Expand the fifth slot to span two columns */
+  grid-row: 1 / 6; /* Expand the fifth slot to span two columns */
+  display: flex;
+  flex-direction: column;
 }
 .slot {
   background-color: #ebebeb;
@@ -38,6 +45,13 @@
   grid-template-rows: repeat(5, minmax(70px, 1fr));
   gap: 7px;
   grid-area: mslot;
+}
+.content {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(50px, 1fr));
+  grid-template-rows: repeat(5, minmax(70px, 1fr));
+  gap: 7px;
+  grid-area: slot;
 }
 .afternoon-content {
   display: grid;
@@ -88,24 +102,34 @@
     transparent 50%
   );
 }
-.break {
-  grid-area: break;
+.break-slot div {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  width: 100%;
+}
+.break-slot img {
+  height: 100%;
+  object-fit: cover;
 }
 .header-slot {
   background-color: #cbea7b;
 }
 
-.slot img {
+.slot:not(.break-slot) img {
   opacity: 0;
-  transition: opacity 0.3s ease; /* Smooth fade-in effect */
+  display: none;
+  transition: opacity, display 0.3s ease; /* Smooth fade-in effect */
 }
 
 /* Show the image on hover */
-.slot:hover:not(.header-slot) img {
+.slot:hover:not(.header-slot):not(.break-slot) img {
+  display: block;
   opacity: 1;
+}
+/* Show the image on hover */
+.slot:hover:not(.header-slot):not(.break):not(.break-slot) p {
+  display: none;
 }
 
 .date-input {

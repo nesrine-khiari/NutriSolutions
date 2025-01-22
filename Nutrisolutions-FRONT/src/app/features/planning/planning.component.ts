@@ -20,6 +20,7 @@ import { PlanningService } from 'src/app/services/planning.service';
 export class PlanningComponent {
   actRoute = inject(ActivatedRoute);
   nutritionistId = this.actRoute.snapshot.params['nutritionistId'];
+  clientUserName: string = '';
   timeSlots: string[] = [
     '8:00',
     '9:00',
@@ -32,6 +33,7 @@ export class PlanningComponent {
     '16:00',
   ];
   reservedSlots: Slot[] = [];
+  allSlots: Slot[] = [];
   morningTimeSlots: string[] = ['8:00', '9:00', '10:00', '11:00'];
   afternoonTimeSlots: string[] = ['13:00', '14:00', '15:00', '16:00'];
   workDaysOfWeek: string[] = [
@@ -44,8 +46,8 @@ export class PlanningComponent {
 
   selectedDate = new Date();
 
-  morningSlots: Slot[] = [];
-  afternoonSlots: Slot[] = [];
+  // morningSlots: Slot[] = [];
+  // afternoonSlots: Slot[] = [];
 
   toastr = inject(ToastrService);
   allDaysOfWeek = [
@@ -57,12 +59,17 @@ export class PlanningComponent {
     'Vendredi',
     'Samedi',
   ];
-  isPopupVisible: boolean = false;
+  isReservationPopupVisible: boolean = false;
+  isCancelPopupVisible: boolean = false;
+  selectedIndex: number = 0;
+  isMorning: boolean = true;
   ngOnInit() {
+    this.clientUserName = this.authService.getUserName();
     this.planningService.getReservedSlots(this.nutritionistId).subscribe({
       next: (slots) => {
         this.reservedSlots = slots.map((slot) => {
           return {
+            id: slot.id ?? '',
             date: new Date(slot.date),
             day: slot.day,
             time: slot.time,
@@ -86,12 +93,16 @@ export class PlanningComponent {
 
     if (this.workDaysOfWeek.includes(selectedDay)) {
       const indexOfSelectedDay = this.workDaysOfWeek.indexOf(selectedDay);
-      this.afternoonSlots = this.generateSlots(
-        this.afternoonTimeSlots,
-        indexOfSelectedDay
-      );
-      this.morningSlots = this.generateSlots(
-        this.morningTimeSlots,
+      // this.afternoonSlots = this.generateSlots(
+      //   this.afternoonTimeSlots,
+      //   indexOfSelectedDay
+      // );
+      // this.morningSlots = this.generateSlots(
+      //   this.morningTimeSlots,
+      //   indexOfSelectedDay
+      // );
+      this.allSlots = this.generateSlots(
+        [...this.morningTimeSlots, '12:00', ...this.afternoonTimeSlots],
         indexOfSelectedDay
       );
     } else {
@@ -100,7 +111,7 @@ export class PlanningComponent {
       this.toastr.error('Weekends Are Off');
     }
   }
-  generateSlots(timeSlots: string[], indexOfSelectedDay: number) {
+  private generateSlots(timeSlots: string[], indexOfSelectedDay: number) {
     return new Array(timeSlots.length * this.workDaysOfWeek.length)
       .fill(null)
       .map((_, index) => {
@@ -110,16 +121,18 @@ export class PlanningComponent {
         const date = new Date(
           selectedDate.setDate(selectedDate.getDate() + difference)
         );
-        const reservedBy =
-          this.reservedSlots.find(
-            (slot) =>
-              slot.date?.toDateString() === date.toDateString() &&
-              slot.time === timeSlots[index % timeSlots.length]
-          )?.reservedBy ?? '';
+        const reservedSlot = this.reservedSlots.find(
+          (slot) =>
+            slot.date?.toDateString() === date.toDateString() &&
+            slot.time === timeSlots[index % timeSlots.length]
+        );
+        const reservedBy = reservedSlot?.reservedBy ?? '';
+        const id = reservedSlot?.id ?? '';
         console.log('Reserved Slots', this.reservedSlots);
         console.log(reservedBy);
 
         return {
+          id: id,
           date: date,
           day: this.workDaysOfWeek[dayIndex],
           time: timeSlots[index % timeSlots.length],
@@ -130,7 +143,7 @@ export class PlanningComponent {
       });
   }
 
-  getRandomCoolColor() {
+  private getRandomCoolColor() {
     // index: number, isMorning: boolean
     const pickedSlotColors = [
       '#FFAD80',
@@ -139,30 +152,34 @@ export class PlanningComponent {
       '#FEE8AD',
       '#94C6FC',
     ];
-    // var neighboursColors = [];
-    // const slots = isMorning ? this.morningSlots : this.afternoonSlots;
-
-    // if (index % 4 > 0) {
-    //   neighboursColors.push(slots[index - 1].color);
-    // }
-    // if (index % 4 < 7) {
-    //   neighboursColors.push(slots[index + 1].color);
-    // }
-
-    // if (index + 4 < slots.length) neighboursColors.push(slots[index + 4].color);
-    // if (index - 4 >= 0) neighboursColors.push(slots[index - 4].color);
-    // var randomIndex = Math.floor(Math.random() * pickedSlotColors.length);
-    // while (neighboursColors.includes(pickedSlotColors[randomIndex])) {
-    var randomIndex = Math.floor(Math.random() * pickedSlotColors.length);
-    // }
+    const neighboursColors = this.getNeighbourColors();
+    var randomIndex = 0;
+    while (neighboursColors.includes(pickedSlotColors[randomIndex])) {
+      randomIndex = Math.floor(Math.random() * pickedSlotColors.length);
+    }
     // Return the color in rgb format
     return pickedSlotColors[randomIndex];
   }
+  private getNeighbourColors() {
+    var neighboursColors = [];
+
+    if (this.selectedIndex % 9 != 5 && this.selectedIndex % 5 != 0) {
+      neighboursColors.push(this.allSlots[this.selectedIndex - 1].color);
+    }
+    if ((this.selectedIndex + 1) % 9 != 4 && this.selectedIndex % 9 != 8) {
+      neighboursColors.push(this.allSlots[this.selectedIndex + 1].color);
+    }
+    if (this.selectedIndex + 9 < this.allSlots.length)
+      neighboursColors.push(this.allSlots[this.selectedIndex + 9].color);
+    if (this.selectedIndex - 9 >= 0)
+      neighboursColors.push(this.allSlots[this.selectedIndex - 9].color);
+    return neighboursColors;
+  }
   planningService = inject(PlanningService);
   authService = inject(AuthService);
-  pickSlot(index: number, isMorning: boolean) {
-    const slots = isMorning ? this.morningSlots : this.afternoonSlots;
-    const slot = slots[index];
+  pickSlot = () => {
+    // const slots = this.isMorning ? this.morningSlots : this.afternoonSlots;
+    const slot = this.allSlots[this.selectedIndex];
     if (slot && !slot.isReserved) {
       const slotModelDto = {
         date: slot.date,
@@ -175,31 +192,63 @@ export class PlanningComponent {
       this.planningService.reserveSlot(slotModelDto).subscribe({
         next: (reservedSlot) => {
           slot.isReserved = true;
-          slot.reservedBy = this.authService.getUserName();
+          slot.reservedBy = this.clientUserName;
 
           const color = this.getRandomCoolColor();
-          slots[index].color = color;
+          this.allSlots[this.selectedIndex].color = color;
           this.toastr.success('Slot Reserved Successfully');
         },
         error: (error) => {
           this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
         },
       });
+      this.closeReservationPopup();
     }
-  }
+  };
+  cancelReservation = () => {
+    // const slots = this.isMorning ? this.morningSlots : this.afternoonSlots;
+    const slot = this.allSlots[this.selectedIndex];
+    if (slot && slot.isReserved) {
+      this.planningService.cancelSlotReservation(slot.id).subscribe({
+        next: (reservedSlot) => {
+          slot.isReserved = false;
+          slot.reservedBy = '';
+          slot.color = '#ebebeb';
+          this.toastr.success('Slot Reservation Cancelled Successfully');
+        },
+        error: (error) => {
+          this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+        },
+      });
+      this.closeCancelnPopup();
+    }
+  };
+
   // Method to show the popup
-  showPopup = (index: number, isMorning: boolean) => {
-    this.isPopupVisible = true;
-    this.pickSlot(index, isMorning);
+  showReservationPopup = (index: number) => {
+    this.isReservationPopupVisible = true;
+    this.selectedIndex = index;
   };
 
   // Method to hide the popup
-  closePopup() {
-    this.isPopupVisible = false;
-  }
+  closeReservationPopup = () => {
+    this.isReservationPopupVisible = false;
+  };
+  // Method to show the popup
+  showCancelPopup = (index: number) => {
+    this.isCancelPopupVisible = true;
+
+    this.selectedIndex = index;
+  };
+
+  // Method to hide the popup
+  closeCancelnPopup = () => {
+    this.isCancelPopupVisible = false;
+  };
 }
 
 export interface Slot {
+  id: string;
   date: Date;
   day: string;
   time: string;

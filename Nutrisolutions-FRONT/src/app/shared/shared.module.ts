@@ -21,6 +21,7 @@ import { RecipeDescriptionComponent } from './components/recipe-description/reci
 import { SearchHeaderComponent } from './components/search-header/search-header.component';
 import { RouterModule } from '@angular/router';
 import { PreloaderComponent } from './components/preloader/preloader.component';
+import { PopupComponent } from './components/popup/popup.component';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -42,6 +43,7 @@ import { PreloaderComponent } from './components/preloader/preloader.component';
     RecipeDescriptionComponent,
     SearchHeaderComponent,
     PreloaderComponent,
+    PopupComponent,
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   exports: [
@@ -64,6 +66,7 @@ import { PreloaderComponent } from './components/preloader/preloader.component';
     RecipeDescriptionComponent,
     SearchHeaderComponent,
     PreloaderComponent,
+    PopupComponent,
   ],
 })
 export class SharedModule {}

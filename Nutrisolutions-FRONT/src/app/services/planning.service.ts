@@ -20,6 +20,10 @@ export class PlanningService {
   reserveSlot(slot: CreateSlotModelDto): Observable<SlotModel> {
     return this.http.post<SlotModel>(`${this.apiUrl}`, slot);
   }
+
+  cancelSlotReservation(id: string): Observable<{ count: number }> {
+    return this.http.delete<{ count: number }>(`${this.apiUrl}/${id}`);
+  }
   // getClientById(id: string): Observable<ClientModel> {
   //   return this.http.get<ClientModel>(`${this.apiUrl}/${id}`);
   // }
