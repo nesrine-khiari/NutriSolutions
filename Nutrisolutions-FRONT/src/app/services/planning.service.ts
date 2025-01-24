@@ -14,7 +14,7 @@ export class PlanningService {
   constructor() {}
   http = inject(HttpClient);
 
-  getReservedSlots(nutritionistId: string): Observable<SlotModel[]> {
+  getReservedSlotsByNutritionist(nutritionistId: string): Observable<SlotModel[]> {
     return this.http.get<SlotModel[]>(`${this.apiUrl}/${nutritionistId}`);
   }
   reserveSlot(slot: CreateSlotModelDto): Observable<SlotModel> {

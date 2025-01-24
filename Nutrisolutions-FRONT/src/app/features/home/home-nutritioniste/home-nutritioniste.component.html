@@ -1,39 +1,90 @@
+<!-- <app-page-background>
+  <div class="first-section">
+    <div class="today-meets-section">
+      <app-svg-box>
+        <div class="today-meets-content">
+          <h2>
+            Good Morning <span class="name">Dr.{{ nutritionist?.name }}</span>
+          </h2>
+          <div class="infos">
+            <h4>Consultations Aujourd'hui</h4>
+            <p>{{ (todayReservations$ | async)?.length }}</p>
+            <div class="stats">
+              <app-stats
+                [evolutionPercent]="51"
+                [stat]="(recentReservations$ | async)?.length ?? 0"
+                [statObject]="'Nouveaux Patients'"
+              ></app-stats>
+              <app-stats
+                [stat]="(reservations$ | async)?.length ?? 0"
+                [statObject]="'Total Patients'"
+              ></app-stats>
+            </div>
+          </div>
+
+          <img
+            class="nutritionist-img"
+            src="assets/images/nutritioniste-man.png"
+            alt=""
+          />
+        </div>
+      </app-svg-box>
+    </div>
+
+    <div class="calendar">
+      <mat-calendar> </mat-calendar>
+    </div>
+  </div>
+  <div class="second-section">
+    <div class="patients-list">
+      <app-upcoming-patients [patients]="patientsList"></app-upcoming-patients>
+    </div>
+  </div>
+</app-page-background> -->
+
 <app-page-background>
-    <div class="first-section">
-        <div class="today-meets-section">
+  <div *ngIf="isLoading" style="display: flex; justify-content: center">
+    <app-preloader></app-preloader>
+  </div>
+  <div *ngIf="!isLoading" class="first-section">
+    <div class="today-meets-section">
+      <app-svg-box>
+        <div class="today-meets-content">
+          <h2>
+            Good Morning <span class="name">Dr.{{ nutritionist?.name }}</span>
+          </h2>
+          <div class="infos">
+            <h4>Consultations Aujourd'hui</h4>
+            <p>{{ todayReservations.length }}</p>
+            <div class="stats">
+              <app-stats
+                [evolutionPercent]="51"
+                [stat]="recentReservations.length"
+                [statObject]="'Nouveaux Patients'"
+              ></app-stats>
+              <app-stats
+                [stat]="reservations.length"
+                [statObject]="'Total Patients'"
+              ></app-stats>
+            </div>
+          </div>
 
-            <app-svg-box>
-                <div class="today-meets-content">
-                    <h2>Good Morning <span class="name">Dr.{{nutritionist?.name}}</span> </h2>
-                    <div class="infos">
-
-                        <h4>Consultations Aujourd'hui</h4>
-                        <p>104</p>
-                        <div class="stats">
-                            <app-stats [evolutionPercent]="51" [stat]="40"
-                                [statObject]="'Nouveaux Patients'"></app-stats>
-                            <app-stats [evolutionPercent]="-20" [stat]="64"
-                                [statObject]="'Ancien Patients'"></app-stats>
-                        </div>
-
-                    </div>
-
-
-                    <img class="nutritionist-img" src="assets/images/nutritioniste-man.png" alt="">
-                </div>
-
-            </app-svg-box>
+          <img
+            class="nutritionist-img"
+            src="assets/images/nutritioniste-man.png"
+            alt=""
+          />
         </div>
-
-        <div class="calendar">
-            <mat-calendar>
-            </mat-calendar>
-        </div>
-    </div>
-    <div class="second-section">
-        <div class="patients-list">
-            <app-upcoming-patients [patients]="patientsList"></app-upcoming-patients>
-        </div>
+      </app-svg-box>
     </div>
 
+    <div class="calendar">
+      <mat-calendar> </mat-calendar>
+    </div>
+  </div>
+  <div *ngIf="!isLoading" class="second-section">
+    <div class="patients-list">
+      <app-upcoming-patients [patients]="patientsList"></app-upcoming-patients>
+    </div>
+  </div>
 </app-page-background>

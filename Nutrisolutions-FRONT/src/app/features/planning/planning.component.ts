@@ -44,7 +44,7 @@ export class PlanningComponent {
     'Vendredi',
   ];
 
-  selectedDate = new Date();
+  selectedDate!: Date;
 
   // morningSlots: Slot[] = [];
   // afternoonSlots: Slot[] = [];
@@ -64,8 +64,12 @@ export class PlanningComponent {
   selectedIndex: number = 0;
   isMorning: boolean = true;
   ngOnInit() {
+    this.selectedDate = new Date();
+    console.log('====================================');
+    console.log(this.selectedDate.toISOString().split('T')[0]);
+    console.log('====================================');
     this.clientUserName = this.authService.getUserName();
-    this.planningService.getReservedSlots(this.nutritionistId).subscribe({
+    this.planningService.getReservedSlotsByNutritionist(this.nutritionistId).subscribe({
       next: (slots) => {
         this.reservedSlots = slots.map((slot) => {
           return {
@@ -78,10 +82,10 @@ export class PlanningComponent {
             color: '#FFAD80',
           };
         });
-        this.updateSlots(this.selectedDate.toDateString());
+        this.updateSlots(this.selectedDate.toISOString());
       },
     });
-    this.updateSlots(this.selectedDate.toDateString());
+    this.updateSlots(this.selectedDate.toISOString());
   }
   updateSlots(selectedDate: string) {
     this.selectedDate = new Date(selectedDate);
@@ -138,7 +142,7 @@ export class PlanningComponent {
           time: timeSlots[index % timeSlots.length],
           isReserved: reservedBy !== '',
           reservedBy: reservedBy,
-          color: reservedBy ? this.getRandomCoolColor() : '#ebebeb',
+          color: reservedBy !== '' ? this.getRandomCoolColor() : '#ebebeb',
         };
       });
   }
@@ -152,26 +156,40 @@ export class PlanningComponent {
       '#FEE8AD',
       '#94C6FC',
     ];
-    const neighboursColors = this.getNeighbourColors();
+    // const neighboursColors = this.getNeighbourColors();
     var randomIndex = 0;
-    while (neighboursColors.includes(pickedSlotColors[randomIndex])) {
-      randomIndex = Math.floor(Math.random() * pickedSlotColors.length);
-    }
+    // while (neighboursColors.includes(pickedSlotColors[randomIndex])) {
+    randomIndex = Math.floor(Math.random() * pickedSlotColors.length);
+    // }
     // Return the color in rgb format
     return pickedSlotColors[randomIndex];
   }
   private getNeighbourColors() {
     var neighboursColors = [];
 
-    if (this.selectedIndex % 9 != 5 && this.selectedIndex % 5 != 0) {
+    if (
+      this.allSlots[this.selectedIndex - 1].color !== '#ebebeb' &&
+      this.selectedIndex % 9 != 5 &&
+      this.selectedIndex % 5 != 0
+    ) {
       neighboursColors.push(this.allSlots[this.selectedIndex - 1].color);
     }
-    if ((this.selectedIndex + 1) % 9 != 4 && this.selectedIndex % 9 != 8) {
+    if (
+      this.allSlots[this.selectedIndex + 1].color !== '#ebebeb' &&
+      (this.selectedIndex + 1) % 9 != 4 &&
+      this.selectedIndex % 9 != 8
+    ) {
       neighboursColors.push(this.allSlots[this.selectedIndex + 1].color);
     }
-    if (this.selectedIndex + 9 < this.allSlots.length)
+    if (
+      this.allSlots[this.selectedIndex + 9].color !== '#ebebeb' &&
+      this.selectedIndex + 9 < this.allSlots.length
+    )
       neighboursColors.push(this.allSlots[this.selectedIndex + 9].color);
-    if (this.selectedIndex - 9 >= 0)
+    if (
+      this.allSlots[this.selectedIndex - 9].color !== '#ebebeb' &&
+      this.selectedIndex - 9 >= 0
+    )
       neighboursColors.push(this.allSlots[this.selectedIndex - 9].color);
     return neighboursColors;
   }

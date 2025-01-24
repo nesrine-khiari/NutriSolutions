@@ -40,5 +40,33 @@ export class EmailService {
       console.error('Error sending email:', error);
     }
   }
+
+  async sendReservationCancelNotification(
+    to: string,
+    name: string,
+    clientName: string,
+    reservationDate: string,
+  ): Promise<void> {
+    try {
+      const result = await this.mailerService.sendMail({
+        to, // Recipient email
+        subject: 'New Reservation', // Subject
+        template: './cancel_reservation', // Template file name (without extension)
+        context: {
+          clientName,
+          reservationDate,
+        },
+      });
+  
+      // Check if email was sent successfully
+      if (result.accepted.length > 0) {
+        console.log('Email sent successfully!');
+      } else {
+        console.log('Email sending failed.');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
+  }
   
 }

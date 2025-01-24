@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ClientModel } from 'src/app/models/client.model';
 import { ObjectifEnum } from 'src/app/models/recipe.model';
@@ -6,12 +6,14 @@ import { ObjectifEnum } from 'src/app/models/recipe.model';
 @Component({
   selector: 'app-upcoming-patients',
   templateUrl: './upcoming-patients.component.html',
-  styleUrls: ['../../../../../assets/css/popup.css','./upcoming-patients.component.css'],
+  styleUrls: [
+    '../../../../../assets/css/popup.css',
+    './upcoming-patients.component.css',
+  ],
 })
 export class UpcomingPatientsComponent {
   @Input() patients: ClientModel[] = [];
   notes: string[] = ['High fever and cough and and adn '];
-
   isPopupVisible: boolean = false; // Initially hidden
 
   newNoteControl: FormControl = new FormControl('');
@@ -37,10 +39,10 @@ export class UpcomingPatientsComponent {
   };
 
   // Method to hide the popup
+
   closePopup() {
     this.isPopupVisible = false;
   }
-
   addNote(newNote: string) {
     this.notes.push(newNote);
   }

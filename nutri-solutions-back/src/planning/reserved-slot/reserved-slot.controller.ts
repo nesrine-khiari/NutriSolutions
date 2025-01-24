@@ -8,11 +8,13 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Patch,
 } from '@nestjs/common';
 import { ReservedSlotService } from './reserved-slot.service';
 import { CreateSlotDto } from '../dtos/create-slot.dto';
 import { ReservedSlot } from '../reserved-slot.entity';
 import { EmailService } from 'src/common/email/email.service';
+import { UpdateSlotDto } from '../dtos/update-slot.dto';
 
 @Controller('planning')
 export class ReservedSlotController {
@@ -29,8 +31,7 @@ export class ReservedSlotController {
   @Post()
   async create(@Body() createSlotDto: CreateSlotDto): Promise<ReservedSlot> {
     const slot = await this.reservedSlotService.createSlot(createSlotDto);
-    const date= new Date(slot.date);
-    const reservationDate = date.toLocaleDateString() + ' at ' + slot.time;
+    const reservationDate = `${new Date(slot.date).toLocaleDateString()} at ${slot.time}`;
     await this.emailService.sendReservationNotification(
       slot.nutritionist.email,
       slot.nutritionist.name,
@@ -73,9 +74,28 @@ export class ReservedSlotController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async delete(@Param('id') id: string): Promise<void> {
+    const slot = await this.reservedSlotService.findOne(id);
+    if (!slot) {
+      throw new NotFoundException(`Reserved slot with ID ${id} not found`);
+    }
+
     const result = await this.reservedSlotService.delete(id);
     if (!result) {
       throw new NotFoundException(`Reserved slot with ID ${id} not found`);
     }
+    const reservationDate = `${new Date(slot.date).toLocaleDateString()} at ${slot.time}`;
+    await this.emailService.sendReservationCancelNotification(
+      slot.nutritionist.email,
+      slot.nutritionist.name,
+      slot.client.name,
+      reservationDate,
+    );
+  }
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateSlotDto: UpdateSlotDto,
+  ) {
+    return this.reservedSlotService.update(id, updateSlotDto);
   }
 }

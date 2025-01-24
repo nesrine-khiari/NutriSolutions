@@ -30,7 +30,10 @@ export class NutritionistController {
   async findOne(@Param('id') id: string): Promise<Nutritionist> {
     return this.nutritionistService.findOne(id);
   }
-
+  @Get(':id/patients')
+  async getPatientsByNutritionist(@Param('id') id: string) {
+    return this.nutritionistService.getPatientsByNutritionist(id);
+  }
 
   //   @Delete(':id')
   //   async remove(@Param('id') id: string): Promise<void> {

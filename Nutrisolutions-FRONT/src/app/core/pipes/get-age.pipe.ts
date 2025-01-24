@@ -20,6 +20,6 @@ export class GetAgePipe implements PipeTransform {
       age--;
     }
 
-    return age + ' ans';
+    return age + ' Ans';
   }
 }

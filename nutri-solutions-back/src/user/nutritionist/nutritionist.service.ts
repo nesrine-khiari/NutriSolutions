@@ -8,12 +8,15 @@ import { CreateNutritionistDto } from './dtos/create-nutritionist.dto';
 import { UpdateNutritionistDto } from './dtos/update-nutritionist.dto';
 import { UserEntity } from '../user.entity';
 import { UpdateUserDto } from '../dtos/update-user.dto';
+import { ReservedSlot } from 'src/planning/reserved-slot.entity';
 
 @Injectable()
 export class NutritionistService extends UserService {
   constructor(
     @InjectRepository(Nutritionist)
     protected readonly nutritionistRepository: Repository<Nutritionist>,
+    @InjectRepository(ReservedSlot)
+    protected readonly reservedSlotRepository: Repository<ReservedSlot>,
   ) {
     super(nutritionistRepository);
   }
@@ -49,7 +52,18 @@ export class NutritionistService extends UserService {
       .take(4)
       .getMany();
   }
+  async getPatientsByNutritionist(nutritionistId: string): Promise<any[]> {
+    const reservedSlots = await this.reservedSlotRepository.find({
+      where: { nutritionist: { id: nutritionistId } },
+      relations: ['client'],
+    });
 
+    // Extract unique clients
+    const patients = reservedSlots.map((slot) => slot.client);
+    return Array.from(new Set(patients.map((p) => p.id))).map((id) =>
+      patients.find((p) => p.id === id),
+    );
+  }
   // Create a new client
   // async create(
   //   createNutritionistDto: CreateNutritionistDto,

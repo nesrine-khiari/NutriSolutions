@@ -4,6 +4,7 @@ import { NutritionistModel, StatusEnum } from '../models/nutritionist.model';
 import { APP_API } from '../core/constants/constants.config';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ClientModel } from '../models/client.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,10 +23,13 @@ export class NutritionistsService {
     return this.http.get<NutritionistModel[]>(this.apiUrl);
   }
   getBestNutritionists(): Observable<NutritionistModel[]> {
-    return this.http.get<NutritionistModel[]>(this.apiUrl+'/top');
+    return this.http.get<NutritionistModel[]>(this.apiUrl + '/top');
   }
   getNutritionistById(id: string): Observable<NutritionistModel> {
     return this.http.get<NutritionistModel>(`${this.apiUrl}/${id}`);
+  }
+  getPatientsByNutritionist(id: string): Observable<ClientModel[]> {
+    return this.http.get<ClientModel[]>(`${this.apiUrl}/${id}/patients`);
   }
   deleteNutritionist(id: string): Observable<{ count: number }> {
     return this.http.delete<{ count: number }>(`${this.apiUrl}/${id}`);

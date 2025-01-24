@@ -10,6 +10,7 @@ import { NutritionistService } from './nutritionist/nutritionist.service';
 import { RecipeEntity } from 'src/recipe/recipe-entity';
 import { NutritionistController } from './nutritionist/nutritionist.controller';
 import { ClientController } from './client/client.controller';
+import { ReservedSlot } from 'src/planning/reserved-slot.entity';
 
 @Module({
   controllers: [NutritionistController,ClientController],
@@ -21,6 +22,7 @@ import { ClientController } from './client/client.controller';
       Nutritionist,
       RecipeEntity,
       AdminEntity,
+      ReservedSlot
     ]),
   ],
   exports: [UserService, ClientService, NutritionistService],

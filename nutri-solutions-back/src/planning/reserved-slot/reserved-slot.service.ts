@@ -5,6 +5,7 @@ import { ReservedSlot } from '../reserved-slot.entity';
 import { CreateSlotDto } from '../dtos/create-slot.dto';
 import { ClientService } from 'src/user/client/client.service';
 import { NutritionistService } from 'src/user/nutritionist/nutritionist.service';
+import { UpdateSlotDto } from '../dtos/update-slot.dto';
 
 @Injectable()
 export class ReservedSlotService {
@@ -89,5 +90,13 @@ export class ReservedSlotService {
     }
 
     return true;
+  }
+  async update(
+    id: string,
+    updateSlotDto: UpdateSlotDto,
+  ): Promise<ReservedSlot> {
+    const slot = await this.findOne(id);
+    Object.assign(slot, updateSlotDto);
+    return this.reservedSlotRepository.save(slot);
   }
 }

@@ -8,12 +8,9 @@ import { Component, Input } from '@angular/core';
 export class StatsComponent {
   @Input() statObject: string = 'Nouveaux Patients';
   @Input() stat: number = 40;
-  @Input() evolutionPercent: number = 51;
+  @Input() evolutionPercent: number | null = null;
 
-  isIncreasing: boolean = false;
 
   hovered: boolean = false;
-  ngOnInit() {
-    this.isIncreasing = this.evolutionPercent > 0;
-  }
+
 }

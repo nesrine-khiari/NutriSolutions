@@ -23,6 +23,9 @@ export class ReservedSlot extends TimeStampEntity {
   @Column()
   time: string;
 
+  @Column('simple-array')
+  notes: string[];
+
   @ManyToOne(() => Client, (client) => client.reservedSlots, {
     onDelete: 'CASCADE',
     eager: true,
