@@ -9,6 +9,8 @@ import {
   JoinTable,
   ChildEntity,
   OneToMany,
+  AfterLoad,
+  AfterInsert,
 } from 'typeorm';
 import { UserEntity } from '../user.entity';
 import { ActivityLevelEnum, ObjectifEnum } from 'src/enums/recipe-enums';
@@ -44,7 +46,8 @@ export class Client extends UserEntity {
   })
   favoriteRecipes: RecipeEntity[];
 
-  
   @OneToMany(() => ReservedSlot, (reservedSlot) => reservedSlot.client)
   reservedSlots: ReservedSlot[];
+  @Column({ default: 0 })
+  reservedSlotsCount: number;
 }

@@ -92,10 +92,7 @@ export class ReservedSlotController {
     );
   }
   @Patch(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() updateSlotDto: UpdateSlotDto,
-  ) {
+  async update(@Param('id') id: string, @Body() updateSlotDto: UpdateSlotDto) {
     return this.reservedSlotService.update(id, updateSlotDto);
   }
 }

@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { GetAgePipe } from 'src/app/core/pipes/get-age.pipe';
 // import { generateFakeClient } from 'src/app/core/helpers/faker.helper';
 import { AppUtils } from 'src/app/core/utils/functions.utils';
 import { ClientModel } from 'src/app/models/client.model';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-upcoming-patient',
@@ -10,15 +11,22 @@ import { ClientModel } from 'src/app/models/client.model';
   styleUrls: ['./upcoming-patient.component.css'],
 })
 export class UpcomingPatientComponent {
-  @Input() isFirst: boolean = false;
+  @Input() isSelected: boolean = false;
   @Input({ required: true }) patient!: ClientModel;
   @Input() index: number = 0;
+  @Input() appointmentTime: string | null = null;
   styleObject: { backgroundColor: string; borderColor: string } = {
     backgroundColor: AppUtils.getCssVariable('--light-green'),
     borderColor: AppUtils.getCssVariable('--secondary-color'),
   };
+  clientService = inject(ClientService);
+  @Output() onSelectPatient = new EventEmitter<ClientModel>();
   ngOnInit() {
     this.styleObject = this.getColor();
+  }
+
+  selectPatient(patient: ClientModel) {
+    this.onSelectPatient.emit(patient);
   }
 
   getColor() {

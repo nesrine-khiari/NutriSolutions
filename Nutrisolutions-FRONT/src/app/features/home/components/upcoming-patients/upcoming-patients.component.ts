@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ClientModel } from 'src/app/models/client.model';
 import { ObjectifEnum } from 'src/app/models/recipe.model';
+import { SlotModel } from 'src/app/models/slot.model';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-upcoming-patients',
@@ -13,37 +15,77 @@ import { ObjectifEnum } from 'src/app/models/recipe.model';
 })
 export class UpcomingPatientsComponent {
   @Input() patients: ClientModel[] = [];
-  notes: string[] = ['High fever and cough and and adn '];
-  isPopupVisible: boolean = false; // Initially hidden
-
-  newNoteControl: FormControl = new FormControl('');
+  @Input() nutritionistId: string = '';
   objectifImg: string = 'se-muscler';
+  clientService = inject(ClientService);
+  appointment!: SlotModel;
+  selectedPatient: ClientModel | null = null;
+  appointmentsLength: number = 0;
+  // appointmentIndex: number = 0;
+  isLoading: boolean = false;
+  selectPatient(patient: ClientModel) {
+    this.selectedPatient = patient;
+    this.clientService
+      .getAppointment(
+        this.selectedPatient?.id ?? '',
+        this.nutritionistId,
+        this.selectedPatient.reservedSlotsCount
+      )
+      .subscribe({
+        next: (appointment) => {
+          console.log('get appointemtn');
+
+          this.appointment = appointment;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.log('error');
+        },
+      });
+  }
   ngOnInit() {
-    switch (this.patients[0].objectif) {
-      case ObjectifEnum.PERDRE_POIDS:
-        this.objectifImg = 'perdre-du-poids';
-        break;
-      case ObjectifEnum.PRENDRE_POIDS:
-        this.objectifImg = 'prendre-du-poids';
-        break;
+    this.selectedPatient = this.patients[0];
+    // this.appointmentsLength = this.selectedPatient.reservedSlots.length;
+    console.log(this.selectedPatient);
+    this.isLoading = true;
+    this.clientService
+      .getAppointment(
+        this.selectedPatient?.id ?? '',
+        this.nutritionistId,
+        this.selectedPatient.reservedSlotsCount
+      )
+      .subscribe({
+        next: (appointment) => {
+          console.log('get appointemtn');
 
-      default:
-        break;
-    }
+          this.appointment = appointment;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.log('error');
+        },
+      });
   }
 
-  // Method to show the popup
-  showPopup = () => {
-    this.isPopupVisible = true;
-    console.log('pop shown');
-  };
-
-  // Method to hide the popup
-
-  closePopup() {
-    this.isPopupVisible = false;
+  onAppointementNumberChanged(appointementNumber: number) {
+    this.clientService
+      .getAppointment(
+        this.selectedPatient?.id ?? '',
+        this.nutritionistId,
+        appointementNumber
+      )
+      .subscribe({
+        next: (appointment) => {
+          this.appointment = appointment;
+          console.log(
+            'New Appointement Set: ' +
+              JSON.stringify(this.appointment) +
+              'After changing number to : ' +
+              appointementNumber
+          );
+        },
+      });
   }
-  addNote(newNote: string) {
-    this.notes.push(newNote);
-  }
+
+  getAppointement(selectedPatientId: string) {}
 }

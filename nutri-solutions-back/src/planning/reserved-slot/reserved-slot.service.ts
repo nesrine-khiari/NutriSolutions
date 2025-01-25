@@ -99,4 +99,25 @@ export class ReservedSlotService {
     Object.assign(slot, updateSlotDto);
     return this.reservedSlotRepository.save(slot);
   }
+
+  async getAppointments(
+    clientId: string,
+    nutritionistId: string,
+    appointmentsNumber: number,
+  ): Promise<ReservedSlot> {
+    const query = this.reservedSlotRepository
+      .createQueryBuilder('reservedSlot')
+      .leftJoinAndSelect('reservedSlot.client', 'client')
+      .where('reservedSlot.nutritionistId = :nutritionistId', {
+        nutritionistId,
+      })
+      .andWhere('reservedSlot.clientId = :clientId', { clientId })
+      .orderBy('reservedSlot.date', 'ASC');
+
+    if (appointmentsNumber > 1) {
+      query.skip(appointmentsNumber - 1);
+    }
+
+    return await query.take(1).getOne();
+  }
 }

@@ -11,10 +11,16 @@ import { RecipeEntity } from 'src/recipe/recipe-entity';
 import { NutritionistController } from './nutritionist/nutritionist.controller';
 import { ClientController } from './client/client.controller';
 import { ReservedSlot } from 'src/planning/reserved-slot.entity';
+import { ReservedSlotService } from 'src/planning/reserved-slot/reserved-slot.service';
 
 @Module({
-  controllers: [NutritionistController,ClientController],
-  providers: [UserService, ClientService, NutritionistService],
+  controllers: [NutritionistController, ClientController],
+  providers: [
+    UserService,
+    ClientService,
+    NutritionistService,
+    ReservedSlotService,
+  ],
   imports: [
     TypeOrmModule.forFeature([
       UserEntity,
@@ -22,7 +28,7 @@ import { ReservedSlot } from 'src/planning/reserved-slot.entity';
       Nutritionist,
       RecipeEntity,
       AdminEntity,
-      ReservedSlot
+      ReservedSlot,
     ]),
   ],
   exports: [UserService, ClientService, NutritionistService],

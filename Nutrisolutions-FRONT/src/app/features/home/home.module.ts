@@ -15,6 +15,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { NutritionistsTableComponent } from './nutritionists-table/nutritionists-table.component';
 import { CoreModule } from 'src/app/core/core.module';
+import { AppointmentCardComponent } from './components/appointment-card/appointment-card.component';
 @NgModule({
   declarations: [
     HomePageComponent,
@@ -25,6 +26,7 @@ import { CoreModule } from 'src/app/core/core.module';
     UpcomingPatientComponent,
     AdminHomeComponent,
     NutritionistsTableComponent,
+    AppointmentCardComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +37,11 @@ import { CoreModule } from 'src/app/core/core.module';
     MatNativeDateModule,
     CoreModule,
   ],
-  exports: [HomePageComponent, AdminHomeComponent, HomeNutritionisteComponent],
+  exports: [
+    HomePageComponent,
+    AdminHomeComponent,
+    HomeNutritionisteComponent,
+    AppointmentCardComponent,
+  ],
 })
 export class HomeModule {}

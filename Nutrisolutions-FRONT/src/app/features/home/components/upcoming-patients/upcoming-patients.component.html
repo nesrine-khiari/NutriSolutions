@@ -1,52 +1,16 @@
 <app-svg-box [width]="'95%'">
-  <div class="upcoming-patients-wrapper">
+  <div *ngIf="!isLoading" class="upcoming-patients-wrapper">
     <div class="patients-list">
       <h2>Liste des patients</h2>
-      <app-upcoming-patient
-        [patient]="patients[index]"
-        [index]="index"
-        *ngFor="let i of patients; let index = index"
-        [isFirst]="index == 0"
-      ></app-upcoming-patient>
+      <app-upcoming-patient [patient]="patients[index]" [index]="index" *ngFor="let i of patients; let index = index"
+        [isSelected]="patients[index] == selectedPatient"
+        (onSelectPatient)="selectPatient($event)"></app-upcoming-patient>
+    </div>
+    <div class="next-meet-card">
+      <app-appointment-card [appointmentsCount]="selectedPatient?.reservedSlotsCount??0" [appointement]="appointment"
+        (onAppointmentChanged)="onAppointementNumberChanged($event)"></app-appointment-card>
     </div>
 
-    <div class="next-patient-meet">
-      <h2>Consultation</h2>
 
-      <div class="next-meet-card">
-        <app-upcoming-patient [patient]="patients[0]"></app-upcoming-patient>
-        <div class="detail">
-          <h4>Objectif</h4>
-          <img [src]="'assets/images/' + objectifImg + '.svg'" alt="" />
-        </div>
-        <hr />
-
-        <div class="notes-wrapper">
-          <div class="detail">
-            <h4>Notes</h4>
-            <div class="notes-content">
-              <p class="note" *ngFor="let note of notes">- {{ note }}</p>
-            </div>
-          </div>
-          <div class="buttons">
-            <app-button
-              [onClick]="showPopup"
-              [text]="'Ajouter Une Note'"
-            ></app-button>
-          </div>
-        </div>
-        <!-- Popup -->
-        <app-popup
-          [text]="'Entrez une nouvelle note'"
-          [isPopupVisible]="false"
-          (popupClosed)="closePopup()"
-        >
-          <app-input-field
-            (enterPressed)="addNote($event)"
-            [control]="newNoteControl"
-          ></app-input-field>
-        </app-popup>
-      </div>
-    </div>
   </div>
 </app-svg-box>

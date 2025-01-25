@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { APP_API } from '../core/constants/constants.config';
 import { ClientModel } from '../models/client.model';
+import { SlotModel } from '../models/slot.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +14,15 @@ export class ClientService {
   #clients: ClientModel[] = [];
 
   apiUrl = APP_API.base_url + '/clients';
+  #selectPatientSubject$ = new Subject<ClientModel>();
+  selectPatient$ = this.#selectPatientSubject$.asObservable();
 
   constructor() {}
   http = inject(HttpClient);
+
+  selectPatient(patient: ClientModel) {
+    this.#selectPatientSubject$.next(patient);
+  }
 
   getAllClients(): Observable<ClientModel[]> {
     return this.http.get<ClientModel[]>(this.apiUrl);
@@ -41,5 +48,22 @@ export class ClientService {
     return this.http.post<ClientModel>(`${this.apiUrl}/${clientId}/favorites`, {
       recipeId: recipeID,
     });
+  }
+
+  getAppointment(
+    clientId: string,
+    nutritionnistId: string,
+    appointmentNumber: number = 0
+  ): Observable<SlotModel> {
+    let params = new HttpParams();
+
+    // Append the query parameter if appointementNumber is specified
+    if (appointmentNumber > 0) {
+      params = params.set('appointmentNumber', appointmentNumber);
+    }
+    return this.http.get<SlotModel>(
+      `${this.apiUrl}/${clientId}/appointments/${nutritionnistId}`,
+      { params }
+    );
   }
 }

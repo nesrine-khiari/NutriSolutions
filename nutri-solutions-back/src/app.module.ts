@@ -12,6 +12,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { join } from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { ReservedSlotSubscriber } from './planning/reserved-slot/reserved-slot.subscriber';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
         autoLoadEntities: true,
         synchronize: true,
         logging: true,
+        subscribers: [ReservedSlotSubscriber],
       }),
     }),
     MailerModule.forRoot({
@@ -43,6 +45,9 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
         auth: {
           user: 'houcem96.hh@gmail.com',
           pass: 'sdhc snhz txmj dhom', // Use an App Password for better security
+        },
+        tls: {
+          rejectUnauthorized: false, // Allow self-signed certificates
         },
       },
       defaults: {

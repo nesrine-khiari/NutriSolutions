@@ -7,6 +7,7 @@ import {
   Get,
   Patch,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { Client } from './client.entity';
 import { ClientService } from './client.service';
@@ -15,10 +16,14 @@ import { UpdateUserDto } from '../dtos/update-user.dto';
 import { UserEntity } from '../user.entity';
 import { UpdateClientDto } from './dtos/update-client.dto';
 import { Public } from 'src/auth/guards/auth.guard';
+import { ReservedSlotService } from 'src/planning/reserved-slot/reserved-slot.service';
 @Public()
 @Controller('clients')
 export class ClientController {
-  constructor(protected readonly clientService: ClientService) {}
+  constructor(
+    protected readonly clientService: ClientService,
+    protected readonly reservedSlotService: ReservedSlotService,
+  ) {}
   @Get()
   async findAll(): Promise<Client[]> {
     return this.clientService.findAll();
@@ -56,5 +61,18 @@ export class ClientController {
   @Get(':clientId/favorites')
   async getFavourites(@Param('clientId') clientId: string) {
     return this.clientService.getFavouriteRecipes(clientId);
+  }
+
+  @Get(':clientId/appointments/:nutritionistId')
+  async getAppointements(
+    @Param('clientId') clientId: string,
+    @Param('nutritionistId') nutritionistId: string,
+    @Query('appointmentNumber') appointmentNumber: number,
+  ) {
+    return this.reservedSlotService.getAppointments(
+      clientId,
+      nutritionistId,
+      appointmentNumber,
+    );
   }
 }

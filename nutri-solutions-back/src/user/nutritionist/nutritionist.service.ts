@@ -9,6 +9,8 @@ import { UpdateNutritionistDto } from './dtos/update-nutritionist.dto';
 import { UserEntity } from '../user.entity';
 import { UpdateUserDto } from '../dtos/update-user.dto';
 import { ReservedSlot } from 'src/planning/reserved-slot.entity';
+import { Client } from '../client/client.entity';
+import { ClientService } from '../client/client.service';
 
 @Injectable()
 export class NutritionistService extends UserService {
@@ -17,6 +19,7 @@ export class NutritionistService extends UserService {
     protected readonly nutritionistRepository: Repository<Nutritionist>,
     @InjectRepository(ReservedSlot)
     protected readonly reservedSlotRepository: Repository<ReservedSlot>,
+    protected readonly clientService: ClientService,
   ) {
     super(nutritionistRepository);
   }
@@ -57,9 +60,10 @@ export class NutritionistService extends UserService {
       where: { nutritionist: { id: nutritionistId } },
       relations: ['client'],
     });
+    const patients = reservedSlots.map((reservedSlot) => reservedSlot.client);
 
     // Extract unique clients
-    const patients = reservedSlots.map((slot) => slot.client);
+    // const patients = reservedSlots.map((slot) => slot.client);
     return Array.from(new Set(patients.map((p) => p.id))).map((id) =>
       patients.find((p) => p.id === id),
     );

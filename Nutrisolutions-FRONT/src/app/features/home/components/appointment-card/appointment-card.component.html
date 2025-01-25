@@ -1,0 +1,41 @@
+<div class="next-patient-meet">
+    <div class="arrows">
+        <img style="cursor: pointer;" *ngIf="apppointementIndex>1" (click)="getPreviousAppointment()"
+            src="assets/images/left-arrow.png" width="25px" alt="">
+        <span>{{appointement.date | date}}</span>
+        <img style="cursor: pointer;" *ngIf="apppointementIndex<appointmentsCount" (click)="getNextAppointment()"
+            src="assets/images/right-arrow.png" width="25px" alt="">
+    </div>
+    <h2>Consultation</h2>
+
+    <div class="next-meet-card">
+        <app-upcoming-patient *ngIf="appointement" [patient]="appointement.client"
+            [appointmentTime]="appointement.time"></app-upcoming-patient>
+        <div class="detail">
+            <h4>Objectif</h4>
+            <img *ngIf="appointement" [src]="'assets/images/' + getObjectifImg(appointement.client.objectif) + '.svg'"
+                alt="" />
+        </div>
+        <hr />
+
+        <div class="notes-wrapper">
+            <div class="detail">
+                <h4>Notes</h4>
+                <div class="notes-content">
+                    <p class="note" *ngFor="let note of appointement.notes">
+                        - {{
+                        note }}
+                    </p>
+                </div>
+            </div>
+            <div class="buttons">
+                <app-button [onClick]="showPopup" [text]="'Ajouter Une Note'"></app-button>
+            </div>
+        </div>
+        <!-- Popup -->
+        <app-popup [text]="'Entrez une nouvelle note'" [isPopupVisible]="isPopupVisible" (popupClosed)="closePopup()">
+            <app-input-field [placeholder]="'Votre note...'" (enterPressed)="addNote($event)"
+                [control]="newNoteControl"></app-input-field>
+        </app-popup>
+    </div>
+</div>

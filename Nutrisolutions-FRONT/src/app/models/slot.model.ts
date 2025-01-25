@@ -8,6 +8,7 @@ export class SlotModel {
     public time: string,
     public client: ClientModel,
     public nutritionist: NutritionistModel,
+    public notes?: string[],
     public id?: string
   ) {}
 }

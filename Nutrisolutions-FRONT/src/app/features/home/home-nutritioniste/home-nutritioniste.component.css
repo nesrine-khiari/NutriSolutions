@@ -105,6 +105,13 @@ span.name {
   background-color: black !important; /* Change to your desired color */
   color: white; /* Optional: Change text color on hover */
 }
+
+::ng-deep .mat-calendar-body-selected {
+  background-color: var(
+    --primary-color
+  ) !important; /* Change to your desired color */
+  color: white !important; /* Optional: Change text color on hover */
+}
 /* Hover effect for calendar cells */
 
 ::ng-deep .mat-calendar-body-cell-content .mat-focus-indicator {

@@ -1,4 +1,4 @@
-<div class="upcoming-patient" [class.active]="isFirst">
+<div class="upcoming-patient" [class.active]="isSelected" (click)="selectPatient(patient)">
   <div class="initials-wrapper" [style.borderColor]="styleObject.borderColor">
     <div class="initials-avatar" [style.backgroundColor]="styleObject.backgroundColor">
       {{ patient.name | getInitials }}
@@ -8,10 +8,10 @@
     <h2>{{ patient.name }}</h2>
     <p>{{ patient.gender }} - {{ patient.birthDate | getAge }}</p>
   </div>
-  <div class="meet-time" [ngStyle]="{
+  <div *ngIf="appointmentTime" class="meet-time" [ngStyle]="{
       backgroundColor: styleObject.backgroundColor,
       color: styleObject.borderColor
     }">
-    <p>9:00AM</p>
+    <p>{{appointmentTime}}</p>
   </div>
 </div>

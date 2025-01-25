@@ -7,6 +7,7 @@ import { CreateClientDto } from './dtos/create-client.dto';
 import { UpdateClientDto } from './dtos/update-client.dto';
 import { UserService } from '../user.service';
 import { UserEntity } from '../user.entity';
+import { ReservedSlot } from 'src/planning/reserved-slot.entity';
 
 @Injectable()
 export class ClientService extends UserService {
@@ -24,7 +25,7 @@ export class ClientService extends UserService {
   // Get all clients
   async findAll(): Promise<Client[]> {
     return this.clientRepository.find({
-      relations: ['favoriteRecipes'], // Include related favorite recipes
+      relations: ['favoriteRecipes', 'reservedSlots'], // Include related favorite recipes
     });
   }
 
@@ -32,7 +33,7 @@ export class ClientService extends UserService {
   async findOneById(id: string): Promise<Client> {
     const client = await this.clientRepository.findOne({
       where: { id },
-      relations: ['favoriteRecipes'], // Include related favorite recipes
+      relations: ['favoriteRecipes', 'reservedSlots'], // Include related favorite recipes
     });
 
     if (!client) {

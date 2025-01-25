@@ -14,11 +14,17 @@ export class PlanningService {
   constructor() {}
   http = inject(HttpClient);
 
-  getReservedSlotsByNutritionist(nutritionistId: string): Observable<SlotModel[]> {
+  getReservedSlotsByNutritionist(
+    nutritionistId: string
+  ): Observable<SlotModel[]> {
     return this.http.get<SlotModel[]>(`${this.apiUrl}/${nutritionistId}`);
   }
   reserveSlot(slot: CreateSlotModelDto): Observable<SlotModel> {
     return this.http.post<SlotModel>(`${this.apiUrl}`, slot);
+  }
+
+  addNote(slotId: string, notes: string[]): Observable<SlotModel> {
+    return this.http.patch<SlotModel>(`${this.apiUrl}/${slotId}`, { notes });
   }
 
   cancelSlotReservation(id: string): Observable<{ count: number }> {

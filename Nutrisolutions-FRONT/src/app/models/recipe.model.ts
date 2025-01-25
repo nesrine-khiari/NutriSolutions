@@ -25,7 +25,6 @@ export enum ObjectifEnum {
   PERDRE_POIDS = 'Perdre du poids',
   PRENDRE_POIDS = 'Prendre du poids',
   MUSCLER = 'Se muscler',
-  MAINTENIR_POIDS = 'Maintenir le poids',
 }
 
 export enum CategoryEnum {

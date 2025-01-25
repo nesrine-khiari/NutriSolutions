@@ -1,4 +1,5 @@
 import { ObjectifEnum, RecipeModel } from './recipe.model';
+import { SlotModel } from './slot.model';
 import { UserModel } from './user.model';
 
 export class ClientModel extends UserModel {
@@ -16,6 +17,8 @@ export class ClientModel extends UserModel {
     public favoriteRecipes: RecipeModel[] = [],
     public objectif: ObjectifEnum,
     public activityLevel: ActivityLevelEnum,
+    public reservedSlots: SlotModel[] = [],
+    public reservedSlotsCount: number = 0,
     id?: string
   ) {
     super(
