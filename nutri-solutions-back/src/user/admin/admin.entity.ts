@@ -1,5 +1,5 @@
-import { Entity } from 'typeorm';
+import { ChildEntity } from 'typeorm';
 import { UserEntity } from '../user.entity';
 
-@Entity()
-export class AdminEntity extends UserEntity {}
+@ChildEntity()
+export class Admin extends UserEntity {}

@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { jwtConstants } from 'src/common/constants/auth.constants';
-import { UserRoleEnum } from 'src/enums/user-enums';
+import { NutritionistStatusEnum, UserRoleEnum } from 'src/enums/user-enums';
 import { IS_PUBLIC_KEY } from './auth.guard';
 import { extractTokenFromHeader } from 'src/common/utils/guards.utils';
 import { JwtService } from '@nestjs/jwt';
@@ -22,6 +22,7 @@ export class RolesGuard implements CanActivate {
     private configService: ConfigService,
   ) {}
   private readonly logger = new Logger(RolesGuard.name);
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const requiredRoles = this.reflector.get<string[]>(
       ROLES_KEY,
@@ -38,12 +39,14 @@ export class RolesGuard implements CanActivate {
         'You are not authorized to access this resource',
       );
     }
+
     try {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: this.configService.get<string>('JWT_SECRET'),
       });
       this.logger.log('JWT payload:', payload);
 
+      // Check if the user has the required role
       const hasRole = requiredRoles.some((role) => payload.role === role);
       if (!hasRole) {
         this.logger.warn(

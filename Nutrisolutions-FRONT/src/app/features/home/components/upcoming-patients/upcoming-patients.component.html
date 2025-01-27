@@ -2,15 +2,20 @@
   <div *ngIf="!isLoading" class="upcoming-patients-wrapper">
     <div class="patients-list">
       <h2>Liste des patients</h2>
-      <app-upcoming-patient [patient]="patients[index]" [index]="index" *ngFor="let i of patients; let index = index"
+      <app-upcoming-patient
+        [patient]="patients[index]"
+        [index]="index"
+        *ngFor="let i of patients; let index = index"
         [isSelected]="patients[index] == selectedPatient"
-        (onSelectPatient)="selectPatient($event)"></app-upcoming-patient>
+        (onSelectPatient)="selectPatient($event)"
+      ></app-upcoming-patient>
     </div>
     <div class="next-meet-card">
-      <app-appointment-card [appointmentsCount]="selectedPatient?.reservedSlotsCount??0" [appointement]="appointment"
-        (onAppointmentChanged)="onAppointementNumberChanged($event)"></app-appointment-card>
+      <app-appointment-card
+        [appointmentsCount]="selectedPatient?.reservedSlotsCount ?? 0"
+        [appointement]="appointment"
+        (onAppointmentChanged)="onAppointementNumberChanged($event)"
+      ></app-appointment-card>
     </div>
-
-
   </div>
 </app-svg-box>

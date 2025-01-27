@@ -11,6 +11,8 @@ import { UpdateUserDto } from '../dtos/update-user.dto';
 import { ReservedSlot } from 'src/planning/reserved-slot.entity';
 import { Client } from '../client/client.entity';
 import { ClientService } from '../client/client.service';
+import { NutritionistStatusEnum } from 'src/enums/user-enums';
+import { EmailService } from 'src/common/email/email.service';
 
 @Injectable()
 export class NutritionistService extends UserService {
@@ -20,6 +22,7 @@ export class NutritionistService extends UserService {
     @InjectRepository(ReservedSlot)
     protected readonly reservedSlotRepository: Repository<ReservedSlot>,
     protected readonly clientService: ClientService,
+    protected readonly emailService: EmailService,
   ) {
     super(nutritionistRepository);
   }
@@ -45,7 +48,11 @@ export class NutritionistService extends UserService {
   ): Promise<Nutritionist> {
     const user = await this.findOne(id); // Ensure client exists
     Object.assign(user, updateNutritionistDto); // Merge updates
-    return this.userRepository.save(user);
+    const result = this.userRepository.save(user);
+    if (updateNutritionistDto.status == NutritionistStatusEnum.APPROVED) {
+      this.emailService.sendNutritionistApproval(user.email, user.name);
+    } else this.emailService.sendNutritionistRejection(user.email, user.name);
+    return result;
   }
   async getBestNutritionists(): Promise<Nutritionist[]> {
     return this.nutritionistRepository

@@ -44,27 +44,29 @@ export class UpcomingPatientsComponent {
       });
   }
   ngOnInit() {
-    this.selectedPatient = this.patients[0];
+    this.selectedPatient = this.patients.length ? this.patients[0] : null;
     // this.appointmentsLength = this.selectedPatient.reservedSlots.length;
     console.log(this.selectedPatient);
-    this.isLoading = true;
-    this.clientService
-      .getAppointment(
-        this.selectedPatient?.id ?? '',
-        this.nutritionistId,
-        this.selectedPatient.reservedSlotsCount
-      )
-      .subscribe({
-        next: (appointment) => {
-          console.log('get appointemtn');
+    if (this.selectedPatient) {
+      this.isLoading = true;
+      this.clientService
+        .getAppointment(
+          this.selectedPatient?.id ?? '',
+          this.nutritionistId,
+          this.selectedPatient.reservedSlotsCount
+        )
+        .subscribe({
+          next: (appointment) => {
+            console.log('get appointemtn');
 
-          this.appointment = appointment;
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.log('error');
-        },
-      });
+            this.appointment = appointment;
+            this.isLoading = false;
+          },
+          error: (err) => {
+            console.log('error');
+          },
+        });
+    }
   }
 
   onAppointementNumberChanged(appointementNumber: number) {

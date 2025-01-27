@@ -15,7 +15,7 @@ import { CreateNutritionistDto } from 'src/user/nutritionist/dtos/create-nutriti
 import { ClientService } from 'src/user/client/client.service';
 import { NutritionistService } from 'src/user/nutritionist/nutritionist.service';
 import { UserEntity } from 'src/user/user.entity';
-import { UserRoleEnum } from 'src/enums/user-enums';
+import { NutritionistStatusEnum, UserRoleEnum } from 'src/enums/user-enums';
 import { EmailService } from 'src/common/email/email.service';
 @Public()
 @Controller('auth')
@@ -37,7 +37,16 @@ export class AuthController {
     if (!user) {
       throw new UnauthorizedException('Invalid email or password');
     }
-    // this.emailService.sendWelcomeEmail(signInDto.email, 'Houcem Hbiri');
+    // Check nutritionist approval status
+    if (user.role === UserRoleEnum.NUTRITIONIST) {
+      if ((user as any).status === NutritionistStatusEnum.WAITING) {
+        throw new UnauthorizedException(
+          'Your account has not been approved yet.',
+        );
+      } else if ((user as any).status === NutritionistStatusEnum.REJECTED) {
+        throw new UnauthorizedException('This account was rejected.');
+      }
+    }
     return this.authService.login(user);
   }
   @Public()
@@ -48,18 +57,18 @@ export class AuthController {
     switch (signupDto.role) {
       case UserRoleEnum.CLIENT:
         user = await this.clientService.create(signupDto as CreateClientDto);
-        break;
+        this.emailService.sendWelcomeEmail(signupDto.email, signupDto.name);
+        return this.authService.login(user);
 
       case UserRoleEnum.NUTRITIONIST:
         user = await this.nutritionistService.create(
           signupDto as CreateNutritionistDto,
         );
+        this.emailService.sendNewNutritionistAlert(signupDto.name);
         break;
 
       default:
         throw new Error('Invalid user type');
     }
-    this.emailService.sendWelcomeEmail(signupDto.email, signupDto.name);
-    return this.authService.login(user);
   }
 }

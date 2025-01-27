@@ -43,7 +43,7 @@ export class NutritionistsTableComponent {
 
   updateStatus(nutritionist: NutritionistModel, newStatus: StatusEnum): void {
     this.nutritionistService
-      .updateNutritionist(nutritionist.id!, nutritionist)
+      .updateNutritionist(nutritionist.id!, newStatus)
       .subscribe({
         next: (response) => {
           // Success callback

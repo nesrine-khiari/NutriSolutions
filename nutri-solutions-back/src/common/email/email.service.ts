@@ -29,7 +29,7 @@ export class EmailService {
           reservationDate,
         },
       });
-  
+
       // Check if email was sent successfully
       if (result.accepted.length > 0) {
         console.log('Email sent successfully!');
@@ -57,7 +57,78 @@ export class EmailService {
           reservationDate,
         },
       });
-  
+
+      // Check if email was sent successfully
+      if (result.accepted.length > 0) {
+        console.log('Email sent successfully!');
+      } else {
+        console.log('Email sending failed.');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
+  }
+  async sendNewNutritionistAlert(
+    nutritionistName: string,
+  ): Promise<void> {
+    try {
+      const result = await this.mailerService.sendMail({
+        to: 'nesrine890@gmail.com', // Recipient email
+        subject: 'New Nutritionist', // Subject
+        template: './nutritionist_signup', // Template file name (without extension)
+        context: {
+          nutritionistName,
+        },
+      });
+
+      // Check if email was sent successfully
+      if (result.accepted.length > 0) {
+        console.log('Email sent successfully!');
+      } else {
+        console.log('Email sending failed.');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
+  }
+  async sendNutritionistRejection(
+    to: string,
+    nutritionistName: string,
+  ): Promise<void> {
+    try {
+      const result = await this.mailerService.sendMail({
+        to, // Recipient email
+        subject: 'Update From Nutrisolutions', // Subject
+        template: './reject_nutritionist', // Template file name (without extension)
+        context: {
+          nutritionistName,
+        },
+      });
+
+      // Check if email was sent successfully
+      if (result.accepted.length > 0) {
+        console.log('Email sent successfully!');
+      } else {
+        console.log('Email sending failed.');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
+  }
+  async sendNutritionistApproval(
+    to: string,
+    nutritionistName: string,
+  ): Promise<void> {
+    try {
+      const result = await this.mailerService.sendMail({
+        to, // Recipient email
+        subject: 'Welcome To Nutrisolutions', // Subject
+        template: './welcome_nutritionist', // Template file name (without extension)
+        context: {
+          nutritionistName,
+        },
+      });
+
       // Check if email was sent successfully
       if (result.accepted.length > 0) {
         console.log('Email sent successfully!');

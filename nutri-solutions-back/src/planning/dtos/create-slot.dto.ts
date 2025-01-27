@@ -1,23 +1,8 @@
 import { IsUUID, IsDateString, IsNotEmpty, IsString } from 'class-validator';
+import { CreateUnavailableSlotDto } from '../unavailable-slot/dtos/create-unavailable-slot.dto';
 
-export class CreateSlotDto {
-  @IsDateString()
-  @IsNotEmpty()
-  date: string; // ISO 8601 date format
-
-  @IsString()
-  @IsNotEmpty()
-  day: string;
-
-  @IsString()
-  @IsNotEmpty()
-  time: string;
-
+export class CreateSlotDto extends CreateUnavailableSlotDto {
   @IsUUID()
   @IsNotEmpty()
   clientId: string;
-
-  @IsUUID()
-  @IsNotEmpty()
-  nutritionistId: string;
 }

@@ -7,10 +7,14 @@ import {
   Column,
   ManyToMany,
   ManyToOne,
+  TableInheritance,
 } from 'typeorm';
 
 @Entity()
-export class ReservedSlot extends TimeStampEntity {
+@TableInheritance({
+  column: { name: 'isReserved', type: 'boolean' },
+})
+export class UnavailableSlot extends TimeStampEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -23,19 +27,12 @@ export class ReservedSlot extends TimeStampEntity {
   @Column()
   time: string;
 
-  @Column('simple-array')
-  notes: string[];
-
-  @ManyToOne(() => Client, (client) => client.reservedSlots, {
-    onDelete: 'CASCADE',
-    eager: true,
-  })
-  client: Client;
-
   @ManyToOne(() => Nutritionist, (nutritionist) => nutritionist.reservedSlots, {
     onDelete: 'CASCADE',
     eager: true,
   })
   nutritionist: Nutritionist;
-}
 
+  @Column({ type: 'boolean', default: false })
+  isReserved: boolean;
+}

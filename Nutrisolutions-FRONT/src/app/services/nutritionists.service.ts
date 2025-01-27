@@ -41,12 +41,11 @@ export class NutritionistsService {
   // }
   updateNutritionist(
     id: string,
-    nutritionist: NutritionistModel
+    status: StatusEnum
   ): Observable<NutritionistModel> {
-    return this.http.patch<NutritionistModel>(
-      `${this.apiUrl}/${id}`,
-      nutritionist
-    );
+    return this.http.patch<NutritionistModel>(`${this.apiUrl}/${id}`, {
+      status,
+    });
   }
 
   // getAllNutritionists(): NutritionistModel[] {

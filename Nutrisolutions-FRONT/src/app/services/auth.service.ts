@@ -28,7 +28,17 @@ export class AuthService {
     this.addUser(user).subscribe({
       next: (response) => {
         this.toastr.success('User Signed up successfully', 'Success');
-        this.login(user.email, user.getPass());
+        if (user.role == UserRoleEnum.CLIENT)
+          this.login(user.email, user.getPass());
+        else
+          this.toastr.info(
+            'Please wait until the Admin approves your candidature.',
+            'Candidature Validation',
+            {
+              timeOut: 10000, // Stay for 10 seconds
+            }
+          );
+        this.router.navigate(['/']);
       },
       error: (error) => {
         this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
@@ -36,19 +46,19 @@ export class AuthService {
     });
     this.userRole = user.role;
   }
-  signupNutritionist(nutritionist: NutritionistModel): void {
-    this.addUser(nutritionist).subscribe({
-      next: (response) => {
-        // this.toastr.success('User created successfully', 'Success');
-        this.login(nutritionist.email, nutritionist.getPass());
-      },
-      error: (error) => {
-        this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
-      },
-    });
+  // signupNutritionist(nutritionist: NutritionistModel): void {
+  //   this.addUser(nutritionist).subscribe({
+  //     next: (response) => {
+  //       this.toastr.success('User created successfully', 'Success');
+  //       // this.login(nutritionist.email, nutritionist.getPass());
+  //     },
+  //     error: (error) => {
+  //       this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+  //     },
+  //   });
 
-    this.userRole = nutritionist.role;
-  }
+  //   this.userRole = nutritionist.role;
+  // }
 
   login(email: string, password: string): void {
     const credentials = { email: email, password: password };

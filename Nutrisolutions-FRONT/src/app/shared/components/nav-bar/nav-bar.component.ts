@@ -25,47 +25,87 @@ export class NavBarComponent implements AfterViewInit {
   authService = inject(AuthService);
   ngOnInit() {
     const role = this.authService.getUserRole();
-    if (role == UserRoleEnum.CLIENT) {
-      this.menuItems = [
-        { title: 'Acceuil', iconClass: 'fas fa-home', route: '/client-home' },
-        { title: 'Profile', iconClass: 'fas fa-user', route: '/profile' },
-        { title: 'Recettes', iconClass: 'fas fa-utensils', route: '/recipes' },
-        {
-          title: 'Nutritionnistes',
-          iconClass: 'fas fa-user-md',
-          route: '/nutritionists',
-        },
-        {
-          title: 'Messenger',
-          iconClass: 'fab fa-facebook-messenger',
-          route: '/messenger',
-        },
-        { title: 'Gallery', iconClass: 'fas fa-image', route: '/gallery' },
-        {
-          title: 'Analytics',
-          iconClass: 'fas fa-chart-line',
-          route: '/analytics',
-        },
-        { title: 'Settings', iconClass: 'fas fa-cog', route: '/settings' },
-      ];
-    } else {
-      this.menuItems = [
-        { title: 'Acceuil', iconClass: 'fas fa-home', route: '/client-home' },
-        { title: 'Recettes', iconClass: 'fas fa-utensils', route: '/recipes' },
+    const nutritionistId = this.authService.getUserId();
+    switch (role) {
+      case UserRoleEnum.CLIENT:
+        this.menuItems = [
+          { title: 'Acceuil', iconClass: 'fas fa-home', route: '/client-home' },
+          { title: 'Profile', iconClass: 'fas fa-user', route: '/profile' },
+          {
+            title: 'Recettes',
+            iconClass: 'fas fa-utensils',
+            route: '/recipes',
+          },
+          {
+            title: 'Nutritionnistes',
+            iconClass: 'fas fa-user-md',
+            route: '/nutritionists',
+          },
+          {
+            title: 'Messenger',
+            iconClass: 'fab fa-facebook-messenger',
+            route: '/messenger',
+          },
+          { title: 'Gallery', iconClass: 'fas fa-image', route: '/gallery' },
+          {
+            title: 'Analytics',
+            iconClass: 'fas fa-chart-line',
+            route: '/analytics',
+          },
+          { title: 'Settings', iconClass: 'fas fa-cog', route: '/settings' },
+        ];
+        break;
+      case UserRoleEnum.NUTRITIONIST:
+        this.menuItems = [
+          { title: 'Acceuil', iconClass: 'fas fa-home', route: '/client-home' },
+          {
+            title: 'Recettes',
+            iconClass: 'fas fa-utensils',
+            route: '/recipes',
+          },
+          {
+            title: 'Planning',
+            iconClass: 'fa-solid fa-calendar-days',
+            route: `/nutritionnists/${nutritionistId}/planning`,
+          },
+          {
+            title: 'Messenger',
+            iconClass: 'fab fa-facebook-messenger',
+            route: '/messenger',
+          },
+          { title: 'Gallery', iconClass: 'fas fa-image', route: '/gallery' },
+          {
+            title: 'Analytics',
+            iconClass: 'fas fa-chart-line',
+            route: '/analytics',
+          },
+          { title: 'Settings', iconClass: 'fas fa-cog', route: '/settings' },
+        ];
+        break;
 
-        {
-          title: 'Messenger',
-          iconClass: 'fab fa-facebook-messenger',
-          route: '/messenger',
-        },
-        { title: 'Gallery', iconClass: 'fas fa-image', route: '/gallery' },
-        {
-          title: 'Analytics',
-          iconClass: 'fas fa-chart-line',
-          route: '/analytics',
-        },
-        { title: 'Settings', iconClass: 'fas fa-cog', route: '/settings' },
-      ];
+      default:
+        this.menuItems = [
+          { title: 'Acceuil', iconClass: 'fas fa-home', route: '/client-home' },
+          {
+            title: 'Recettes',
+            iconClass: 'fas fa-utensils',
+            route: '/recipes',
+          },
+
+          {
+            title: 'Messenger',
+            iconClass: 'fab fa-facebook-messenger',
+            route: '/messenger',
+          },
+          { title: 'Gallery', iconClass: 'fas fa-image', route: '/gallery' },
+          {
+            title: 'Analytics',
+            iconClass: 'fas fa-chart-line',
+            route: '/analytics',
+          },
+          { title: 'Settings', iconClass: 'fas fa-cog', route: '/settings' },
+        ];
+        break;
     }
   }
   menuItems = [

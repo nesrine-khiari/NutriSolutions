@@ -10,6 +10,7 @@ import { Nutritionist } from 'src/user/nutritionist/nutritionist.entity';
 import { RecipeEntity } from 'src/recipe/recipe-entity';
 import { UserEntity } from 'src/user/user.entity';
 import { EmailService } from 'src/common/email/email.service';
+import { UnavailableSlot } from './unavailable-slot/unavailable-slot.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -18,9 +19,15 @@ import { EmailService } from 'src/common/email/email.service';
       Nutritionist,
       RecipeEntity,
       UserEntity,
+      UnavailableSlot,
     ]),
   ],
-  providers: [ReservedSlotService, ClientService, NutritionistService,EmailService],
+  providers: [
+    ReservedSlotService,
+    ClientService,
+    NutritionistService,
+    EmailService,
+  ],
   controllers: [ReservedSlotController],
 })
 export class PlanningModule {}

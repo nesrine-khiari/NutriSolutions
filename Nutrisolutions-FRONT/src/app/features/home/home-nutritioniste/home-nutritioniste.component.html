@@ -13,13 +13,23 @@
             <h4>Consultations Aujourd'hui</h4>
             <p>{{ todayReservations.length }}</p>
             <div class="stats">
-              <app-stats [evolutionPercent]="51" [stat]="recentReservations.length"
-                [statObject]="'Nouveaux Patients'"></app-stats>
-              <app-stats [stat]="reservations.length" [statObject]="'Total Patients'"></app-stats>
+              <app-stats
+                [evolutionPercent]="51"
+                [stat]="recentReservations.length"
+                [statObject]="'Nouveaux Patients'"
+              ></app-stats>
+              <app-stats
+                [stat]="reservations.length"
+                [statObject]="'Total Patients'"
+              ></app-stats>
             </div>
           </div>
 
-          <img class="nutritionist-img" [src]="'assets/images/nutritionist-'+getGenderImage()+ '.png'" alt="" />
+          <img
+            class="nutritionist-img"
+            [src]="'assets/images/nutritionist-' + getGenderImage() + '.png'"
+            alt=""
+          />
         </div>
       </app-svg-box>
     </div>
@@ -28,9 +38,12 @@
       <mat-calendar [(selected)]="currentDate"> </mat-calendar>
     </div>
   </div>
-  <div *ngIf="!isLoading" class="second-section">
+  <div *ngIf="!isLoading && patientsList.length > 0" class="second-section">
     <div class="patients-list">
-      <app-upcoming-patients [patients]="patientsList" [nutritionistId]="nutritionistId"></app-upcoming-patients>
+      <app-upcoming-patients
+        [patients]="patientsList"
+        [nutritionistId]="nutritionistId"
+      ></app-upcoming-patients>
     </div>
   </div>
 </app-page-background>
