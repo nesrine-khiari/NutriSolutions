@@ -51,7 +51,7 @@ export class HomeNutritionisteComponent {
     console.log('hello ' + this.currentDate);
     console.log('====================================');
     this.planningService
-      .getReservedSlotsByNutritionist(this.nutritionistId)
+      .getUnavailableSlotsByNutritionist(this.nutritionistId)
       .subscribe({
         next: (reservations) => {
           this.reservations = reservations;

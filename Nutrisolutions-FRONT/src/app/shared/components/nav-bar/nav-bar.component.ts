@@ -57,7 +57,7 @@ export class NavBarComponent implements AfterViewInit {
         break;
       case UserRoleEnum.NUTRITIONIST:
         this.menuItems = [
-          { title: 'Acceuil', iconClass: 'fas fa-home', route: '/client-home' },
+          { title: 'Acceuil', iconClass: 'fas fa-home', route: '/nutritionist-home' },
           {
             title: 'Recettes',
             iconClass: 'fas fa-utensils',
@@ -85,7 +85,7 @@ export class NavBarComponent implements AfterViewInit {
 
       default:
         this.menuItems = [
-          { title: 'Acceuil', iconClass: 'fas fa-home', route: '/client-home' },
+          { title: 'Acceuil', iconClass: 'fas fa-home', route: '/admin-home' },
           {
             title: 'Recettes',
             iconClass: 'fas fa-utensils',

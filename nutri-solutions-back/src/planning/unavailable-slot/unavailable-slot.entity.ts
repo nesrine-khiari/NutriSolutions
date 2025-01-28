@@ -1,19 +1,15 @@
 import { TimeStampEntity } from 'src/common/db-utilities/time-stamp.entity';
-import { Client } from 'src/user/client/client.entity';
 import { Nutritionist } from 'src/user/nutritionist/nutritionist.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToMany,
   ManyToOne,
   TableInheritance,
 } from 'typeorm';
 
 @Entity()
-@TableInheritance({
-  column: { name: 'isReserved', type: 'boolean' },
-})
+@TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export class UnavailableSlot extends TimeStampEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -27,12 +23,12 @@ export class UnavailableSlot extends TimeStampEntity {
   @Column()
   time: string;
 
-  @ManyToOne(() => Nutritionist, (nutritionist) => nutritionist.reservedSlots, {
+  @ManyToOne(() => Nutritionist, (nutritionist) => nutritionist.unavailableSlots, {
     onDelete: 'CASCADE',
     eager: true,
   })
   nutritionist: Nutritionist;
 
   @Column({ type: 'boolean', default: false })
-  isReserved: boolean;
+  isReservation: boolean;
 }

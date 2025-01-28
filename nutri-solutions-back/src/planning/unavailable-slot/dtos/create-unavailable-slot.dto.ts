@@ -18,5 +18,5 @@ export class CreateUnavailableSlotDto {
   nutritionistId: string;
 
   @IsBoolean()
-  isReserved: boolean;
+  isReservation: boolean;
 }

@@ -1,6 +1,6 @@
 import { IsArray } from 'class-validator';
 
-export class UpdateSlotDto {
+export class UpdateReservedSlotDto {
   @IsArray()
   notes: string[];
 }

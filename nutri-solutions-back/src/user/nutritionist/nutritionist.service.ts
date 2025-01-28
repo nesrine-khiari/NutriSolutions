@@ -8,7 +8,7 @@ import { CreateNutritionistDto } from './dtos/create-nutritionist.dto';
 import { UpdateNutritionistDto } from './dtos/update-nutritionist.dto';
 import { UserEntity } from '../user.entity';
 import { UpdateUserDto } from '../dtos/update-user.dto';
-import { ReservedSlot } from 'src/planning/reserved-slot.entity';
+import { ReservedSlot } from 'src/planning/reserved-slot/reserved-slot.entity';
 import { Client } from '../client/client.entity';
 import { ClientService } from '../client/client.service';
 import { NutritionistStatusEnum } from 'src/enums/user-enums';
@@ -33,7 +33,7 @@ export class NutritionistService extends UserService {
   async findOne(id: string): Promise<Nutritionist> {
     const user = await this.nutritionistRepository.findOne({
       where: { id },
-      relations: ['reservedSlots'],
+      relations: ['unavailableSlots'],
     });
     if (!user) {
       throw new NotFoundException(

@@ -11,7 +11,8 @@ import {
 } from 'typeorm';
 import { UserEntity } from '../user.entity';
 import { NutritionistStatusEnum } from 'src/enums/user-enums';
-import { ReservedSlot } from 'src/planning/reserved-slot.entity';
+import { ReservedSlot } from 'src/planning/reserved-slot/reserved-slot.entity';
+import { UnavailableSlot } from 'src/planning/unavailable-slot/unavailable-slot.entity';
 
 @ChildEntity()
 export class Nutritionist extends UserEntity {
@@ -32,6 +33,6 @@ export class Nutritionist extends UserEntity {
   @Column({default: 4})
   stars: number;
 
-  @OneToMany(() => ReservedSlot, (reservedSlot) => reservedSlot.nutritionist)
-    reservedSlots: ReservedSlot[];
+  @OneToMany(() => UnavailableSlot, (unavailableSlot) => unavailableSlot.nutritionist)
+  unavailableSlots: UnavailableSlot[];
 }

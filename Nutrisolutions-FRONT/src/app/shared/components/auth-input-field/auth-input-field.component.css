@@ -56,7 +56,11 @@ input::placeholder {
   cursor: pointer;
   color: var(--hint-text);
 }
-
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-textfield-decoration-container {
+  display: none;
+}
 
 .toggle-icon:hover {
   color: #555;

@@ -7,7 +7,7 @@ import { CreateClientDto } from './dtos/create-client.dto';
 import { UpdateClientDto } from './dtos/update-client.dto';
 import { UserService } from '../user.service';
 import { UserEntity } from '../user.entity';
-import { ReservedSlot } from 'src/planning/reserved-slot.entity';
+import { ReservedSlot } from 'src/planning/reserved-slot/reserved-slot.entity';
 
 @Injectable()
 export class ClientService extends UserService {

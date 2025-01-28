@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 // import { generateFakeNutritionist } from 'src/app/core/helpers/faker.helper';
 import { AppUtils } from 'src/app/core/utils/functions.utils';
-import { ClientModel } from 'src/app/models/client.model';
-import { SlotModel } from 'src/app/models/slot.model';
+import { ClientModel, UserRoleEnum } from 'src/app/models/client.model';
+import { CreateSlotModelDto, SlotModel } from 'src/app/models/slot.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { PlanningService } from 'src/app/services/planning.service';
 
@@ -21,6 +21,7 @@ export class PlanningComponent {
   actRoute = inject(ActivatedRoute);
   nutritionistId = this.actRoute.snapshot.params['nutritionistId'];
   clientUserName: string = '';
+  userRole: string = '';
   timeSlots: string[] = [
     '8:00',
     '9:00',
@@ -61,31 +62,39 @@ export class PlanningComponent {
   ];
   isReservationPopupVisible: boolean = false;
   isCancelPopupVisible: boolean = false;
+  isUnavailablePopupVisible: boolean = false;
   selectedIndex: number = 0;
   isMorning: boolean = true;
+  constructor() {}
   ngOnInit() {
     this.selectedDate = new Date();
-    console.log('====================================');
-    console.log(this.selectedDate.toISOString().split('T')[0]);
-    console.log('====================================');
     this.clientUserName = this.authService.getUserName();
-    this.planningService.getReservedSlotsByNutritionist(this.nutritionistId).subscribe({
-      next: (slots) => {
-        this.reservedSlots = slots.map((slot) => {
-          return {
-            id: slot.id ?? '',
-            date: new Date(slot.date),
-            day: slot.day,
-            time: slot.time,
-            isReserved: true,
-            reservedBy: (slot.client as ClientModel).name,
-            color: '#FFAD80',
-          };
-        });
-        this.updateSlots(this.selectedDate.toISOString());
-      },
-    });
-    this.updateSlots(this.selectedDate.toISOString());
+    this.userRole = this.authService.getUserRole();
+    this.planningService
+      .getUnavailableSlotsByNutritionist(this.nutritionistId)
+      .subscribe({
+        next: (slots) => {
+          console.log('Raw slots:', slots);
+          this.reservedSlots = slots.map((slot) => {
+            console.log('Mapping slot:', slot);
+            return {
+              id: slot.id ?? '',
+              date: new Date(slot.date),
+              day: slot.day,
+              time: slot.time,
+              isReservation: slot.isReservation,
+              isReserved: true,
+              reservedBy: slot.client ? (slot.client as ClientModel)?.name : '',
+              color: '#FFAD80',
+            };
+          });
+          console.log('Reserved slots:', this.reservedSlots);
+          this.updateSlots(this.selectedDate.toISOString());
+        },
+        error: (err) => {
+          console.error('Error fetching unavailable slots:', err);
+        },
+      });
   }
   updateSlots(selectedDate: string) {
     this.selectedDate = new Date(selectedDate);
@@ -133,16 +142,21 @@ export class PlanningComponent {
         const reservedBy = reservedSlot?.reservedBy ?? '';
         const id = reservedSlot?.id ?? '';
         console.log('Reserved Slots', this.reservedSlots);
-        console.log(reservedBy);
+        console.log('hola', reservedSlot?.isReserved);
 
         return {
           id: id,
           date: date,
           day: this.workDaysOfWeek[dayIndex],
           time: timeSlots[index % timeSlots.length],
-          isReserved: reservedBy !== '',
+          isReservation: reservedSlot?.isReservation ?? false,
+          isReserved: reservedSlot?.isReserved ?? false,
           reservedBy: reservedBy,
-          color: reservedBy !== '' ? this.getRandomCoolColor() : '#ebebeb',
+          color: reservedSlot?.isReservation
+            ? this.getRandomCoolColor()
+            : reservedSlot?.isReserved
+            ? '#ff6b6b'
+            : '#ebebeb',
         };
       });
   }
@@ -196,31 +210,46 @@ export class PlanningComponent {
   planningService = inject(PlanningService);
   authService = inject(AuthService);
   pickSlot = () => {
-    // const slots = this.isMorning ? this.morningSlots : this.afternoonSlots;
     const slot = this.allSlots[this.selectedIndex];
-    if (slot && !slot.isReserved) {
-      const slotModelDto = {
-        date: slot.date,
-        day: slot.day,
-        time: slot.time,
-        clientId: this.authService.getUserId(),
-        nutritionistId: this.nutritionistId,
-      };
+    let slotModelDto: CreateSlotModelDto;
 
-      this.planningService.reserveSlot(slotModelDto).subscribe({
+    if (slot && !slot.isReserved) {
+      if (this.userRole == UserRoleEnum.CLIENT.toString()) {
+        slotModelDto = {
+          date: slot.date,
+          day: slot.day,
+          time: slot.time,
+          isReservation: true,
+          clientId: this.authService.getUserId(),
+          nutritionistId: this.nutritionistId,
+        };
+      } else {
+        slotModelDto = {
+          date: slot.date,
+          day: slot.day,
+          time: slot.time,
+          isReservation: false,
+          nutritionistId: this.nutritionistId,
+        };
+      }
+      this.planningService.addSlot(slotModelDto).subscribe({
         next: (reservedSlot) => {
           slot.isReserved = true;
-          slot.reservedBy = this.clientUserName;
-
-          const color = this.getRandomCoolColor();
+          const color = reservedSlot.isReservation
+            ? this.getRandomCoolColor()
+            : '#ff6b6b';
           this.allSlots[this.selectedIndex].color = color;
           this.toastr.success('Slot Reserved Successfully');
+          if (slotModelDto.isReservation) {
+            this.closeReservationPopup();
+          } else {
+            this.closeUnavailablePopup();
+          }
         },
         error: (error) => {
           this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
         },
       });
-      this.closeReservationPopup();
     }
   };
   cancelReservation = () => {
@@ -247,6 +276,11 @@ export class PlanningComponent {
     this.isReservationPopupVisible = true;
     this.selectedIndex = index;
   };
+  // Method to show the popup
+  showAddUnavailableSlotPopup = (index: number) => {
+    this.isUnavailablePopupVisible = true;
+    this.selectedIndex = index;
+  };
 
   // Method to hide the popup
   closeReservationPopup = () => {
@@ -255,13 +289,15 @@ export class PlanningComponent {
   // Method to show the popup
   showCancelPopup = (index: number) => {
     this.isCancelPopupVisible = true;
-
     this.selectedIndex = index;
   };
 
   // Method to hide the popup
   closeCancelnPopup = () => {
     this.isCancelPopupVisible = false;
+  };
+  closeUnavailablePopup = () => {
+    this.isUnavailablePopupVisible = false;
   };
 }
 
@@ -270,7 +306,15 @@ export interface Slot {
   date: Date;
   day: string;
   time: string;
+  isReservation?: boolean;
   isReserved: boolean;
   reservedBy: string;
   color: string;
 }
+
+//to see together
+// closePopup(popupType: 'reservation' | 'cancel' | 'unavailable') {
+//   this.isReservationPopupVisible = popupType === 'reservation' ? false : this.isReservationPopupVisible;
+//   this.isCancelPopupVisible = popupType === 'cancel' ? false : this.isCancelPopupVisible;
+//   this.isUnavailablePopupVisible = popupType === 'unavailable' ? false : this.isUnavailablePopupVisible;
+// }

@@ -5,7 +5,7 @@ import {
   InsertEvent,
   RemoveEvent,
 } from 'typeorm';
-import { ReservedSlot } from '../reserved-slot.entity';
+import { ReservedSlot } from './reserved-slot.entity';
 import { Client } from 'src/user/client/client.entity';
 
 @EventSubscriber()

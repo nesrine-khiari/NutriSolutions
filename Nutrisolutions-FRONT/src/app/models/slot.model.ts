@@ -6,8 +6,10 @@ export class SlotModel {
     public date: Date,
     public day: string,
     public time: string,
-    public client: ClientModel,
     public nutritionist: NutritionistModel,
+    public isReservation: boolean,
+    public isReserved: boolean,
+    public client?: ClientModel,
     public notes?: string[],
     public id?: string
   ) {}
@@ -17,7 +19,9 @@ export interface CreateSlotModelDto {
   date: Date;
   day: string;
   time: string;
-  clientId: string;
-  nutritionistId: NutritionistModel | string;
+  isReservation: boolean;
+  clientId?: string;
+  nutritionistId: string;
+  // NutritionistModel |
   id?: string;
 }

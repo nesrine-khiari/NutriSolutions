@@ -9,7 +9,7 @@ import { NutritionistService } from './nutritionist/nutritionist.service';
 import { RecipeEntity } from 'src/recipe/recipe-entity';
 import { NutritionistController } from './nutritionist/nutritionist.controller';
 import { ClientController } from './client/client.controller';
-import { ReservedSlot } from 'src/planning/reserved-slot.entity';
+import { ReservedSlot } from 'src/planning/reserved-slot/reserved-slot.entity';
 import { ReservedSlotService } from 'src/planning/reserved-slot/reserved-slot.service';
 import { Admin } from './admin/admin.entity';
 import { EmailService } from 'src/common/email/email.service';

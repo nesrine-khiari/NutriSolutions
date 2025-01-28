@@ -34,7 +34,6 @@ export class UpcomingPatientsComponent {
       .subscribe({
         next: (appointment) => {
           console.log('get appointemtn');
-
           this.appointment = appointment;
           this.isLoading = false;
         },

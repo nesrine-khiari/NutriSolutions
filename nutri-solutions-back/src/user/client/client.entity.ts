@@ -15,7 +15,7 @@ import {
 import { UserEntity } from '../user.entity';
 import { ActivityLevelEnum, ObjectifEnum } from 'src/enums/recipe-enums';
 import { RecipeEntity } from 'src/recipe/recipe-entity';
-import { ReservedSlot } from 'src/planning/reserved-slot.entity';
+import { ReservedSlot } from 'src/planning/reserved-slot/reserved-slot.entity';
 
 @ChildEntity()
 export class Client extends UserEntity {

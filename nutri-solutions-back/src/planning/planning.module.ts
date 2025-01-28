@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ReservedSlot } from './reserved-slot.entity';
+import { ReservedSlot } from './reserved-slot/reserved-slot.entity';
 import { ReservedSlotService } from './reserved-slot/reserved-slot.service';
-import { ReservedSlotController } from './reserved-slot/reserved-slot.controller';
 import { NutritionistService } from 'src/user/nutritionist/nutritionist.service';
 import { ClientService } from 'src/user/client/client.service';
 import { Client } from 'src/user/client/client.entity';
@@ -11,6 +10,8 @@ import { RecipeEntity } from 'src/recipe/recipe-entity';
 import { UserEntity } from 'src/user/user.entity';
 import { EmailService } from 'src/common/email/email.service';
 import { UnavailableSlot } from './unavailable-slot/unavailable-slot.entity';
+import { UnavailableSlotService } from './unavailable-slot/unavailable-slot.service';
+import { UnavailableSlotController } from './unavailable-slot/unavailable-slot.controller';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -27,7 +28,8 @@ import { UnavailableSlot } from './unavailable-slot/unavailable-slot.entity';
     ClientService,
     NutritionistService,
     EmailService,
+    UnavailableSlotService,
   ],
-  controllers: [ReservedSlotController],
+  controllers: [UnavailableSlotController],
 })
 export class PlanningModule {}
