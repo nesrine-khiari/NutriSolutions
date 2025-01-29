@@ -11,7 +11,7 @@
         <div class="checkbox">
           <input type="checkbox" /> <label> Remember me ? </label>
         </div>
-        <a [routerLink]="'/reset-password'" class="forgot-password">Forgot Password ?</a>
+        <a (click)="showRequestPassPopup()" class="forgot-password">Forgot Password ?</a>
       </div>
       <app-button [type]="'submit'" [disabled]="loginForm.invalid ?? false" [text]="'Connexion'"
         [onClick]="connexion"></app-button>
@@ -26,4 +26,14 @@
       </div>
     </div>
   </form>
+  <app-popup *ngIf="isRequestPopupVisible" (popupClosed)="isRequestPopupVisible=false;"
+    [text]="'Veuillez insérer votre email'">
+    <app-input-field [placeholder]="'Votre email...'" [control]="emailControl"></app-input-field>
+    <div style="display: flex; gap: 10px">
+      <app-button [text]="'Confirmer'" [onClick]="sendResetPassRequest"></app-button>
+      <app-button [boxShadow]="'0 4px 8px 2px #ffc5c5'" [backgroundColor]="'#df0404'" [onClick]="closeRequestPopup"
+        [text]="'Annuler'"></app-button>
+    </div>
+  </app-popup>
+
 </app-auth-background>

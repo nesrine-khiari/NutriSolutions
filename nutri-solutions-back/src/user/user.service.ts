@@ -70,6 +70,14 @@ export class UserService {
     Object.assign(user, updateUserDto); // Merge updates
     return this.userRepository.save(user);
   }
+
+  async updatePassword(id: string, newPassword: string): Promise<UserEntity> {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    await this.userRepository.update(id, { password: hashedPassword });
+    return this.findOne(id);
+  }
   /**
    * Validates a user's credentials.
    * @param email - The user's email.

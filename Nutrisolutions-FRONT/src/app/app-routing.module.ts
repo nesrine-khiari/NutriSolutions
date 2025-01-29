@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'reset-password/:resetToken', component: ResetPasswordComponent },
   {
     path: 'nutritionists',
     component: NutritionistsListComponent,

@@ -96,6 +96,23 @@ export class AuthService {
     localStorage.clear();
   }
 
+  resetPasswordRequest(email: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/request-password-reset`, {
+      email,
+    });
+  }
+  resetPassword(
+    resetToken: string,
+    oldPassword: string,
+    newPassword: string
+  ): Observable<string> {
+    return this.http.post<string>(`${this.apiUrl}/reset-password`, {
+      resetToken,
+      oldPassword,
+      newPassword,
+    });
+  }
+
   isLoggedIn(): boolean {
     return localStorage.getItem('isAuthenticated') === 'true';
   }

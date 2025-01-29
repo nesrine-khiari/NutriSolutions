@@ -9,10 +9,11 @@
 .forgot-password {
   color: var(--hint-text);
   text-decoration: none;
+  cursor: pointer;
 }
 .checkbox {
   display: flex;
-align-items: center;
+  align-items: center;
 }
 .checkbox label {
   margin-left: 5px;

@@ -68,9 +68,7 @@ export class EmailService {
       console.error('Error sending email:', error);
     }
   }
-  async sendNewNutritionistAlert(
-    nutritionistName: string,
-  ): Promise<void> {
+  async sendNewNutritionistAlert(nutritionistName: string): Promise<void> {
     try {
       const result = await this.mailerService.sendMail({
         to: 'nesrine890@gmail.com', // Recipient email
@@ -139,5 +137,30 @@ export class EmailService {
       console.error('Error sending email:', error);
     }
   }
-  
+
+  async sendPasswordResetEmail(
+    to: string,
+    resetToken: string,
+    userName: string,
+  ): Promise<void> {
+    try {
+      const result = await this.mailerService.sendMail({
+        to, // Recipient email
+        subject: 'Password Reset Request', // Subject
+        template: './password_reset', // Template file name
+        context: {
+          resetToken,
+          userName, // Token to be used in the reset link
+        },
+      });
+
+      if (result.accepted.length > 0) {
+        console.log('Password reset email sent successfully!');
+      } else {
+        console.log('Password reset email sending failed.');
+      }
+    } catch (error) {
+      console.error('Error sending password reset email:', error);
+    }
+  }
 }

@@ -210,7 +210,7 @@ export class PlanningComponent {
   planningService = inject(PlanningService);
   authService = inject(AuthService);
   pickSlot = () => {
-    const slot = this.allSlots[this.selectedIndex];
+    let slot = this.allSlots[this.selectedIndex];
     let slotModelDto: CreateSlotModelDto;
 
     if (slot && !slot.isReserved) {
@@ -234,11 +234,17 @@ export class PlanningComponent {
       }
       this.planningService.addSlot(slotModelDto).subscribe({
         next: (reservedSlot) => {
+          slot.reservedBy = reservedSlot.isReservation
+            ? this.clientUserName
+            : '';
+          console.log(slot.reservedBy);
+
           slot.isReserved = true;
+          slot.isReservation = true;
           const color = reservedSlot.isReservation
             ? this.getRandomCoolColor()
             : '#ff6b6b';
-          this.allSlots[this.selectedIndex].color = color;
+          slot.color = color;
           this.toastr.success('Slot Reserved Successfully');
           if (slotModelDto.isReservation) {
             this.closeReservationPopup();
@@ -259,6 +265,8 @@ export class PlanningComponent {
       this.planningService.cancelSlotReservation(slot.id).subscribe({
         next: (reservedSlot) => {
           slot.isReserved = false;
+          slot.isReservation = false;
+
           slot.reservedBy = '';
           slot.color = '#ebebeb';
           this.toastr.success('Slot Reservation Cancelled Successfully');

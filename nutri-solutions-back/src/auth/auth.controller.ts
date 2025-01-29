@@ -17,6 +17,7 @@ import { NutritionistService } from 'src/user/nutritionist/nutritionist.service'
 import { UserEntity } from 'src/user/user.entity';
 import { NutritionistStatusEnum, UserRoleEnum } from 'src/enums/user-enums';
 import { EmailService } from 'src/common/email/email.service';
+import { UpdatePasswordDto } from './dtos/update-password.dto';
 @Public()
 @Controller('auth')
 export class AuthController {
@@ -70,5 +71,20 @@ export class AuthController {
       default:
         throw new Error('Invalid user type');
     }
+  }
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  @Post('request-password-reset')
+  async requestPasswordReset(@Body('email') email: string) {
+    return this.authService.requestPasswordReset(email);
+  }
+
+  @Post('reset-password')
+  async resetPassword(@Body() updatePassword: UpdatePasswordDto) {
+    return this.authService.resetPassword(
+      updatePassword.resetToken,
+      updatePassword.oldPassword,
+      updatePassword.newPassword,
+    );
   }
 }
