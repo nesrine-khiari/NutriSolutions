@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { APP_API } from 'src/app/core/constants/constants.config';
+import { AppUtils } from 'src/app/core/utils/functions.utils';
 // import { generateFakeNutritionist } from 'src/app/core/helpers/faker.helper';
 import {
   NutritionistModel,
@@ -31,13 +32,14 @@ export class NutritionistsTableComponent {
   nutritionists: NutritionistModel[] = [];
   nutritionistService = inject(NutritionistsService);
   toastr = inject(ToastrService);
+  totalNutritionistsCount: number = 0;
+  currentPage: number = 0;
+  limit: number = 12;
+  isLoading: boolean = false;
+  pageIndex: number = 0;
   constructor() {
-    this.generateNutritionists(10); // Generate 10 fake nutritionists
-  }
-
-  generateNutritionists(count: number): void {
-    this.nutritionistService.getAllNutritionists().subscribe((data) => {
-      this.nutritionists = data;
+    this.nutritionistService.getAllNutritionists().subscribe((response) => {
+      this.nutritionists = response.data;
     });
   }
 
@@ -85,6 +87,30 @@ export class NutritionistsTableComponent {
       },
       error: (error) => {
         console.error('Error downloading file:', error);
+      },
+    });
+  }
+
+  getTotalPageNumber() {
+    return Math.ceil(this.totalNutritionistsCount / this.limit);
+  }
+
+  updatePage(index: number) {
+    this.currentPage = index;
+    this.isLoading = true;
+
+    this.nutritionistService.getAllNutritionists(this.currentPage).subscribe({
+      next: (response) => {
+        this.nutritionists = response.data;
+        this.totalNutritionistsCount = response.total;
+        // H
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 1000);
+      },
+      error: (error) => {
+        this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+        this.isLoading = false; // H
       },
     });
   }

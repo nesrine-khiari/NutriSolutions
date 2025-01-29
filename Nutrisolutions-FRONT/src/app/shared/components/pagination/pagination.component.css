@@ -1,5 +1,6 @@
 .pagination-container {
   display: flex;
+  padding-right: 30px;
   gap: 7px;
 }
 .pagination-container a {

@@ -1,5 +1,7 @@
 import {
   ConflictException,
+  HttpException,
+  HttpStatus,
   Injectable,
   Logger,
   NotFoundException,
@@ -53,16 +55,18 @@ export class UserService {
       // Return the saved entity
       return savedEntity;
     } catch (error) {
-      // Log the error for debugging
-      this.logger.error('Error creating user:', error);
-
-      // Handle PostgreSQL unique constraint violations
-      if (error.code === '23505') {
-        throw new ConflictException('Email already exists');
+      if (
+        error.message.includes('IDX_') &&
+        error.message.includes('Duplicate')
+      ) {
+        throw new ConflictException('Email is already in use');
       }
 
-      // Rethrow any other errors
-      throw error;
+      // Handle other types of errors
+      throw new HttpException(
+        error.message || 'Internal Server Error',
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
   async update(id: string, updateUserDto: UpdateUserDto): Promise<UserEntity> {

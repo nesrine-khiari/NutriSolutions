@@ -18,8 +18,8 @@ export class HomePageComponent {
   nutritionistsService = inject(NutritionistsService);
 
   constructor() {
-    this.recipesService.getAllRecipes().subscribe((recipes: RecipeModel[]) => {
-      this.recetRecipes = recipes.slice(0, 4);
+    this.recipesService.getAllRecipes(1, 4).subscribe((response) => {
+      this.recetRecipes = response.data;
     });
     this.nutritionistsService
       .getBestNutritionists()

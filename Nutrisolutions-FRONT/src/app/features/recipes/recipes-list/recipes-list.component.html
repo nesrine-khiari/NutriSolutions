@@ -26,7 +26,7 @@
         "></app-recipe-item>
     </div>
     <div class="pagination">
-      <app-pagination (pageChanged)="updatePage($event)"></app-pagination>
+      <app-pagination [totalPages]="getTotalPageNumber()" (pageChanged)="updatePage($event)"></app-pagination>
     </div>
   </app-svg-box>
 </app-page-background>

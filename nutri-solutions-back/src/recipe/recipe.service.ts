@@ -17,8 +17,22 @@ export class RecipesService {
     return await this.recipeRepository.save(recipe);
   }
 
-  async findAll(): Promise<RecipeEntity[]> {
-    return this.recipeRepository.find();
+  async findAll(
+    page: number = 1,
+    limit: number = 12,
+  ): Promise<{
+    data: RecipeEntity[];
+    total: number;
+  }> {
+    const [data, total] = await this.recipeRepository.findAndCount({
+      skip: (page - 1) * limit, // Offset calculation
+      take: limit, // Number of items per page
+    });
+
+    return {
+      data,
+      total,
+    };
   }
 
   async findOne(id: string): Promise<RecipeEntity> {
@@ -46,5 +60,4 @@ export class RecipesService {
     const recipe = await this.findOne(id);
     await this.recipeRepository.remove(recipe);
   }
-  
 }

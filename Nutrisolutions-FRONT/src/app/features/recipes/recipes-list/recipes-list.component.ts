@@ -19,13 +19,33 @@ import { RecipesService } from 'src/app/services/recipe.service';
 })
 export class RecipesListComponent {
   recipes: RecipeModel[] = [];
+  totalRecipesCount: number = 0;
   currentPage: number = 0;
+  limit: number = 12;
   isLoading: boolean = true;
   updatePage(index: number) {
     this.currentPage = index;
-    //api call for next page
+    this.isLoading = true;
+
+    this.recipesService.getAllRecipes(this.currentPage).subscribe({
+      next: (response) => {
+        this.recipes = response.data;
+        this.totalRecipesCount = response.total;
+        // H
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 1000);
+      },
+      error: (error) => {
+        this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+        this.isLoading = false; // H
+      },
+    });
   }
 
+  getTotalPageNumber() {
+    return Math.ceil(this.totalRecipesCount / this.limit);
+  }
   searchControl: FormControl = new FormControl('');
   categoryControl!: FormControl;
   objectifControl!: FormControl;
@@ -38,9 +58,10 @@ export class RecipesListComponent {
     this.objectifControl = new FormControl(ObjectifEnum.ALL);
   }
   constructor() {
-    this.recipesService.getAllRecipes().subscribe({
-      next: (recipes) => {
-        this.recipes = recipes;
+    this.recipesService.getAllRecipes(this.currentPage).subscribe({
+      next: (response) => {
+        this.recipes = response.data;
+        this.totalRecipesCount = response.total;
         // H
         setTimeout(() => {
           this.isLoading = false;

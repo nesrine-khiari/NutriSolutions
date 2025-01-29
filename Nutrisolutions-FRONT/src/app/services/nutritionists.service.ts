@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { NutritionistModel, StatusEnum } from '../models/nutritionist.model';
 // import { generateFakeNutritionist } from '../core/helpers/faker.helper';
 import { APP_API } from '../core/constants/constants.config';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ClientModel } from '../models/client.model';
 
@@ -19,8 +19,26 @@ export class NutritionistsService {
   constructor() {}
   http = inject(HttpClient);
 
-  getAllNutritionists(): Observable<NutritionistModel[]> {
-    return this.http.get<NutritionistModel[]>(this.apiUrl);
+  getAllNutritionists(
+    page: number = 1,
+    limit: number = 12
+  ): Observable<{
+    data: NutritionistModel[];
+    total: number;
+  }> {
+    let params = new HttpParams();
+
+    if (page > 0) {
+      params = params.set('page', page.toString());
+    }
+    if (limit > 0) {
+      params = params.set('limit', limit.toString());
+    }
+
+    return this.http.get<{
+      data: NutritionistModel[];
+      total: number;
+    }>(this.apiUrl, { params });
   }
   getBestNutritionists(): Observable<NutritionistModel[]> {
     return this.http.get<NutritionistModel[]>(this.apiUrl + '/top');

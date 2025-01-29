@@ -26,8 +26,23 @@ export class NutritionistService extends UserService {
   ) {
     super(nutritionistRepository);
   }
-  async findAll(): Promise<Nutritionist[]> {
-    return this.nutritionistRepository.find();
+
+  async findAllNutritionists(
+    page: number = 1,
+    limit: number = 12,
+  ): Promise<{
+    data: Nutritionist[];
+    total: number;
+  }> {
+    const [data, total] = await this.nutritionistRepository.findAndCount({
+      skip: (page - 1) * limit, // Offset calculation
+      take: limit, // Number of items per page
+    });
+
+    return {
+      data,
+      total,
+    };
   }
 
   async findOne(id: string): Promise<Nutritionist> {

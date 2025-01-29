@@ -2,9 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { NutritionistModel } from '../models/nutritionist.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import {
-  generateFakeRecipe,
-} from '../core/helpers/faker.helper';
+import { generateFakeRecipe } from '../core/helpers/faker.helper';
 import { RecipeModel } from '../models/recipe.model';
 import { Observable } from 'rxjs';
 import { APP_API } from '../core/constants/constants.config';
@@ -20,8 +18,26 @@ export class RecipesService {
   constructor() {}
   http = inject(HttpClient);
 
-  getAllRecipes(): Observable<RecipeModel[]> {
-    return this.http.get<RecipeModel[]>(this.apiUrl);
+  getAllRecipes(
+    page: number = 1,
+    limit: number = 12
+  ): Observable<{
+    data: RecipeModel[];
+    total: number;
+  }> {
+    let params = new HttpParams();
+
+    if (page > 0) {
+      params = params.set('page', page.toString());
+    }
+    if (limit > 0) {
+      params = params.set('limit', limit.toString());
+    }
+
+    return this.http.get<{
+      data: RecipeModel[];
+      total: number;
+    }>(this.apiUrl, { params });
   }
   getRecipeById(id: string): Observable<RecipeModel> {
     return this.http.get<RecipeModel>(`${this.apiUrl}/${id}`);
@@ -32,7 +48,7 @@ export class RecipesService {
   addRecipe(recipe: RecipeModel): Observable<RecipeModel> {
     return this.http.post<RecipeModel>(this.apiUrl, recipe);
   }
-  updateRecipe(id: string,recipe: RecipeModel): Observable<RecipeModel> {
+  updateRecipe(id: string, recipe: RecipeModel): Observable<RecipeModel> {
     return this.http.patch<RecipeModel>(`${this.apiUrl}/${id}`, recipe);
   }
 

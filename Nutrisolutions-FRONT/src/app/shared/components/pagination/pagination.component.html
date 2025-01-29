@@ -1,19 +1,31 @@
 <div class="pagination-container">
-    <a (click)="setPage(selectedPageIndex-1)">Prev</a>
-    <a [class.active]="selectedPageIndex==0">1</a>
-    <a *ngIf="selectedPageIndex<=1" [class.active]="selectedPageIndex==1">2</a>
+    <!-- prev -->
+    <a *ngIf="selectedPageIndex>1" (click)="setPage(selectedPageIndex-1)">Prev</a>
+    <!--  -->
 
-    <a *ngIf="selectedPageIndex>1">...</a>
-    <a *ngIf="selectedPageIndex<=2" [class.active]="selectedPageIndex==2">3</a>
-    <a *ngIf="selectedPageIndex>=3 && selectedPageIndex<=totalPages-4"
-        [class.active]="selectedPageIndex>2">{{selectedPageIndex+1}}</a>
-    <a *ngIf="selectedPageIndex>=2 && selectedPageIndex <=totalPages-4"
-        [class.active]="false">{{selectedPageIndex+2}}</a>
 
-    <a *ngIf="totalPages-selectedPageIndex-1>2 ">...</a>
-    <a *ngIf="selectedPageIndex>=(totalPages-3)" [class.active]="selectedPageIndex==totalPages-3">{{totalPages-2}}</a>
-    <a *ngIf="selectedPageIndex>=(totalPages-3)"
-        [class.active]="selectedPageIndex==totalPages-2    ">{{totalPages-1}}</a>
-    <a [class.active]="selectedPageIndex==totalPages-1">{{totalPages}}</a>
-    <a (click)="setPage(selectedPageIndex+1)">Next</a>
+    <a [class.active]="selectedPageIndex==1">1</a>
+    <a *ngIf="selectedPageIndex<=2 && totalPages>1" [class.active]="selectedPageIndex==2">2</a>
+
+    <a *ngIf="selectedPageIndex>2">...</a>
+
+    <a *ngIf="selectedPageIndex<=3 && totalPages>2" [class.active]="selectedPageIndex==3">3</a>
+
+
+    <a *ngIf="selectedPageIndex>=4 && selectedPageIndex<=totalPages-3 && totalPages>3"
+        [class.active]="true">{{selectedPageIndex}}</a>
+    <a *ngIf="selectedPageIndex>=3 && selectedPageIndex <=totalPages-4 && totalPages>3"
+        [class.active]="false">{{selectedPageIndex+1}}</a>
+
+    <a *ngIf="totalPages-selectedPageIndex>=3 && totalPages>5 ">...</a>
+    <a *ngIf="selectedPageIndex>(totalPages-3) && totalPages>5"
+        [class.active]="selectedPageIndex==totalPages-2">{{totalPages-2}}</a>
+    <a *ngIf="selectedPageIndex>=(totalPages-2)&& totalPages>5"
+        [class.active]="selectedPageIndex==totalPages-1    ">{{totalPages-1}}</a>
+    <a *ngIf="totalPages>3" [class.active]="selectedPageIndex==totalPages ">{{totalPages}}</a>
+
+
+    <!-- next -->
+    <a *ngIf="selectedPageIndex<totalPages" (click)="setPage(selectedPageIndex+1)">Next</a>
+    <!--  -->
 </div>

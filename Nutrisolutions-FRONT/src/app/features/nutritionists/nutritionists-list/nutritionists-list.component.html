@@ -7,22 +7,19 @@
 
     <div class="filters">
       <app-search [formControlName]="searchControl"></app-search>
-      <app-dropdown
-        [name]="'Experience'"
-        [options]="experienceOptions"
-        [formControlName]="experienceControl"
-      ></app-dropdown>
+      <app-dropdown [name]="'Experience'" [options]="experienceOptions"
+        [formControlName]="experienceControl"></app-dropdown>
     </div>
     <div class="grid-container">
-      <app-nutritionist-item
-        *ngFor="
+      <app-nutritionist-item *ngFor="
           let nutritionist of nutritionists
             | nutritionistsFilter
               : searchControl.value
               : experienceControl.value
-        "
-        [nutritionist]="nutritionist"
-      ></app-nutritionist-item>
+        " [nutritionist]="nutritionist"></app-nutritionist-item>
+    </div>
+    <div class="pagination">
+      <app-pagination [totalPages]="getTotalPageNumber()" (pageChanged)="updatePage($event)"></app-pagination>
     </div>
   </app-svg-box>
 </app-page-background>

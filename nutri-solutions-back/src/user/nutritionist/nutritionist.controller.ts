@@ -7,6 +7,7 @@ import {
   Get,
   Patch,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { NutritionistService } from './nutritionist.service';
 import { Nutritionist } from './nutritionist.entity';
@@ -19,8 +20,14 @@ export class NutritionistController {
   constructor(protected readonly nutritionistService: NutritionistService) {}
   @Roles(UserRoleEnum.ADMIN, UserRoleEnum.CLIENT)
   @Get()
-  async findAll(): Promise<Nutritionist[]> {
-    return this.nutritionistService.findAll();
+  async findAll(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ): Promise<{
+    data: Nutritionist[];
+    total: number;
+  }> {
+    return this.nutritionistService.findAllNutritionists(page, limit);
   }
   @Get('top')
   async getBestNutritionists(): Promise<Nutritionist[]> {
