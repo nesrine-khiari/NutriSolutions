@@ -27,6 +27,10 @@ export class ClientService {
   getAllClients(): Observable<ClientModel[]> {
     return this.http.get<ClientModel[]>(this.apiUrl);
   }
+  getClientsCount(): Observable<{ total: number }> {
+    return this.http.get<{ total: number }>(this.apiUrl + '/count'); // Correct type for the response
+  }
+
   getClientById(id: string): Observable<ClientModel> {
     return this.http.get<ClientModel>(`${this.apiUrl}/${id}`);
   }
@@ -64,6 +68,11 @@ export class ClientService {
     return this.http.get<SlotModel>(
       `${this.apiUrl}/${clientId}/appointments/${nutritionnistId}`,
       { params }
+    );
+  }
+  getLastReservedSlot(clientId: string): Observable<SlotModel | null> {
+    return this.http.get<SlotModel | null>(
+      `${this.apiUrl}/${clientId}/last-reserved-slot`
     );
   }
 }

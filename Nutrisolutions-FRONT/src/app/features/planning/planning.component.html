@@ -2,8 +2,14 @@
   <div class="quote">
     <h3>Un nutritionniste, votre allié pour une santé équilibrée et durable</h3>
   </div>
-  <input id="date-input" type="date" class="date-input" [(ngModel)]="selectedDate.toISOString().split('T')[0]" ngModel
-    (ngModelChange)="updateSlots($event)" />
+  <input
+    id="date-input"
+    type="date"
+    class="date-input"
+    [(ngModel)]="selectedDate.toISOString().split('T')[0]"
+    ngModel
+    (ngModelChange)="updateSlots($event)"
+  />
   <div class="planning">
     <!-- First Row: Empty slot + Time slots -->
     <div class="times-days-slot">
@@ -19,29 +25,67 @@
       </div>
     </div>
     <div class="vert-header">
-      <div class="slot header-slot" *ngFor="let day of workDaysOfWeek">
+      <div
+        class="slot header-slot"
+        [class.active]="index == currentDate.getDay() - 1"
+        *ngFor="let day of workDaysOfWeek; let index = index"
+      >
         {{ day }}
       </div>
     </div>
 
     <div class="content">
-      <div class="slot" [class.break-slot]="index % 9 == 4" *ngFor="let slot of allSlots; let index = index"
-        [style.backgroundColor]="slot.color">
+      <div
+        class="slot"
+        [class.break-slot]="index % 9 == 4"
+        *ngFor="let slot of allSlots; let index = index"
+        [style.backgroundColor]="slot.color"
+      >
         <div *ngIf="index % 9 != 4">
           <p *ngIf="slot.isReservation">
             {{ slot.reservedBy | getInitials }}
           </p>
-          <img *ngIf="
+          <img
+            *ngIf="
               !slot.isReservation && slot.isReserved && userRole == 'Client'
-            " src="assets/images/unavailable.png" width="30px" height="30px" alt="appointment" />
-          <img (click)="showReservationPopup(index)" *ngIf="!slot.isReserved && userRole == 'Client'"
-            src="assets/images/medical-appointment.svg" width="30px" height="30px" alt="appointment" />
-          <img (click)="showAddUnavailableSlotPopup(index)" *ngIf="!slot.isReserved && userRole == 'Nutritionist'"
-            src="assets/images/unavailable.png" width="30px" height="30px" alt="appointment" />
-          <img (click)="showCancelPopup(index)" *ngIf="
+            "
+            src="assets/images/unavailable.png"
+            width="30px"
+            height="30px"
+            alt="appointment"
+          />
+          <img
+            (click)="showReservationPopup(index)"
+            *ngIf="
+              !slot.isReserved &&
+              userRole == 'Client' &&
+              slot.date >= currentDate
+            "
+            src="assets/images/medical-appointment.svg"
+            width="30px"
+            height="30px"
+            alt="appointment"
+          />
+          <img
+            (click)="showAddUnavailableSlotPopup(index)"
+            *ngIf="!slot.isReserved && userRole == 'Nutritionist'"
+            src="assets/images/unavailable.png"
+            width="30px"
+            height="30px"
+            alt="appointment"
+          />
+          <img
+            (click)="showCancelPopup(index)"
+            *ngIf="
+              slot.date >= currentDate &&
               slot.isReserved &&
               (slot.reservedBy == clientUserName || userRole == 'Nutritionist')
-            " src="assets/images/cancel.png" width="30px" height="30px" alt="appointment" />
+            "
+            src="assets/images/cancel.png"
+            width="30px"
+            height="30px"
+            alt="appointment"
+          />
         </div>
 
         <div *ngIf="index % 9 == 4">
@@ -54,28 +98,52 @@
   </div>
   <!-- Popup -->
   <div class="modal">
-    <app-popup [text]="'Confirmer la prise de rendez-vous'" *ngIf="isReservationPopupVisible"
-      (popupClosed)="isReservationPopupVisible = false">
+    <app-popup
+      [text]="'Confirmer la prise de rendez-vous'"
+      *ngIf="isReservationPopupVisible"
+      (popupClosed)="isReservationPopupVisible = false"
+    >
       <div style="display: flex; gap: 10px">
         <app-button [text]="'Confirmer'" [onClick]="pickSlot"></app-button>
-        <app-button [boxShadow]="'0 4px 8px 2px #ffc5c5'" [backgroundColor]="'#df0404'"
-          [onClick]="closeReservationPopup" [text]="'Annuler'"></app-button>
+        <app-button
+          [boxShadow]="'0 4px 8px 2px #ffc5c5'"
+          [backgroundColor]="'#df0404'"
+          [onClick]="closeReservationPopup"
+          [text]="'Annuler'"
+        ></app-button>
       </div>
     </app-popup>
-    <app-popup [text]="'Confirmer l\'annulation'" *ngIf="isCancelPopupVisible"
-      (popupClosed)="isCancelPopupVisible = false">
+    <app-popup
+      [text]="'Confirmer l\'annulation'"
+      *ngIf="isCancelPopupVisible"
+      (popupClosed)="isCancelPopupVisible = false"
+    >
       <div style="display: flex; gap: 10px">
-        <app-button [text]="'Confirmer'" [onClick]="cancelReservation"></app-button>
-        <app-button [boxShadow]="'0 4px 8px 2px #ffc5c5'" [backgroundColor]="'#df0404'" [onClick]="closeCancelnPopup"
-          [text]="'Annuler'"></app-button>
+        <app-button
+          [text]="'Confirmer'"
+          [onClick]="cancelReservation"
+        ></app-button>
+        <app-button
+          [boxShadow]="'0 4px 8px 2px #ffc5c5'"
+          [backgroundColor]="'#df0404'"
+          [onClick]="closeCancelnPopup"
+          [text]="'Annuler'"
+        ></app-button>
       </div>
     </app-popup>
-    <app-popup [text]="'Confirmer la non disponibilité'" *ngIf="isUnavailablePopupVisible"
-      (popupClosed)="isUnavailablePopupVisible = false">
+    <app-popup
+      [text]="'Confirmer la non disponibilité'"
+      *ngIf="isUnavailablePopupVisible"
+      (popupClosed)="isUnavailablePopupVisible = false"
+    >
       <div style="display: flex; gap: 10px">
         <app-button [text]="'Confirmer'" [onClick]="pickSlot"></app-button>
-        <app-button [boxShadow]="'0 4px 8px 2px #ffc5c5'" [backgroundColor]="'#df0404'"
-          [onClick]="closeUnavailablePopup" [text]="'Annuler'"></app-button>
+        <app-button
+          [boxShadow]="'0 4px 8px 2px #ffc5c5'"
+          [backgroundColor]="'#df0404'"
+          [onClick]="closeUnavailablePopup"
+          [text]="'Annuler'"
+        ></app-button>
       </div>
     </app-popup>
   </div>

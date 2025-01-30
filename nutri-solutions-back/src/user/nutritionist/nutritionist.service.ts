@@ -57,6 +57,20 @@ export class NutritionistService extends UserService {
     }
     return user;
   }
+  async countNutritionists(): Promise<{ total: number }> {
+    const total = await this.nutritionistRepository.count();
+    return { total };
+  }
+  async findAllApprovedNutritionists(page: number, limit: number): Promise<{ data: Nutritionist[]; total: number }> {
+    const [data, total] = await this.nutritionistRepository.findAndCount({
+      where: { status: NutritionistStatusEnum.APPROVED },
+      take: limit,
+      skip: (page - 1) * limit,
+    });
+  
+    return { data, total };
+  }
+    
   async update(
     id: string,
     updateNutritionistDto: UpdateNutritionistDto,

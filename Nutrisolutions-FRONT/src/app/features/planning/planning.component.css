@@ -144,3 +144,7 @@
       border-box;
   outline: none;
 }
+
+.slot.header-slot.active {
+  border: 3px solid red; /* Red border */
+}

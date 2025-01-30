@@ -8,6 +8,8 @@ import {
   Patch,
   Delete,
   Query,
+  Req,
+  LoggerService,
 } from '@nestjs/common';
 import { NutritionistService } from './nutritionist.service';
 import { Nutritionist } from './nutritionist.entity';
@@ -17,18 +19,31 @@ import { UpdateNutritionistDto } from './dtos/update-nutritionist.dto';
 
 @Controller('nutritionists')
 export class NutritionistController {
-  constructor(protected readonly nutritionistService: NutritionistService) {}
+  constructor(protected readonly nutritionistService: NutritionistService, ) {}
   @Roles(UserRoleEnum.ADMIN, UserRoleEnum.CLIENT)
   @Get()
   async findAll(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
+    @Req() request: Request,  // Inject the request to get the user's role
   ): Promise<{
     data: Nutritionist[];
     total: number;
   }> {
-    return this.nutritionistService.findAllNutritionists(page, limit);
+    const userRole = request['user'].role;  // Get the user's role
+
+    if (userRole === UserRoleEnum.ADMIN) {
+      return this.nutritionistService.findAllNutritionists(page, limit);
+    } else {
+      return this.nutritionistService.findAllApprovedNutritionists(page, limit);
+    }
   }
+
+  @Get('count')
+  async countNutritionists(): Promise<{ total: number }> {
+    return this.nutritionistService.countNutritionists();
+  }
+
   @Get('top')
   async getBestNutritionists(): Promise<Nutritionist[]> {
     return this.nutritionistService.getBestNutritionists();

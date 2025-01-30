@@ -40,6 +40,9 @@ export class NutritionistsService {
       total: number;
     }>(this.apiUrl, { params });
   }
+  getNutritionistsCount(): Observable<{ total: number }> {
+    return this.http.get<{ total: number }>(this.apiUrl + '/count');
+  }
   getBestNutritionists(): Observable<NutritionistModel[]> {
     return this.http.get<NutritionistModel[]>(this.apiUrl + '/top');
   }

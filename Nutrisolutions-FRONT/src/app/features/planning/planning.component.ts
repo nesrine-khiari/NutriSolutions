@@ -65,6 +65,7 @@ export class PlanningComponent {
   isUnavailablePopupVisible: boolean = false;
   selectedIndex: number = 0;
   isMorning: boolean = true;
+  currentDate = new Date();
   constructor() {}
   ngOnInit() {
     this.selectedDate = new Date();

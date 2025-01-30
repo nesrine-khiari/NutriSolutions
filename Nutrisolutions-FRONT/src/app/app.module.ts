@@ -16,9 +16,10 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { CoreModule } from "./core/core.module";
+import { UnderConstructionComponent } from './features/under-construction/under-construction.component';
 
 @NgModule({
-  declarations: [AppComponent, PlanningComponent],
+  declarations: [AppComponent, PlanningComponent, UnderConstructionComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

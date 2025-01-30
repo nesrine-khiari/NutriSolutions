@@ -18,6 +18,8 @@ export class ClientService extends UserService {
     private readonly recipeRepository: Repository<RecipeEntity>,
     @InjectRepository(UserEntity)
     protected readonly userRepository: Repository<UserEntity>,
+    @InjectRepository(ReservedSlot)
+    private readonly reservedSlotRepository: Repository<ReservedSlot>,
   ) {
     super(userRepository);
   }
@@ -28,7 +30,10 @@ export class ClientService extends UserService {
       relations: ['favoriteRecipes', 'reservedSlots'], // Include related favorite recipes
     });
   }
-
+  async countClients(): Promise<{ total: number }> {
+    const total = await this.clientRepository.count();
+    return { total };
+  }
   // Get a specific client by ID
   async findOneById(id: string): Promise<Client> {
     const client = await this.clientRepository.findOne({
@@ -110,5 +115,16 @@ export class ClientService extends UserService {
     await this.clientRepository.save(client);
 
     return client;
+  }
+  async getLastReservedSlot(clientId: string): Promise<ReservedSlot | null> {
+    const lastReservedSlot = await this.reservedSlotRepository
+      .createQueryBuilder('reservedSlot')
+      .leftJoinAndSelect('reservedSlot.client', 'client')
+      .where('client.id = :clientId', { clientId })
+      .orderBy('reservedSlot.date', 'DESC') // Replace 'reservedDate' with the actual column name
+      .limit(1)
+      .getOne();
+
+    return lastReservedSlot;
   }
 }

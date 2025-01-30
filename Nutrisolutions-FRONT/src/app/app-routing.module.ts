@@ -15,6 +15,7 @@ import { HomeNutritionisteComponent } from './features/home/home-nutritioniste/h
 import { AddRecipeComponent } from './features/recipes/add-recipe/add-recipe.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { UserRoleEnum } from './models/client.model';
+import { UnderConstructionComponent } from './features/under-construction/under-construction.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -60,7 +61,7 @@ const routes: Routes = [
     data: { roles: [UserRoleEnum.NUTRITIONIST] },
   },
 
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  { path: '**', component: UnderConstructionComponent, pathMatch: 'full' },
 ];
 
 @NgModule({

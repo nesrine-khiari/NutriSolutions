@@ -17,6 +17,7 @@ import { UserEntity } from '../user.entity';
 import { UpdateClientDto } from './dtos/update-client.dto';
 import { Public } from 'src/auth/guards/auth.guard';
 import { ReservedSlotService } from 'src/planning/reserved-slot/reserved-slot.service';
+import { ReservedSlot } from 'src/planning/reserved-slot/reserved-slot.entity';
 @Public()
 @Controller('clients')
 export class ClientController {
@@ -27,6 +28,10 @@ export class ClientController {
   @Get()
   async findAll(): Promise<Client[]> {
     return this.clientService.findAll();
+  }
+  @Get('count')
+  async countNutritionists(): Promise<{ total: number }> {
+    return this.clientService.countClients();
   }
   //   @Post()
   //   async create(
@@ -74,5 +79,11 @@ export class ClientController {
       nutritionistId,
       appointmentNumber,
     );
+  }
+  @Get(':id/last-reserved-slot')
+  async getLastReservedSlot(
+    @Param('id') id: string,
+  ): Promise<ReservedSlot | null> {
+    return this.clientService.getLastReservedSlot(id);
   }
 }

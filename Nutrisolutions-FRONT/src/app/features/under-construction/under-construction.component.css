@@ -1,0 +1,9 @@
+.content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 69vh;
+}
+.content img{
+  width: 65%;
+}
