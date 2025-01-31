@@ -87,10 +87,12 @@ export class NutritionistService extends UserService {
     return this.nutritionistRepository
       .createQueryBuilder('nutritionist')
       .where('nutritionist.stars >= :stars', { stars: 4 })
+      .andWhere('nutritionist.status = :status', { status: NutritionistStatusEnum.APPROVED })
       .orderBy('nutritionist.stars', 'DESC')
       .take(4)
       .getMany();
   }
+  
   async getPatientsByNutritionist(nutritionistId: string): Promise<any[]> {
     const reservedSlots = await this.reservedSlotRepository.find({
       where: { nutritionist: { id: nutritionistId } },
