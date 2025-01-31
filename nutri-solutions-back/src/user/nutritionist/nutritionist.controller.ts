@@ -16,6 +16,7 @@ import { Nutritionist } from './nutritionist.entity';
 import { Roles } from 'src/auth/guards/role.guard';
 import { UserRoleEnum } from 'src/enums/user-enums';
 import { UpdateNutritionistDto } from './dtos/update-nutritionist.dto';
+import { Public } from 'src/auth/guards/auth.guard';
 
 @Controller('nutritionists')
 export class NutritionistController {
@@ -38,7 +39,7 @@ export class NutritionistController {
       return this.nutritionistService.findAllApprovedNutritionists(page, limit);
     }
   }
-
+  @Public()
   @Get('count')
   async countNutritionists(): Promise<{ total: number }> {
     return this.nutritionistService.countNutritionists();
@@ -70,3 +71,5 @@ export class NutritionistController {
     return this.nutritionistService.update(id, updateNutritionistDto);
   }
 }
+
+

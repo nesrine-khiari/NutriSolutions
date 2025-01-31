@@ -34,7 +34,10 @@ export class RecipesService {
       total,
     };
   }
-
+  async countRecipes(): Promise<{ total: number }> {
+    const total = await this.recipeRepository.count();
+    return { total };
+  }
   async findOne(id: string): Promise<RecipeEntity> {
     // Include related favorite recipes
     const recipe = await this.recipeRepository.findOne({

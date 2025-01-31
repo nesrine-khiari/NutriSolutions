@@ -7,23 +7,14 @@ import {
   Patch,
   Post,
   Query,
-  Res,
-  UploadedFile,
-  UseInterceptors,
 } from '@nestjs/common';
 import { RecipesService } from './recipe.service';
 import { CreateRecipeDto } from './dtos/create-recipe.dto';
 import { UpdateRecipeDto } from './dtos/update-recipe.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { v4 as uuidv4 } from 'uuid';
-import * as path from 'path';
-import { existsSync } from 'fs';
-import { Response } from 'express';
-import { Public } from 'src/auth/guards/auth.guard';
 import { Roles } from 'src/auth/guards/role.guard';
 import { UserRoleEnum } from 'src/enums/user-enums';
 import { RecipeEntity } from './recipe-entity';
+import { Public } from 'src/auth/guards/auth.guard';
 @Controller('recipes')
 export class RecipeController {
   constructor(private readonly recipesService: RecipesService) {}
@@ -42,6 +33,11 @@ export class RecipeController {
     total: number;
   }> {
     return this.recipesService.findAll(Number(page), Number(limit));
+  }
+  @Public()
+  @Get('count')
+  async countNutritionists(): Promise<{ total: number }> {
+    return this.recipesService.countRecipes();
   }
 
   @Get(':id')

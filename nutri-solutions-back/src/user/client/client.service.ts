@@ -116,15 +116,5 @@ export class ClientService extends UserService {
 
     return client;
   }
-  async getLastReservedSlot(clientId: string): Promise<ReservedSlot | null> {
-    const lastReservedSlot = await this.reservedSlotRepository
-      .createQueryBuilder('reservedSlot')
-      .leftJoinAndSelect('reservedSlot.client', 'client')
-      .where('client.id = :clientId', { clientId })
-      .orderBy('reservedSlot.date', 'DESC') // Replace 'reservedDate' with the actual column name
-      .limit(1)
-      .getOne();
 
-    return lastReservedSlot;
-  }
 }

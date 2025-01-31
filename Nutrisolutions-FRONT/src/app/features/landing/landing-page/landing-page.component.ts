@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AppUtils } from 'src/app/core/utils/functions.utils';
 import { ClientService } from 'src/app/services/client.service';
 import { NutritionistsService } from 'src/app/services/nutritionists.service';
+import { RecipesService } from 'src/app/services/recipe.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -11,8 +12,10 @@ import { NutritionistsService } from 'src/app/services/nutritionists.service';
 export class LandingPageComponent {
   nutritionistsCount: number = 0;
   clientsCount: number = 0;
+  recipesCount: number = 0;
   nutritionistService = inject(NutritionistsService);
   clientService = inject(ClientService);
+  recipeService = inject(RecipesService);
   getCssVariable(variableName: string): string {
     return AppUtils.getCssVariable(variableName);
   }
@@ -25,6 +28,11 @@ export class LandingPageComponent {
     this.clientService.getClientsCount().subscribe({
       next: (response) => {
         this.clientsCount = response.total;
+      },
+    });
+    this.recipeService.getRecipesCount().subscribe({
+      next: (response) => {
+        this.recipesCount = response.total;
       },
     });
   }

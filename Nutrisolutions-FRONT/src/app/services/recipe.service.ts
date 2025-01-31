@@ -39,6 +39,9 @@ export class RecipesService {
       total: number;
     }>(this.apiUrl, { params });
   }
+  getRecipesCount(): Observable<{ total: number }> {
+    return this.http.get<{ total: number }>(this.apiUrl + '/count');
+  }
   getRecipeById(id: string): Observable<RecipeModel> {
     return this.http.get<RecipeModel>(`${this.apiUrl}/${id}`);
   }
