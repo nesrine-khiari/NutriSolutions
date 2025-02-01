@@ -25,6 +25,8 @@ export class UpcomingPatientsComponent {
   isLoading: boolean = false;
   selectPatient(patient: ClientModel) {
     this.selectedPatient = patient;
+    this.isLoading = true;
+
     this.clientService
       .getAppointment(
         this.selectedPatient?.id ?? '',
@@ -35,6 +37,8 @@ export class UpcomingPatientsComponent {
         next: (appointment) => {
           console.log('get appointemtn');
           this.appointment = appointment;
+          console.log(appointment);
+
           this.isLoading = false;
         },
         error: (err) => {
@@ -59,6 +63,8 @@ export class UpcomingPatientsComponent {
             console.log('get appointemtn');
 
             this.appointment = appointment;
+            console.log(appointment);
+
             this.isLoading = false;
           },
           error: (err) => {

@@ -240,7 +240,7 @@ export class PlanningComponent {
           console.log(slot.reservedBy);
 
           slot.isReserved = true;
-          slot.isReservation = true;
+          slot.isReservation = slotModelDto.isReservation;
           const color = reservedSlot.isReservation
             ? this.getRandomCoolColor()
             : '#ff6b6b';

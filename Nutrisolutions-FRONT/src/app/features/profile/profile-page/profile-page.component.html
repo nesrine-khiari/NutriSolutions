@@ -36,10 +36,12 @@
       </div>
       <div class="lower-right">
         <h3>Upcoming appointment</h3>
-        <!-- <button>
-          {{ client?.appointments?.[0] ?? 'No appointments available' }}
-        </button> -->
-        <p style="color: var(--brown)">Consultation with Dr. Khiari</p>
+        <button>
+          {{ upcomingAppointement !=null? (upcomingAppointement.date | date ) + ' à '+ upcomingAppointement.time + 'h' :
+          "You haven't booked any appointments yet." }}
+        </button>
+        <p *ngIf="upcomingAppointement" style="color: var(--brown)">Consultation with
+          Dr.{{upcomingAppointement?.nutritionist?.name}}</p>
       </div>
     </div>
   </div>
