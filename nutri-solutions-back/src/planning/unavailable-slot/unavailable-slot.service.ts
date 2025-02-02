@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { ClientService } from 'src/user/client/client.service';
 import { NutritionistService } from 'src/user/nutritionist/nutritionist.service';
 import { UnavailableSlot } from './unavailable-slot.entity';
@@ -116,16 +116,37 @@ export class UnavailableSlotService {
     return slot;
   }
   /**
-   * Delete a reserved slot by its ID.
+   * Soft Delete a reserved slot by its ID.
    * @param id The ID of the reserved slot to delete.
    * @returns True if deletion was successful, false otherwise.
    */
-  async delete(id: string): Promise<boolean> {
-    const result = await this.unavailableSlotRepository.delete(id);
+  async softDelete(id: string): Promise<UpdateResult> {
+    const unavailableSlot = await this.findOne(id);
+    let result;
+    if (unavailableSlot.isReservation) {
+      result = await this.reservedSlotRepository.softDelete(id);
+    } else {
+      result = await this.unavailableSlotRepository.softDelete(id);
+    }
 
     if (result.affected === 0) {
       throw new NotFoundException(`Reserved slot with ID ${id} not found`);
     }
-    return true;
+    return result;
+  }
+
+  async delete(id: string): Promise<UpdateResult> {
+    const unavailableSlot = await this.findOne(id);
+    let result;
+    if (unavailableSlot.isReservation) {
+      result = await this.reservedSlotRepository.softDelete(id);
+    } else {
+      result = await this.unavailableSlotRepository.softDelete(id);
+    }
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Reserved slot with ID ${id} not found`);
+    }
+    return result;
   }
 }

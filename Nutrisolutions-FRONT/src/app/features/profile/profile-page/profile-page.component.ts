@@ -5,6 +5,7 @@ import { GetAgePipe } from 'src/app/core/pipes/get-age.pipe';
 import { AppUtils } from 'src/app/core/utils/functions.utils';
 import { ClientModel } from 'src/app/models/client.model';
 import { RecipeModel } from 'src/app/models/recipe.model';
+import { SlotModel } from 'src/app/models/slot.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClientService } from 'src/app/services/client.service';
 import { RecipesService } from 'src/app/services/recipe.service';
@@ -23,11 +24,14 @@ export class ProfilePageComponent implements OnInit {
   clientService = inject(ClientService);
   toastr = inject(ToastrService);
   base_url = APP_API.base_url;
+  upcomingAppointement: SlotModel | null = null;
   constructor(private getAgePipe: GetAgePipe) {
     this.clientService.getClientById(this.authService.getUserId()).subscribe({
       next: (response) => {
         this.client = response;
-
+        if (this.client.reservedSlots.length)
+          this.upcomingAppointement =
+            this.client.reservedSlots[this.client.reservedSlots.length - 1];
         this.updateClientInfoItems();
       },
       error: (err) => {

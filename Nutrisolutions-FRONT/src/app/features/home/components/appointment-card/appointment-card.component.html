@@ -1,4 +1,4 @@
-<div class="next-patient-meet">
+<div class="next-patient-meet" *ngIf="appointement">
   <div class="arrows">
     <img style="cursor: pointer" *ngIf="apppointementIndex > 1" (click)="getPreviousAppointment()"
       src="assets/images/left-arrow.png" width="25px" alt="" />
@@ -9,11 +9,10 @@
   <h2>Consultation</h2>
 
   <div class="next-meet-card">
-    <app-upcoming-patient *ngIf="appointement" [patient]="appointement.client!"
-      [appointmentTime]="appointement.time"></app-upcoming-patient>
+    <app-upcoming-patient [patient]="appointement.client!" [appointmentTime]="appointement.time"></app-upcoming-patient>
     <div class="detail">
       <h4>Objectif</h4>
-      <img *ngIf="appointement" [src]="
+      <img [src]="
           'assets/images/' +
           getObjectifImg(appointement.client!.objectif) +
           '.svg'

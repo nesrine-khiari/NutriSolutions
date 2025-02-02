@@ -12,3 +12,9 @@ export enum NutritionistStatusEnum {
   REJECTED = 'Rejeté',
   WAITING = 'En attente',
 }
+export enum ExperienceEnum {
+  JUNIOR = '1-3 ans',
+  MID_LEVEL = '4-6 ans',
+  SENIOR = '7-10 ans',
+  SENIOR_PLUS = 'Plus de 10 ans',
+}

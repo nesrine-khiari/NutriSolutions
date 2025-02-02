@@ -5,6 +5,7 @@ import { APP_API } from '../core/constants/constants.config';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ClientModel } from '../models/client.model';
+import { ExperienceEnum } from '../models/recipe.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,18 +22,21 @@ export class NutritionistsService {
 
   getAllNutritionists(
     page: number = 1,
-    limit: number = 12
+    limit: number = 12,
+    searchText?: string,
+    experience?: ExperienceEnum
   ): Observable<{
     data: NutritionistModel[];
     total: number;
   }> {
-    let params = new HttpParams();
-
-    if (page > 0) {
-      params = params.set('page', page.toString());
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+    if (searchText?.trim()) {
+      params = params.set('searchText', searchText.trim());
     }
-    if (limit > 0) {
-      params = params.set('limit', limit.toString());
+    if (experience) {
+      params = params.set('experience', experience);
     }
 
     return this.http.get<{

@@ -35,15 +35,20 @@ export class ClientService extends UserService {
     return { total };
   }
   // Get a specific client by ID
+
   async findOneById(id: string): Promise<Client> {
-    const client = await this.clientRepository.findOne({
-      where: { id },
-      relations: ['favoriteRecipes', 'reservedSlots'], // Include related favorite recipes
-    });
+    const client = await this.clientRepository
+      .createQueryBuilder('client')
+      .leftJoinAndSelect('client.favoriteRecipes', 'favoriteRecipes')
+      .leftJoinAndSelect('client.reservedSlots', 'reservedSlots')
+      .where('client.id = :id', { id })
+      .orderBy('reservedSlots.date', 'ASC') // Order reservedSlots by date ascending
+      .getOne();
 
     if (!client) {
       throw new NotFoundException(`Client with ID ${id} not found`);
     }
+
     return client;
   }
 
@@ -116,5 +121,4 @@ export class ClientService extends UserService {
 
     return client;
   }
-
 }

@@ -58,25 +58,27 @@ export class HomeNutritionisteComponent {
           setTimeout(() => {
             this.isLoading = false;
           }, 500);
+          this.todayReservations = this.reservations.filter((reservation) => {
+            // Parse reservation.date and compare it to the desired date
+            const reservationDate = new Date(reservation.date).toDateString();
+            return reservationDate === this.currentDate.toDateString();
+          });
+
+          this.recentReservations = this.reservations.filter((reservation) => {
+            const reservationDateMonth = new Date(reservation.date).getMonth();
+            const reservationDateYear = new Date(
+              reservation.date
+            ).getFullYear();
+            return (
+              reservationDateMonth === this.currentDate.getMonth() &&
+              reservationDateYear === this.currentDate.getFullYear()
+            );
+          });
         },
         error: (err) => {
           console.error('Failed to fetch reservations:', err);
         },
       });
-    this.todayReservations = this.reservations.filter((reservation) => {
-      // Parse reservation.date and compare it to the desired date
-      const reservationDate = new Date(reservation.date).toDateString();
-      return reservationDate === this.currentDate.toDateString();
-    });
-
-    this.recentReservations = this.reservations.filter((reservation) => {
-      const reservationDateMonth = new Date(reservation.date).getMonth();
-      const reservationDateYear = new Date(reservation.date).getFullYear();
-      return (
-        reservationDateMonth === this.currentDate.getMonth() &&
-        reservationDateYear === this.currentDate.getFullYear()
-      );
-    });
 
     this.nutritionistService
       .getPatientsByNutritionist(this.nutritionistId)

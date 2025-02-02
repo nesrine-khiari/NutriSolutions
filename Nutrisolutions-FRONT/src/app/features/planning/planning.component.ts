@@ -235,13 +235,14 @@ export class PlanningComponent {
       }
       this.planningService.addSlot(slotModelDto).subscribe({
         next: (reservedSlot) => {
+          slot.id = reservedSlot.id ?? '';
           slot.reservedBy = reservedSlot.isReservation
             ? this.clientUserName
             : '';
           console.log(slot.reservedBy);
 
           slot.isReserved = true;
-          slot.isReservation = true;
+          slot.isReservation = slotModelDto.isReservation;
           const color = reservedSlot.isReservation
             ? this.getRandomCoolColor()
             : '#ff6b6b';

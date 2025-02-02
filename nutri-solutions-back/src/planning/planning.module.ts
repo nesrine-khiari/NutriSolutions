@@ -12,24 +12,20 @@ import { EmailService } from 'src/common/email/email.service';
 import { UnavailableSlot } from './unavailable-slot/unavailable-slot.entity';
 import { UnavailableSlotService } from './unavailable-slot/unavailable-slot.service';
 import { UnavailableSlotController } from './unavailable-slot/unavailable-slot.controller';
+import { UserModule } from 'src/user/user.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       ReservedSlot,
-      Client,
-      Nutritionist,
-      RecipeEntity,
-      UserEntity,
+      // Client,
+      // Nutritionist,
+      // RecipeEntity,
+      // UserEntity,
       UnavailableSlot,
     ]),
+    UserModule,
   ],
-  providers: [
-    ReservedSlotService,
-    ClientService,
-    NutritionistService,
-    EmailService,
-    UnavailableSlotService,
-  ],
+  providers: [ReservedSlotService, EmailService, UnavailableSlotService],
   controllers: [UnavailableSlotController],
 })
 export class PlanningModule {}

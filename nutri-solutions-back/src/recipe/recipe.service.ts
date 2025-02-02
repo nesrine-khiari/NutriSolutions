@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Brackets, Repository } from 'typeorm';
 import { CreateRecipeDto } from './dtos/create-recipe.dto';
 import { UpdateRecipeDto } from './dtos/update-recipe.dto';
 import { RecipeEntity } from './recipe-entity';
+import { CategoryEnum, ObjectifEnum } from 'src/enums/recipe-enums';
 
 @Injectable()
 export class RecipesService {
@@ -20,19 +21,42 @@ export class RecipesService {
   async findAll(
     page: number = 1,
     limit: number = 12,
+    searchText?: string,
+    objectif?: ObjectifEnum, // Assuming this is an enum
+    categorie?: CategoryEnum, // Assuming this is an enum
   ): Promise<{
     data: RecipeEntity[];
     total: number;
   }> {
-    const [data, total] = await this.recipeRepository.findAndCount({
-      skip: (page - 1) * limit, // Offset calculation
-      take: limit, // Number of items per page
-    });
+    const queryBuilder = this.recipeRepository.createQueryBuilder('recipe');
 
-    return {
-      data,
-      total,
-    };
+    if (searchText?.trim()) {
+      const formattedSearch = `%${searchText.trim()}%`;
+      queryBuilder.andWhere(
+        new Brackets((qb) => {
+          qb.where('LOWER(recipe.name) LIKE LOWER(:searchText)', {
+            searchText: formattedSearch,
+          }).orWhere('LOWER(recipe.description) LIKE LOWER(:searchText)', {
+            searchText: formattedSearch,
+          });
+        }),
+      );
+    }
+
+    if (objectif) {
+      queryBuilder.andWhere('recipe.objectif = :objectif', { objectif });
+    }
+
+    if (categorie) {
+      queryBuilder.andWhere('recipe.category = :categorie', { categorie });
+    }
+
+    queryBuilder.skip((page - 1) * limit).take(limit);
+
+    // Get results and total count
+    const [data, total] = await queryBuilder.getManyAndCount();
+
+    return { data, total };
   }
   async countRecipes(): Promise<{ total: number }> {
     const total = await this.recipeRepository.count();
