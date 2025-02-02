@@ -18,7 +18,7 @@ export class NutritionistModel extends UserModel {
     public location?: string,
     id?: string,
     public patientsNumber: number = 0,
-    public stars?: number, // appointments?: string[],
+    public rating?: number // appointments?: string[],
   ) {
     super(
       name,
@@ -31,7 +31,7 @@ export class NutritionistModel extends UserModel {
       role,
       id
     );
-    this.stars = stars ?? 4;
+    this.rating = rating ?? 3;
   }
 }
 
@@ -50,4 +50,12 @@ export enum StatusEnumFilter {
   Approved = 'Approuvé',
   Rejected = 'Rejeté',
   Waiting = 'En attente',
+}
+
+export enum StarsCountEnum {
+  One = '1',
+  Two = '2',
+  Three = '3',
+  Four = '4',
+  Five = '5',
 }

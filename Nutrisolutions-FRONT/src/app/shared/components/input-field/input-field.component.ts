@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-input-field',
@@ -13,13 +14,13 @@ export class InputFieldComponent implements OnInit {
   @Input() fontSize: string = 'clamp(9px, 14px, 1.4vw)';
   @Input() color: string = 'var(--primary-color)';
   @Input() fontWeight: string = '';
-
+  logger = inject(LoggerService);
   @Output() enterPressed = new EventEmitter<string>();
 
   ngOnInit(): void {
-    console.log('InputFieldComponent initialized');
-    console.log('Placeholder:', this.placeholder);
-    console.log('Font Size:', this.fontSize);
+    this.logger.info('InputFieldComponent initialized');
+    this.logger.debug('Placeholder:', this.placeholder);
+    this.logger.debug('Font Size:', this.fontSize);
   }
 
   getStyles() {

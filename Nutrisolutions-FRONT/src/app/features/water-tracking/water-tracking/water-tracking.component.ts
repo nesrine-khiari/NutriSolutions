@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-water-tracking',
@@ -13,6 +14,7 @@ export class WaterTrackingComponent {
   currentTime: string = '';
   private intervalId: any;
   private timeIntervalId: any;
+  logger = inject(LoggerService);
   constructor(private toastr: ToastrService) {}
   ngOnInit(): void {
     this.updateStatus();
@@ -23,9 +25,9 @@ export class WaterTrackingComponent {
     // Set the interval to run every 30 seconds (30000 milliseconds)
     this.intervalId = setInterval(() => {
       this.recommendedDrunCups++;
-      this.toastr.info("Don't forget to Hydrate yourself!", 'Water Tracker');
+      this.toastr.info("N'oubliez pas de vous hydrater !", "Suivi de l'eau");
       this.updateStatus();
-      console.log('CHECKING');
+      this.logger.info('CHECKING');
     }, 15000);
   }
   getCurrentHour(): string {
@@ -51,8 +53,8 @@ export class WaterTrackingComponent {
   }
   showWarning() {
     this.toastr.warning(
-      'Warning message',
-      "Don't Forget To Hydrate Your Self !"
+      "Message d'avertissement",
+      "N'oubliez pas de vous hydrater !"
     );
   }
   fillNextCup() {

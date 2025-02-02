@@ -24,7 +24,8 @@ export class NutritionistsService {
     page: number = 1,
     limit: number = 12,
     searchText?: string,
-    experience?: ExperienceEnum
+    experience?: ExperienceEnum,
+    status?: StatusEnum
   ): Observable<{
     data: NutritionistModel[];
     total: number;
@@ -38,7 +39,9 @@ export class NutritionistsService {
     if (experience) {
       params = params.set('experience', experience);
     }
-
+    if (status) {
+      params = params.set('status', status);
+    }
     return this.http.get<{
       data: NutritionistModel[];
       total: number;

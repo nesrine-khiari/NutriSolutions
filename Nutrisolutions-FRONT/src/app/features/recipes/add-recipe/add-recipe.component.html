@@ -26,7 +26,7 @@
               <app-dropdown
                 [name]="'Catégorie'"
                 [options]="categoryOptions"
-                [formControlName]="categoryControl"
+                [control]="categoryControl"
               ></app-dropdown>
             </div>
             <div class="detail-item">
@@ -34,7 +34,7 @@
               <app-dropdown
                 [name]="'Objectif'"
                 [options]="objectifOptions"
-                [formControlName]="objectifControl"
+                [control]="objectifControl"
               ></app-dropdown>
             </div>
             <div class="detail-item" *ngFor="let item of items">
@@ -50,7 +50,7 @@
             <app-dropdown
               [name]="'Temps de préparation'"
               [options]="preptimeOptions"
-              [formControlName]="preptimeControl"
+              [control]="preptimeControl"
             ></app-dropdown>
           </div>
         </div>

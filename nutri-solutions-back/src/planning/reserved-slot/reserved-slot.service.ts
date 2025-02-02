@@ -62,4 +62,5 @@ export class ReservedSlotService {
 
     return await query.take(1).getOne();
   }
+
 }

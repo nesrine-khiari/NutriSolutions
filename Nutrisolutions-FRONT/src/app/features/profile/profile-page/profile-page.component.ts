@@ -8,6 +8,7 @@ import { RecipeModel } from 'src/app/models/recipe.model';
 import { SlotModel } from 'src/app/models/slot.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClientService } from 'src/app/services/client.service';
+import { LoggerService } from 'src/app/services/logger.service';
 import { RecipesService } from 'src/app/services/recipe.service';
 
 @Component({
@@ -25,6 +26,7 @@ export class ProfilePageComponent implements OnInit {
   toastr = inject(ToastrService);
   base_url = APP_API.base_url;
   upcomingAppointement: SlotModel | null = null;
+  logger=inject(LoggerService);
   constructor(private getAgePipe: GetAgePipe) {
     this.clientService.getClientById(this.authService.getUserId()).subscribe({
       next: (response) => {
@@ -35,7 +37,7 @@ export class ProfilePageComponent implements OnInit {
         this.updateClientInfoItems();
       },
       error: (err) => {
-        console.error('Upload Failed:', err);
+        this.logger.error('Upload Failed:', err);
       },
     });
   }

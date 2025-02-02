@@ -38,7 +38,7 @@ export class ResetPasswordComponent {
           .resetPassword(this.resetToken, this.oldPassword, this.newPassword)
           .subscribe({
             next: (response) => {
-              this.toastr.success('Password Reset Success');
+              this.toastr.success('Réinitialisation du mot de passe réussie');
               this.router.navigate(['/login']);
             },
             error: (err) => {
@@ -46,7 +46,7 @@ export class ResetPasswordComponent {
             },
           });
       } else {
-        this.toastr.error('Password Mismatch');
+        this.toastr.error('Les mots de passe ne correspondent pas');
       }
     }
   };

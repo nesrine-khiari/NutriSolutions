@@ -5,12 +5,14 @@ import {
   InsertEvent,
   RemoveEvent,
   UpdateEvent,
+  Not,
 } from 'typeorm';
 import { ReservedSlot } from './reserved-slot.entity';
 import { Client } from 'src/user/client/client.entity';
+import { UnavailableSlot } from '../unavailable-slot/unavailable-slot.entity';
 import { Nutritionist } from 'src/user/nutritionist/nutritionist.entity';
 import { Logger } from '@nestjs/common';
-import { UnavailableSlot } from '../unavailable-slot/unavailable-slot.entity';
+import { log } from 'console';
 
 @EventSubscriber()
 export class ReservedSlotSubscriber
@@ -43,7 +45,7 @@ export class ReservedSlotSubscriber
     if (reservedSlot?.client) {
       await event.manager.decrement(
         Client,
-        { id: reservedSlot.client.id },
+        { id: (reservedSlot as ReservedSlot)?.client.id },
         'reservedSlotsCount',
         1,
       );
@@ -101,5 +103,20 @@ export class ReservedSlotSubscriber
         1,
       );
     }
+  }
+  async afterUpdate(event: UpdateEvent<ReservedSlot>) {
+    Logger.warn('afterUpdateNutritionistRating');
+    const reservedSlot = event.entity;
+    const nutritionist = reservedSlot.nutritionist;
+    const slotsCount = await event.manager.count(ReservedSlot, {
+      where: { nutritionist: { id: reservedSlot.nutritionist.id } , rating: Not(0) },
+    });
+    Logger.warn('staars: ' + reservedSlot.rating);
+    let totalStars: number =
+      nutritionist.rating * (slotsCount - 1) + Number(reservedSlot.rating);
+    Logger.warn('totalStars: ' + totalStars);
+    nutritionist.rating = totalStars / slotsCount;
+    Logger.warn('nutritionistRating: ' + nutritionist.rating);
+    await event.manager.save(nutritionist);
   }
 }

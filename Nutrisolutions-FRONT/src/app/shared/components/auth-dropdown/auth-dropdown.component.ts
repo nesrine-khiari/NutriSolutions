@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-auth-dropdown',
@@ -13,12 +14,12 @@ export class AuthDropdownComponent {
 
   @Input() selectedOption: string = '';
   @Output() onInputChange = new EventEmitter<string>();
-
+  logger = inject(LoggerService);
   ngOnInit() {
     if (!this.selectedOption) this.selectedOption = this.options[0];
   }
   notifyParent(newValue: string) {
     this.onInputChange.emit(newValue);
-    console.log('emitted new value : ' + newValue);
+    this.logger.debug('emitted new value : ' + newValue);
   }
 }

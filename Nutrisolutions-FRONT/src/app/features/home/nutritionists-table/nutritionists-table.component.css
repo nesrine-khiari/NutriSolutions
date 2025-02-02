@@ -36,6 +36,7 @@ td {
   font-weight: 500;
 }
 .certificate-container {
+  gap : 10px;
   justify-content: space-between;
   width: 100%;
   display: flex;

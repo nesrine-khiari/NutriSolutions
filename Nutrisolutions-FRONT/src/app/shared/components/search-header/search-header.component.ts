@@ -25,7 +25,7 @@ export class SearchHeaderComponent {
       },
       error: (error) => {
         // Error callback
-        this.toastr.error('Error fetching user', 'Error');
+        this.toastr.error('Erreur lors de la récupération de l\'utilisateur', 'Erreur');
       },
     });
   }

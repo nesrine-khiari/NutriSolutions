@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { NutritionistModel } from 'src/app/models/nutritionist.model';
 import { RecipeModel } from 'src/app/models/recipe.model';
 import { NutritionistsService } from 'src/app/services/nutritionists.service';

@@ -15,17 +15,24 @@ import { UnavailableSlotController } from './unavailable-slot/unavailable-slot.c
 import { UserModule } from 'src/user/user.module';
 @Module({
   imports: [
+    UserModule,
     TypeOrmModule.forFeature([
       ReservedSlot,
       // Client,
       // Nutritionist,
       // RecipeEntity,
       // UserEntity,
+      RecipeEntity,
       UnavailableSlot,
     ]),
     UserModule,
   ],
-  providers: [ReservedSlotService, EmailService, UnavailableSlotService],
+
+  providers: [
+    ReservedSlotService,
+    EmailService,
+    UnavailableSlotService,
+  ],
   controllers: [UnavailableSlotController],
 })
 export class PlanningModule {}

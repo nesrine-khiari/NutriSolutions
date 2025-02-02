@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { AppUtils } from '../core/utils/functions.utils';
 import { ClientService } from './client.service';
 import { NutritionistsService } from './nutritionists.service';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,19 +22,20 @@ export class AuthService {
   http = inject(HttpClient);
   apiUrl = APP_API.base_url + '/auth';
   router = inject(Router);
+  logger = inject(LoggerService);
   private addUser(user: UserModel): Observable<UserModel> {
     return this.http.post<UserModel>(`${this.apiUrl}/signup`, user);
   }
   signupUser(user: UserModel): void {
     this.addUser(user).subscribe({
       next: (response) => {
-        this.toastr.success('User Signed up successfully', 'Success');
+        this.toastr.success('Utilisateur inscrit avec succès', 'Succès');
         if (user.role == UserRoleEnum.CLIENT)
           this.login(user.email, user.getPass());
         else
           this.toastr.info(
-            'Please wait until the Admin approves your candidature.',
-            'Candidature Validation',
+            "Veuillez attendre que l'administrateur approuve votre candidature.",
+            'Validation de la candidature',
             {
               timeOut: 10000, // Stay for 10 seconds
             }
@@ -41,7 +43,7 @@ export class AuthService {
         this.router.navigate(['/']);
       },
       error: (error) => {
-        this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+        this.toastr.error(AppUtils.getErrorMessage(error), 'Erreur');
       },
     });
     this.userRole = user.role;
@@ -64,16 +66,14 @@ export class AuthService {
     const credentials = { email: email, password: password };
     this.http.post(`${this.apiUrl}/login`, credentials).subscribe({
       next: (response: any) => {
-        this.toastr.success('Login successful', 'Success');
+        this.toastr.success('Connexion réussie', 'Succès');
         const token = response.accessToken;
         const user = response.user as UserModel;
         localStorage.setItem(APP_CONST.tokenLocalStorage, token);
         localStorage.setItem(APP_CONST.role, user.role);
         localStorage.setItem(APP_CONST.payloadIdKey, user.id!);
         localStorage.setItem(APP_CONST.nameLocalStorage, user.name!);
-        console.log('====================================');
-        console.log('role is', user.role);
-        console.log('====================================');
+        this.logger.debug('role is', user.role);
         if (user.role === UserRoleEnum.CLIENT) {
           this.router.navigate(['/client-home']);
         } else if (user.role === UserRoleEnum.NUTRITIONIST) {
@@ -83,7 +83,7 @@ export class AuthService {
         }
       },
       error: (error) => {
-        this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+        this.toastr.error(AppUtils.getErrorMessage(error), 'Erreur');
       },
     });
     this.isAuthenticated = true;

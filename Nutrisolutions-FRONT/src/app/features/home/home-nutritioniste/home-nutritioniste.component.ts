@@ -7,6 +7,7 @@ import { ObjectifEnum } from 'src/app/models/recipe.model';
 import { SlotModel } from 'src/app/models/slot.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClientService } from 'src/app/services/client.service';
+import { LoggerService } from 'src/app/services/logger.service';
 import { NutritionistsService } from 'src/app/services/nutritionists.service';
 import { PlanningService } from 'src/app/services/planning.service';
 
@@ -29,7 +30,7 @@ export class HomeNutritionisteComponent {
   todayReservations: SlotModel[] = [];
   recentReservations: SlotModel[] = [];
   currentDate: Date = new Date();
-
+  logger = inject(LoggerService);
   getGenderImage() {
     return this.nutritionist?.gender == GenderEnum.MALE ? 'man' : 'women';
   }
@@ -44,12 +45,10 @@ export class HomeNutritionisteComponent {
           this.nutritionist = response;
         },
         error: (err) => {
-          console.error('Upload Failed:', err);
+          this.logger.error('Upload Failed:', err);
         },
       });
-    console.log('====================================');
-    console.log('hello ' + this.currentDate);
-    console.log('====================================');
+    this.logger.debug('Current Date ' + this.currentDate);
     this.planningService
       .getUnavailableSlotsByNutritionist(this.nutritionistId)
       .subscribe({
@@ -76,7 +75,7 @@ export class HomeNutritionisteComponent {
           });
         },
         error: (err) => {
-          console.error('Failed to fetch reservations:', err);
+          this.logger.error('Failed to fetch reservations:', err);
         },
       });
 

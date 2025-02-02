@@ -12,4 +12,7 @@ export class ReservedSlot extends UnavailableSlot {
     eager: true,
   })
   client: Client;
+
+  @Column({ type: 'float', default: 0 })
+  rating: number;
 }

@@ -12,6 +12,7 @@ import { ClientModel } from 'src/app/models/client.model';
 import { ObjectifEnum } from 'src/app/models/recipe.model';
 import { SlotModel } from 'src/app/models/slot.model';
 import { ClientService } from 'src/app/services/client.service';
+import { LoggerService } from 'src/app/services/logger.service';
 import { PlanningService } from 'src/app/services/planning.service';
 
 @Component({
@@ -37,10 +38,10 @@ export class AppointmentCardComponent {
       this.apppointementIndex = this.appointmentsCount;
     }
   }
-
+  logger = inject(LoggerService);
   ngOnInit() {
     this.apppointementIndex = this.appointmentsCount;
-    console.log(this.appointement);
+    this.logger.debug('appointementIndex: ' + this.apppointementIndex);
   }
   // Method to show the popup
   getObjectifImg(objectif: ObjectifEnum) {
@@ -69,7 +70,7 @@ export class AppointmentCardComponent {
 
   showPopup = () => {
     this.isPopupVisible = true;
-    console.log('pop shown');
+    this.logger.info('pop shown');
   };
 
   // Method to hide the popup
@@ -86,10 +87,10 @@ export class AppointmentCardComponent {
       .subscribe({
         next: (reservedSlot) => {
           this.appointement = reservedSlot;
-          this.toastr.success('Note Added Successfully!');
+          this.toastr.success('Note ajoutée avec succès !');
         },
         error: (err) => {
-          this.toastr.error('Error');
+          this.toastr.error('Erreur');
         },
       });
   }

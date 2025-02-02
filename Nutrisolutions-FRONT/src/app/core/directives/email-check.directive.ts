@@ -2,10 +2,12 @@ import {
   Directive,
   ElementRef,
   HostListener,
+  inject,
   Input,
   Renderer2,
   SimpleChanges,
 } from '@angular/core';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Directive({
   selector: '[appEmailCheck]',
@@ -18,12 +20,12 @@ export class EmailCheckDirective {
   constructor(private el: ElementRef, private renderer: Renderer2) {
     // Create a note element
   }
-
+  logger = inject(LoggerService);
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['applyEmailCheck']) {
       if (this.applyEmailCheck) {
         this.noteElement = this.renderer.createElement('small');
-        console.log('created small tag');
+        this.logger.info('created small tag');
 
         this.renderer.addClass(this.noteElement, 'input-note');
         const inputHeader = this.el.nativeElement
@@ -39,7 +41,9 @@ export class EmailCheckDirective {
 
   @HostListener('input', ['$event.target.value'])
   onInput(value: string) {
-    this.checkEmailValidity(value);
+    if (this.noteElement && this.applyEmailCheck) {
+      this.checkEmailValidity(value);
+    }
   }
 
   private checkEmailValidity(email: string) {

@@ -2,11 +2,12 @@ import {
   Directive,
   ElementRef,
   HostListener,
+  inject,
   Input,
   Renderer2,
   SimpleChanges,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Directive({
   selector: '[appConfirmPasswordCheck]',
@@ -16,16 +17,16 @@ export class ConfirmPasswordCheckDirective {
   @Input('password') password: any;
 
   private noteElement: HTMLElement | null = null;
-
+  logger = inject(LoggerService);
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['applyConfirmPassword']) {
       if (this.applyConfirmPassword) {
-        console.log('applying confirm pass');
+        this.logger.info('applying confirm pass');
 
         this.noteElement = this.renderer.createElement('small');
-        console.log('created small tag');
+        this.logger.info('created small tag');
 
         this.renderer.addClass(this.noteElement, 'input-note');
         const inputHeader = this.el.nativeElement
@@ -41,12 +42,13 @@ export class ConfirmPasswordCheckDirective {
 
   @HostListener('input', ['$event.target.value'])
   onInput(value: string) {
-    if (this.applyConfirmPassword) this.checkPasswordMatch(value);
+    if (this.noteElement && this.applyConfirmPassword)
+      this.checkPasswordMatch(value);
   }
 
   private checkPasswordMatch(confirmPassword: string) {
-    console.log('confirm pass :' + confirmPassword);
-    console.log('pass :' + this.password);
+    this.logger.debug('confirm pass :' + confirmPassword);
+    this.logger.debug('pass :' + this.password);
 
     if (!confirmPassword) {
       this.renderer.setProperty(
@@ -72,10 +74,5 @@ export class ConfirmPasswordCheckDirective {
       this.renderer.removeClass(this.noteElement, 'valid-input-note');
       this.renderer.removeClass(this.noteElement, 'error-input-note');
     }
-  }
-
-  private validateEmail(email: string): boolean {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z]+(\.[a-zA-Z]{1,})?$/;
-    return emailRegex.test(email);
   }
 }

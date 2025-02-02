@@ -18,6 +18,7 @@ import { UserEntity } from 'src/user/user.entity';
 import { NutritionistStatusEnum, UserRoleEnum } from 'src/enums/user-enums';
 import { EmailService } from 'src/common/email/email.service';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
+
 @Public()
 @Controller('auth')
 export class AuthController {
@@ -27,6 +28,12 @@ export class AuthController {
     private nutritionistService: NutritionistService,
     private emailService: EmailService,
   ) {}
+
+  /**
+   * Endpoint pour se connecter
+   * @param signInDto Les informations de connexion
+   * @returns Un token JWT si les informations sont valides
+   */
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
@@ -50,6 +57,12 @@ export class AuthController {
     }
     return this.authService.login(user);
   }
+
+  /**
+   * Endpoint pour s'inscrire
+   * @param signupDto Les informations d'inscription
+   * @returns Un token JWT si l'inscription est réussie
+   */
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('signup')
@@ -72,6 +85,12 @@ export class AuthController {
         throw new Error('Invalid user type');
     }
   }
+
+  /**
+   * Endpoint pour demander une réinitialisation de mot de passe
+   * @param email L'email de l'utilisateur
+   * @returns Une réponse de succès si l'email est envoyé
+   */
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('request-password-reset')
@@ -79,6 +98,11 @@ export class AuthController {
     return this.authService.requestPasswordReset(email);
   }
 
+  /**
+   * Endpoint pour réinitialiser le mot de passe
+   * @param updatePassword Les informations de réinitialisation de mot de passe
+   * @returns Une réponse de succès si le mot de passe est réinitialisé
+   */
   @Post('reset-password')
   async resetPassword(@Body() updatePassword: UpdatePasswordDto) {
     return this.authService.resetPassword(

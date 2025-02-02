@@ -30,6 +30,9 @@ export class PlanningService {
   cancelSlotReservation(id: string): Observable<{ count: number }> {
     return this.http.delete<{ count: number }>(`${this.apiUrl}/${id}`);
   }
+  addRating(slotId: string, rating: number): Observable<SlotModel> {
+    return this.http.patch<SlotModel>(`${this.apiUrl}/${slotId}`, { rating });
+  }
   // getClientById(id: string): Observable<ClientModel> {
   //   return this.http.get<ClientModel>(`${this.apiUrl}/${id}`);
   // }

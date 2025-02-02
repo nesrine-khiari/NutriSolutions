@@ -14,6 +14,7 @@ import {
   ObjectifEnum,
   RecipeModel,
 } from 'src/app/models/recipe.model';
+import { LoggerService } from 'src/app/services/logger.service';
 import { RecipesService } from 'src/app/services/recipe.service';
 
 @Component({
@@ -57,7 +58,7 @@ export class RecipesListComponent {
           }, 1000);
         },
         error: (error) => {
-          this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+          this.toastr.error(AppUtils.getErrorMessage(error), 'Erreur');
           this.isLoading = false; // H
         },
       });
@@ -72,6 +73,7 @@ export class RecipesListComponent {
 
   toastr = inject(ToastrService);
   recipesService = inject(RecipesService);
+  logger = inject(LoggerService);
 
   ngOnInit() {
     this.categoryControl = new FormControl(CategoryEnum.ALL);
@@ -94,7 +96,7 @@ export class RecipesListComponent {
       .pipe(
         switchMap(([searchText, category, objectif]) => {
           this.isLoading = true;
-          console.log('new call');
+          this.logger.info('new call');
 
           return this.recipesService.getAllRecipes(
             this.currentPage,
@@ -114,7 +116,7 @@ export class RecipesListComponent {
           }, 500); // Reduce loading delay for a better UX
         },
         error: (error) => {
-          this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+          this.toastr.error(AppUtils.getErrorMessage(error), 'Erreur');
           this.isLoading = false;
         },
       });
@@ -133,7 +135,7 @@ export class RecipesListComponent {
         }, 1000);
       },
       error: (error) => {
-        this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+        this.toastr.error(AppUtils.getErrorMessage(error), 'Erreur');
         this.isLoading = false; // H
       },
     });

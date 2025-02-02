@@ -4,6 +4,7 @@ import { ClientModel } from 'src/app/models/client.model';
 import { ObjectifEnum } from 'src/app/models/recipe.model';
 import { SlotModel } from 'src/app/models/slot.model';
 import { ClientService } from 'src/app/services/client.service';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-upcoming-patients',
@@ -21,7 +22,7 @@ export class UpcomingPatientsComponent {
   appointment!: SlotModel;
   selectedPatient: ClientModel | null = null;
   appointmentsLength: number = 0;
-  // appointmentIndex: number = 0;
+  logger = inject(LoggerService);
   isLoading: boolean = false;
   selectPatient(patient: ClientModel) {
     this.selectedPatient = patient;
@@ -35,21 +36,20 @@ export class UpcomingPatientsComponent {
       )
       .subscribe({
         next: (appointment) => {
-          console.log('get appointemtn');
           this.appointment = appointment;
-          console.log(appointment);
+          this.logger.debug('get appointment' + appointment);
 
           this.isLoading = false;
         },
         error: (err) => {
-          console.log('error');
+          this.logger.error('error', err);
         },
       });
   }
   ngOnInit() {
     this.selectedPatient = this.patients.length ? this.patients[0] : null;
     // this.appointmentsLength = this.selectedPatient.reservedSlots.length;
-    console.log(this.selectedPatient);
+    this.logger.debug('selectedPatient' + this.selectedPatient);
     if (this.selectedPatient) {
       this.isLoading = true;
       this.clientService
@@ -60,15 +60,12 @@ export class UpcomingPatientsComponent {
         )
         .subscribe({
           next: (appointment) => {
-            console.log('get appointemtn');
-
             this.appointment = appointment;
-            console.log(appointment);
-
+            this.logger.debug('get appointment' + appointment);
             this.isLoading = false;
           },
           error: (err) => {
-            console.log('error');
+            this.logger.error('error', err);
           },
         });
     }
@@ -84,7 +81,7 @@ export class UpcomingPatientsComponent {
       .subscribe({
         next: (appointment) => {
           this.appointment = appointment;
-          console.log(
+          this.logger.debug(
             'New Appointement Set: ' +
               JSON.stringify(this.appointment) +
               'After changing number to : ' +

@@ -2,8 +2,11 @@
   <h2>Nos Nutritionnistes:</h2>
   <div class="filters">
     <app-search [formControlName]="searchControl"></app-search>
-    <app-dropdown [name]="'Trier'" [options]="trieOptions" [formControlName]="trieControl"></app-dropdown>
-    <app-dropdown [name]="'Status'" [options]="statusOptions" [formControlName]="statusControl"></app-dropdown>
+    <app-dropdown
+      [name]="'Status'"
+      [options]="statusOptions"
+      [control]="statusControl"
+    ></app-dropdown>
   </div>
   <table>
     <thead>
@@ -17,29 +20,42 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="
-          let nutritionist of nutritionists
-            | nutritionistsTableFilter
-              : searchControl.value
-              : statusControl.value
-              : trieControl.value
-        ">
-        <td [innerHTML]="highlightText(nutritionist.name, searchControl.value)"></td>
-        <td [innerHTML]="highlightText(nutritionist.location, searchControl.value)"></td>
-        <td [innerHTML]="highlightText(nutritionist.phoneNumber, searchControl.value)"></td>
-        <td [innerHTML]="highlightText(nutritionist.email, searchControl.value)">
+      <tr *ngFor="let nutritionist of nutritionists">
+        <td
+          [innerHTML]="highlightText(nutritionist.name, searchControl.value)"
+        ></td>
+        <td
+          [innerHTML]="
+            highlightText(nutritionist.location ?? '', searchControl.value)
+          "
+        ></td>
+        <td
+          [innerHTML]="
+            highlightText(nutritionist.phoneNumber, searchControl.value)
+          "
+        ></td>
+        <td
+          [innerHTML]="highlightText(nutritionist.email, searchControl.value)"
+        >
           <span class="highlight">{{ searchControl.value }}</span>
         </td>
 
         <td>
-          <div class="certificate-container"
-            (click)="downloadCertificate(nutritionist.certificateUrl.split('/').pop())">
+          <div class="certificate-container">
             <img src="assets/images/pdf-file.png" alt="Download" class="icon" />
-            <span>{{ nutritionist.certificate }}</span>
-            <img src="assets/images/download-icon.png" alt="Download" class="icon" />
+            <span>{{ nutritionist.certificateUrl.split("/").pop() }}</span>
+            <img
+              src="assets/images/download-icon.png"
+              (click)="
+                downloadCertificate(
+                  nutritionist.certificateUrl.split('/').pop() ?? ''
+                )
+              "
+              alt="Download"
+              class="icon"
+            />
           </div>
         </td>
-
 
         <td>
           <div [ngSwitch]="nutritionist.status">
@@ -63,10 +79,18 @@
 
             <!-- Status: Pending -->
             <div *ngSwitchCase="'En attente'" class="status-images">
-              <img src="assets/images/accept.png" alt="Accept" class="icon"
-                (click)="updateStatus(nutritionist, statusEnum.Approved)" />
-              <img src="assets/images/cancel.png" alt="Cancel" class="icon"
-                (click)="updateStatus(nutritionist, statusEnum.Rejected)" />
+              <img
+                src="assets/images/accept.png"
+                alt="Accept"
+                class="icon"
+                (click)="updateStatus(nutritionist, statusEnum.Approved)"
+              />
+              <img
+                src="assets/images/cancel.png"
+                alt="Cancel"
+                class="icon"
+                (click)="updateStatus(nutritionist, statusEnum.Rejected)"
+              />
             </div>
 
             <!-- Default case for other statuses -->
@@ -80,6 +104,9 @@
   </table>
 
   <div class="pagination">
-    <app-pagination [totalPages]="getTotalPageNumber()" (pageChanged)="updatePage($event)"></app-pagination>
+    <app-pagination
+      [totalPages]="getTotalPageNumber()"
+      (pageChanged)="updatePage($event)"
+    ></app-pagination>
   </div>
 </div>

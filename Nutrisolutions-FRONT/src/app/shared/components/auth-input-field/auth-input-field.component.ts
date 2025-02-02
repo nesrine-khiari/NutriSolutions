@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormControl, NgModel } from '@angular/forms';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-auth-input-field',
@@ -20,31 +21,14 @@ export class AuthInputFieldComponent {
   @Input() password?: string;
   @Input() control: FormControl = new FormControl('');
   @Input() applyCheck: boolean = false;
-
-  // @Input() updateInputNote: (newValue: string, errors: any) => string = (
-  //   newValue: string,
-  //   errors: any
-  // ) => {
-  //   if (errors) {
-  //     if (errors['required']) {
-  //       return 'Required Field..';
-  //     } else {
-  //       return 'Invalid input..';
-  //     }
-  //   } else {
-  //     return '';
-  //   }
-  // };
-
+  logger = inject(LoggerService);
   @Output() onInputChange = new EventEmitter<string>();
 
   inputNote: string = '';
 
   updateValue(newValue: string, errors: any | null) {
     this.onInputChange.emit(newValue);
-    console.log('errors: ' + errors);
-
-    // this.inputNote = this.updateInputNote(newValue, errors);
+    this.logger.error('errors: ' + errors);
   }
 
   isPasswordVisible: boolean = false;

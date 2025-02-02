@@ -30,15 +30,15 @@ export class LoggerService {
     console.error(`ERROR: ${message}`, ...optionalParams);
   }
 
-  debug(message: string, ...optionalParams: any[]): void {
+  debug(message?: string, ...optionalParams: any[]): void {
     if (!this.isProduction) {
       console.debug(`DEBUG: ${message}`, ...optionalParams);
     }
   }
 
-  log(message: string, ...optionalParams: any[]): void {
+  log(message: any, ...optionalParams: any[]): void {
     if (!this.isProduction) {
-      console.log(`LOG: ${message}`, ...optionalParams);
+      console.debug(`LOG: ${message}`, ...optionalParams);
     }
   }
 }

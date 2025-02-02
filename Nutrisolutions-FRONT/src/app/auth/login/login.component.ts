@@ -17,16 +17,14 @@ export class LoginComponent {
   passwordControl: FormControl = new FormControl('');
   toastr = inject(ToastrService);
 
-  setEmail(event: string) {
-    console.log('Email set');
-
-    this.email = event;
-  }
-  setPassword(event: string) {
-    console.log('password set');
-
-    this.password = event;
-  }
+  // setEmail(event: string) {
+  //   this.logger.debug('Email set');
+  //   this.email = event;
+  // }
+  // setPassword(event: string) {
+  //   this.logger.debug('password set');
+  //   this.password = event;
+  // }
   connexion = () => {
     // this.authService.login(this.email, this.password);
     this.authService.login(this.emailControl.value, this.passwordControl.value);

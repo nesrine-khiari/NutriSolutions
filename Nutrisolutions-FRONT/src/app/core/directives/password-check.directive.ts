@@ -2,10 +2,12 @@ import {
   Directive,
   ElementRef,
   HostListener,
+  inject,
   Input,
   Renderer2,
   SimpleChanges,
 } from '@angular/core';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Directive({
   selector: '[appPasswordCheck]',
@@ -18,11 +20,12 @@ export class PasswordCheckDirective {
   constructor(private el: ElementRef, private renderer: Renderer2) {
     // Create a note element
   }
+  logger = inject(LoggerService);
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['applyPasswordCheck']) {
       if (this.applyPasswordCheck) {
         this.noteElement = this.renderer.createElement('small');
-        console.log('created small tag');
+        this.logger.info('created small tag');
 
         this.renderer.addClass(this.noteElement, 'input-note');
         const inputHeader = this.el.nativeElement
@@ -38,7 +41,9 @@ export class PasswordCheckDirective {
 
   @HostListener('input', ['$event.target.value'])
   onInput(value: string) {
-    this.checkPasswordStrength(value);
+    if (this.noteElement && this.applyPasswordCheck) {
+      this.checkPasswordStrength(value);
+    }
   }
 
   // updatePasswordInputNote = (password: string): string => {
@@ -47,7 +52,7 @@ export class PasswordCheckDirective {
   //     if (errors['required']) {
   //       return 'Required Field..';
   //     } else if (errors['minlength']) {
-  //       return `Minimum length is ${errors['minlength'].requiredLength}..`;
+  //       return Minimum length is ${errors['minlength'].requiredLength}..;
   //     } else {
   //       return 'Invalid input..';
   //     }
@@ -79,19 +84,14 @@ export class PasswordCheckDirective {
       return;
     }
 
-    const strength = this.calculatePasswordStrength(password);
-    console.log(password.length);
-
     if (password.length < 8) {
-      console.log(password.length);
-
+      this.logger.debug('password length is less than 8', password.length);
       this.renderer.setProperty(
         this.noteElement,
         'textContent',
         'Minimum length is 8..'
       );
       this.renderer.removeClass(this.noteElement, 'valid-input-note');
-
       this.renderer.addClass(this.noteElement, 'error-input-note');
       return;
     }
@@ -101,23 +101,10 @@ export class PasswordCheckDirective {
       this.renderer.setProperty(this.noteElement, 'textContent', 'Normal..');
     } else {
       this.renderer.setProperty(this.noteElement, 'textContent', 'Weak..');
-      this.renderer.removeClass(this.noteElement, 'error-input-note');
-      this.renderer.addClass(this.noteElement, 'valid-input-note');
-      console.log('valid input note');
-    }
-  }
 
-  private calculatePasswordStrength(password: string): string {
-    const strongRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    const mediumRegex = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-    if (strongRegex.test(password)) {
-      return 'strong';
-    } else if (mediumRegex.test(password)) {
-      return 'medium';
-    } else {
-      return 'weak';
+      this.logger.info('valid input note');
     }
+    this.renderer.removeClass(this.noteElement, 'error-input-note');
+    this.renderer.addClass(this.noteElement, 'valid-input-note');
   }
 }

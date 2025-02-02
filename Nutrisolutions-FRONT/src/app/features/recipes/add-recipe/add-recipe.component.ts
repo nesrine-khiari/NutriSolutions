@@ -122,7 +122,7 @@ export class AddRecipeComponent {
 
   selectImage(selectedImage: File) {
     this.imageFile = selectedImage;
-    console.log('Selected image:', selectedImage.name);
+    this.logger.debug('Selected image:', selectedImage.name);
   }
   authService = inject(AuthService);
   async createRecipeModel(): Promise<RecipeModel> {
@@ -130,9 +130,9 @@ export class AddRecipeComponent {
       try {
         const response = await firstValueFrom(this.authService.getUserInfos()!);
         this.nutritionstName = response?.name || '';
-        console.log('Nutritionist:', this.nutritionstName);
+        this.logger.debug('Nutritionist:', this.nutritionstName);
       } catch (error) {
-        this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+        this.toastr.error(AppUtils.getErrorMessage(error), 'Erreur');
         throw error; // Or handle error as needed
       }
     }
@@ -172,19 +172,19 @@ export class AddRecipeComponent {
 
   saveRecipe = () => {
     if (this.isFormInvalid) {
-      this.toastr.error('Please fill all the required fields');
+      this.toastr.error('Veuillez remplir tous les champs obligatoires');
     } else {
       if (this.imageFile) {
         // Upload the image first
         this.uploadImageService.uploadImage(this.imageFile).subscribe({
           next: (response) => {
-            console.log('Upload Success:', response);
+            this.logger.debug('Upload Success:', response);
             this.imageUrl = response.path;
             this.processRecipe(); // Handle the recipe after uploading the image
           },
           error: (err) => {
-            console.error('Upload Failed:', err);
-            this.toastr.error('Image upload failed. Please try again.');
+            this.logger.error('Upload Failed:', err);
+            this.toastr.error("Échec du téléchargement de l'image. Veuillez réessayer.");
           },
         });
       } else {
@@ -201,24 +201,24 @@ export class AddRecipeComponent {
       this.logger.info('Edit Recipe:', newRecipe);
       this.recipesService.updateRecipe(newRecipe.id!, newRecipe).subscribe({
         next: () => {
-          this.toastr.success('Recipe updated successfully');
+          this.toastr.success('Recette mise à jour avec succès');
           this.router.navigate(['/recipes/recipe-details', newRecipe.id]);
         },
         error: (err) => {
-          console.error('Update Failed:', err);
-          this.toastr.error('Failed to update recipe');
+          this.logger.error('Update Failed:', err);
+          this.toastr.error('Échec de la mise à jour de la recette');
         },
       });
     } else {
       this.logger.info('Add Recipe:', newRecipe);
       this.recipesService.addRecipe(newRecipe).subscribe({
         next: (addedRecipe) => {
-          this.toastr.success('Recipe added successfully');
+          this.toastr.success('Recette ajoutée avec succès');
           this.router.navigate(['/recipes']);
         },
         error: (err) => {
-          console.error('Add Failed:', err);
-          this.toastr.error('Failed to add recipe');
+          this.logger.error('Add Failed:', err);
+          this.toastr.error('Échec de l\'ajout de la recette');
         },
       });
     }

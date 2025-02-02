@@ -7,6 +7,7 @@ import { UserRoleEnum } from 'src/app/models/client.model';
 import { RecipeModel } from 'src/app/models/recipe.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClientService } from 'src/app/services/client.service';
+import { LoggerService } from 'src/app/services/logger.service';
 import { RecipesService } from 'src/app/services/recipe.service';
 
 @Component({
@@ -27,6 +28,7 @@ export class RecipeDetailsComponent implements OnInit {
   toastr = inject(ToastrService);
   clientService = inject(ClientService);
   authService = inject(AuthService);
+  logger = inject(LoggerService);
   buttons = [
     {
       image: 'assets/images/downloads.png',
@@ -61,9 +63,10 @@ export class RecipeDetailsComponent implements OnInit {
     return this.checkedInstructions.has(index);
   }
   role: string = UserRoleEnum.CLIENT;
+  
   ngOnInit(): void {
     this.recipeId = this.route.snapshot.paramMap.get('id');
-    console.log('Recipe ID:', this.recipeId);
+    this.logger.debug('Recipe ID:', this.recipeId);
     this.loadRecipe(this.recipeId || '');
     this.role = this.authService.getUserRole();
   }
@@ -117,12 +120,12 @@ export class RecipeDetailsComponent implements OnInit {
     if (this.recipeId) {
       this.recipesService.deleteRecipe(this.recipeId).subscribe(
         (response) => {
-          this.toastr.success('Recipe deleted successfully');
+          this.toastr.success('Recette supprimée avec succès');
           this.router.navigate(['/recipes']);
         },
         (error) => {
-          this.toastr.error('Error deleting recipe');
-          console.error('Error deleting recipe:', error);
+          this.toastr.error('Erreur lors de la suppression de la recette');
+          this.logger.error('Error deleting recipe:', error);
         }
       );
     }
@@ -133,11 +136,11 @@ export class RecipeDetailsComponent implements OnInit {
       .addRecipeToFavourite(this.recipeId!, this.authService.getUserId())
       .subscribe({
         next: (client) => {
-          this.toastr.success('Recipe added to favourite');
+          this.toastr.success('Recette ajoutée aux favoris');
         },
         error: (error) => {
-          this.toastr.error('Error adding recipe to favourite');
-          console.error('Error adding recipe to favourite:', error);
+          this.toastr.error("Erreur lors de l'ajout de la recette aux favoris");
+          this.logger.error('Error adding recipe to favourite:', error);
         },
       });
   }

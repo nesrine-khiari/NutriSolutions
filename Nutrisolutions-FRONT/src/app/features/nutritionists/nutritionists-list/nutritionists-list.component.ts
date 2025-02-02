@@ -15,6 +15,7 @@ import {
   ExperienceEnum,
   ObjectifEnum,
 } from 'src/app/models/recipe.model';
+import { LoggerService } from 'src/app/services/logger.service';
 import { NutritionistsService } from 'src/app/services/nutritionists.service';
 
 @Component({
@@ -44,6 +45,7 @@ export class NutritionistsListComponent {
         this.nutritionists = response.data;
       });
   }
+  logger = inject(LoggerService);
   ngOnInit() {
     this.experienceControl = new FormControl(ExperienceEnum.ALL);
 
@@ -61,8 +63,7 @@ export class NutritionistsListComponent {
       .pipe(
         switchMap(([searchText, experience]) => {
           this.isLoading = true;
-          console.log('new call');
-
+          this.logger.info('new call');
           return this.nutritionistsService.getAllNutritionists(
             1,
             12,
@@ -82,7 +83,7 @@ export class NutritionistsListComponent {
           }, 500); // Reduce loading delay for a better UX
         },
         error: (error) => {
-          this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+          this.toastr.error(AppUtils.getErrorMessage(error), 'Erreur');
           this.isLoading = false;
         },
       });
@@ -101,7 +102,7 @@ export class NutritionistsListComponent {
         }, 1000);
       },
       error: (error) => {
-        this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+        this.toastr.error(AppUtils.getErrorMessage(error), 'Erreur');
         this.isLoading = false; // H
       },
     });
@@ -132,7 +133,7 @@ export class NutritionistsListComponent {
           }, 1000);
         },
         error: (error) => {
-          this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+          this.toastr.error(AppUtils.getErrorMessage(error), 'Erreur');
           this.isLoading = false; // H
         },
       });

@@ -1,11 +1,14 @@
 import { Component, inject } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 // import { generateFakeNutritionist } from 'src/app/core/helpers/faker.helper';
 import { AppUtils } from 'src/app/core/utils/functions.utils';
 import { ClientModel, UserRoleEnum } from 'src/app/models/client.model';
+import { StarsCountEnum } from 'src/app/models/nutritionist.model';
 import { CreateSlotModelDto, SlotModel } from 'src/app/models/slot.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { LoggerService } from 'src/app/services/logger.service';
 import { PlanningService } from 'src/app/services/planning.service';
 
 @Component({
@@ -63,9 +66,13 @@ export class PlanningComponent {
   isReservationPopupVisible: boolean = false;
   isCancelPopupVisible: boolean = false;
   isUnavailablePopupVisible: boolean = false;
+  isRatingPopupVisible: boolean = false;
   selectedIndex: number = 0;
   isMorning: boolean = true;
   currentDate = new Date();
+  starOptions = Object.values(StarsCountEnum);
+  starControl: FormControl = new FormControl(StarsCountEnum.One);
+  logger = inject(LoggerService);
   constructor() {}
   ngOnInit() {
     this.selectedDate = new Date();
@@ -75,9 +82,9 @@ export class PlanningComponent {
       .getUnavailableSlotsByNutritionist(this.nutritionistId)
       .subscribe({
         next: (slots) => {
-          console.log('Raw slots:', slots);
+          this.logger.debug('Raw slots:', slots);
           this.reservedSlots = slots.map((slot) => {
-            console.log('Mapping slot:', slot);
+            this.logger.debug('Mapping slot:', slot);
             return {
               id: slot.id ?? '',
               date: new Date(slot.date),
@@ -85,44 +92,35 @@ export class PlanningComponent {
               time: slot.time,
               isReservation: slot.isReservation,
               isReserved: true,
+              rating: slot.rating,
               reservedBy: slot.client ? (slot.client as ClientModel)?.name : '',
               color: '#FFAD80',
             };
           });
-          console.log('Reserved slots:', this.reservedSlots);
+          this.logger.debug('Reserved slots:', this.reservedSlots);
           this.updateSlots(this.selectedDate.toISOString());
         },
         error: (err) => {
-          console.error('Error fetching unavailable slots:', err);
+          this.logger.error('Error fetching unavailable slots:', err);
         },
       });
   }
   updateSlots(selectedDate: string) {
     this.selectedDate = new Date(selectedDate);
     const currentDayIndex = this.selectedDate.getDay();
-    console.log(currentDayIndex);
+    this.logger.debug('Current Day Index', currentDayIndex);
 
     const selectedDay = this.allDaysOfWeek[currentDayIndex];
-    console.log(selectedDay);
+    this.logger.debug('Selected Day', selectedDay);
 
     if (this.workDaysOfWeek.includes(selectedDay)) {
       const indexOfSelectedDay = this.workDaysOfWeek.indexOf(selectedDay);
-      // this.afternoonSlots = this.generateSlots(
-      //   this.afternoonTimeSlots,
-      //   indexOfSelectedDay
-      // );
-      // this.morningSlots = this.generateSlots(
-      //   this.morningTimeSlots,
-      //   indexOfSelectedDay
-      // );
       this.allSlots = this.generateSlots(
         [...this.morningTimeSlots, '12:00', ...this.afternoonTimeSlots],
         indexOfSelectedDay
       );
     } else {
-      console.log('jawna ahah');
-
-      this.toastr.error('Weekends Are Off');
+      this.toastr.error('Les week-ends sont inallouables');
     }
   }
   private generateSlots(timeSlots: string[], indexOfSelectedDay: number) {
@@ -142,8 +140,8 @@ export class PlanningComponent {
         );
         const reservedBy = reservedSlot?.reservedBy ?? '';
         const id = reservedSlot?.id ?? '';
-        console.log('Reserved Slots', this.reservedSlots);
-        console.log('hola', reservedSlot?.isReserved);
+        this.logger.debug('Reserved Slots', this.reservedSlots);
+        this.logger.debug('Is reserved', reservedSlot?.isReserved);
 
         return {
           id: id,
@@ -153,6 +151,7 @@ export class PlanningComponent {
           isReservation: reservedSlot?.isReservation ?? false,
           isReserved: reservedSlot?.isReserved ?? false,
           reservedBy: reservedBy,
+          rating: reservedSlot?.rating ?? 0,
           color: reservedSlot?.isReservation
             ? this.getRandomCoolColor()
             : reservedSlot?.isReserved
@@ -210,6 +209,7 @@ export class PlanningComponent {
   }
   planningService = inject(PlanningService);
   authService = inject(AuthService);
+
   pickSlot = () => {
     let slot = this.allSlots[this.selectedIndex];
     let slotModelDto: CreateSlotModelDto;
@@ -239,7 +239,7 @@ export class PlanningComponent {
           slot.reservedBy = reservedSlot.isReservation
             ? this.clientUserName
             : '';
-          console.log(slot.reservedBy);
+          this.logger.debug('Reserved By', slot.reservedBy);
 
           slot.isReserved = true;
           slot.isReservation = slotModelDto.isReservation;
@@ -247,7 +247,7 @@ export class PlanningComponent {
             ? this.getRandomCoolColor()
             : '#ff6b6b';
           slot.color = color;
-          this.toastr.success('Slot Reserved Successfully');
+          this.toastr.success('Créneau réservé avec succès');
           if (slotModelDto.isReservation) {
             this.closeReservationPopup();
           } else {
@@ -255,7 +255,7 @@ export class PlanningComponent {
           }
         },
         error: (error) => {
-          this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+          this.toastr.error(AppUtils.getErrorMessage(error), 'Erreur');
         },
       });
     }
@@ -271,16 +271,30 @@ export class PlanningComponent {
 
           slot.reservedBy = '';
           slot.color = '#ebebeb';
-          this.toastr.success('Slot Reservation Cancelled Successfully');
+          this.toastr.success('Réservation de créneau annulée avec succès');
         },
         error: (error) => {
-          this.toastr.error(AppUtils.getErrorMessage(error), 'Error');
+          this.toastr.error(AppUtils.getErrorMessage(error), 'Erreur');
         },
       });
+
       this.closeCancelnPopup();
     }
   };
+  addRating = () => {
+    let slot = this.allSlots[this.selectedIndex];
+    this.planningService.addRating(slot.id, this.starControl.value).subscribe({
+      next: () => {
+        slot.rating = this.starControl.value;
+        this.toastr.success('Évaluation ajoutée avec succès');
+      },
+      error: (error) => {
+        this.toastr.error(AppUtils.getErrorMessage(error), 'Erreur');
+      },
+    });
 
+    this.closeRatingPopup();
+  };
   // Method to show the popup
   showReservationPopup = (index: number) => {
     this.isReservationPopupVisible = true;
@@ -301,6 +315,15 @@ export class PlanningComponent {
     this.isCancelPopupVisible = true;
     this.selectedIndex = index;
   };
+  // Method to show the popup
+  showRatingPopup = (index: number) => {
+    this.selectedIndex = index;
+    if (this.allSlots[this.selectedIndex].rating == 0) {
+      this.isRatingPopupVisible = true;
+    } else {
+      this.toastr.error('Vous avez déjà noté ce créneau');
+    }
+  };
 
   // Method to hide the popup
   closeCancelnPopup = () => {
@@ -308,6 +331,11 @@ export class PlanningComponent {
   };
   closeUnavailablePopup = () => {
     this.isUnavailablePopupVisible = false;
+  };
+  // Method to hide the popup
+  closeRatingPopup = () => {
+    this.isRatingPopupVisible = false;
+    this.starControl.setValue(StarsCountEnum.One);
   };
 }
 
@@ -319,12 +347,6 @@ export interface Slot {
   isReservation?: boolean;
   isReserved: boolean;
   reservedBy: string;
+  rating: number | undefined;
   color: string;
 }
-
-//to see together
-// closePopup(popupType: 'reservation' | 'cancel' | 'unavailable') {
-//   this.isReservationPopupVisible = popupType === 'reservation' ? false : this.isReservationPopupVisible;
-//   this.isCancelPopupVisible = popupType === 'cancel' ? false : this.isCancelPopupVisible;
-//   this.isUnavailablePopupVisible = popupType === 'unavailable' ? false : this.isUnavailablePopupVisible;
-// }

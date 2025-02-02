@@ -15,8 +15,9 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { ReservedSlotSubscriber } from './planning/reserved-slot/reserved-slot.subscriber';
 import { ScheduleModule } from '@nestjs/schedule';
 
-@Module({
+@Module({ 
   imports: [
+    ScheduleModule.forRoot(),
     RecipeModule,
     UserModule,
     PlanningModule,
