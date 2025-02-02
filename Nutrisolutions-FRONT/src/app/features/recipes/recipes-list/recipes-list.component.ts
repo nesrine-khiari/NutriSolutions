@@ -14,6 +14,7 @@ import {
   ObjectifEnum,
   RecipeModel,
 } from 'src/app/models/recipe.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { LoggerService } from 'src/app/services/logger.service';
 import { RecipesService } from 'src/app/services/recipe.service';
 
@@ -74,7 +75,8 @@ export class RecipesListComponent {
   toastr = inject(ToastrService);
   recipesService = inject(RecipesService);
   logger = inject(LoggerService);
-
+  authService = inject(AuthService);
+  userRole = this.authService.getUserRole();
   ngOnInit() {
     this.categoryControl = new FormControl(CategoryEnum.ALL);
     this.objectifControl = new FormControl(ObjectifEnum.ALL);

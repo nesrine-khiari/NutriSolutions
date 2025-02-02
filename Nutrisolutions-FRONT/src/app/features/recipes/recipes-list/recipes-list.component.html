@@ -8,7 +8,7 @@
       <app-search [formControlName]="searchControl"></app-search>
       <app-dropdown [name]="'Objectif'" [options]="objectifOptions" [control]="objectifControl"></app-dropdown>
       <app-dropdown [name]="'Catégorie'" [options]="categoryOptions" [control]="categoryControl"></app-dropdown>
-      <div style="margin-left: auto">
+      <div *ngIf="userRole=='Nutritionist'"  style="margin-left: auto" >
         <app-button [text]="'Ajouter Recette'" [routerLink]="'add-recipe'"></app-button>
       </div>
     </div>
