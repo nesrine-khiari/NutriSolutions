@@ -13,6 +13,7 @@ import { Client } from '../client/client.entity';
 import { ClientService } from '../client/client.service';
 import { NutritionistStatusEnum } from 'src/enums/user-enums';
 import { EmailService } from 'src/common/email/email.service';
+import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class NutritionistService extends UserService {
@@ -61,16 +62,19 @@ export class NutritionistService extends UserService {
     const total = await this.nutritionistRepository.count();
     return { total };
   }
-  async findAllApprovedNutritionists(page: number, limit: number): Promise<{ data: Nutritionist[]; total: number }> {
+  async findAllApprovedNutritionists(
+    page: number,
+    limit: number,
+  ): Promise<{ data: Nutritionist[]; total: number }> {
     const [data, total] = await this.nutritionistRepository.findAndCount({
       where: { status: NutritionistStatusEnum.APPROVED },
       take: limit,
       skip: (page - 1) * limit,
     });
-  
+
     return { data, total };
   }
-    
+
   async update(
     id: string,
     updateNutritionistDto: UpdateNutritionistDto,
@@ -87,12 +91,14 @@ export class NutritionistService extends UserService {
     return this.nutritionistRepository
       .createQueryBuilder('nutritionist')
       .where('nutritionist.stars >= :stars', { stars: 4 })
-      .andWhere('nutritionist.status = :status', { status: NutritionistStatusEnum.APPROVED })
+      .andWhere('nutritionist.status = :status', {
+        status: NutritionistStatusEnum.APPROVED,
+      })
       .orderBy('nutritionist.stars', 'DESC')
       .take(4)
       .getMany();
   }
-  
+
   async getPatientsByNutritionist(nutritionistId: string): Promise<any[]> {
     const reservedSlots = await this.reservedSlotRepository.find({
       where: { nutritionist: { id: nutritionistId } },
@@ -106,25 +112,17 @@ export class NutritionistService extends UserService {
       patients.find((p) => p.id === id),
     );
   }
-  // Create a new client
-  // async create(
-  //   createNutritionistDto: CreateNutritionistDto,
-  // ): Promise<Nutritionist> {
-  //   const newNutritionist = this.nutritionistRepository.create(
-  //     createNutritionistDto,
-  //   );
-  //   return this.nutritionistRepository.save(newNutritionist);
-  // }
+  async getClientsCount(nutritionistId: string): Promise<number> {
+    const clients = await this.getPatientsByNutritionist(nutritionistId);
+    return clients.length;
+  }
 
-  // Update an existing client
-  // async update(
-  //   id: string,
-  //   updateNutritionistDto: UpdateNutritionistDto,
-  // ): Promise<Nutritionist> {
-  //   const nutritionist = await this.nutritionistRepository.findOne({
-  //     where: { id },
-  //   }); // Ensure client exists
-  //   Object.assign(nutritionist, updateNutritionistDto); // Merge updates
-  //   return this.nutritionistRepository.save(nutritionist);
-  // }
+  @Cron('*/1 * * * *') // This cron expression runs every minute
+  async incrementExperience() {
+    try {
+      await this.nutritionistRepository.increment({}, 'experienceYears', 1);
+    } catch (error) {
+      console.error('Error incrementing experience', error);
+    }
+  }
 }

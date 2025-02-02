@@ -9,5 +9,5 @@ import { FormControl } from '@angular/forms';
 export class DropdownComponent {
   @Input() name: string = 'Objectif';
   @Input({ required: true }) options: any[] = ['Options1', 'Option2'];
-  @Input() formControlName: FormControl = new FormControl('');
+  @Input() control: FormControl = new FormControl('');
 }

@@ -29,9 +29,15 @@ export class Nutritionist extends UserEntity {
     default: NutritionistStatusEnum.WAITING,
   })
   status: NutritionistStatusEnum;
-  @Column({default: 4})
-  stars: number;
+  @Column({ type: 'float', default: 0 })
+  rating: number;
 
-  @OneToMany(() => UnavailableSlot, (unavailableSlot) => unavailableSlot.nutritionist)
+  @Column({ default: 0 })
+  patientsNumber: number;
+
+  @OneToMany(
+    () => UnavailableSlot,
+    (unavailableSlot) => unavailableSlot.nutritionist,
+  )
   unavailableSlots: UnavailableSlot[];
 }

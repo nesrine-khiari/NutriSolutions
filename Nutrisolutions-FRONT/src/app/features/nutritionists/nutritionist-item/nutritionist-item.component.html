@@ -5,7 +5,7 @@
     </div>
     <div class="nutritionist-content">
       <div class="stars-container">
-        <app-star [selectedStars]="nutritionist.stars ?? 4"></app-star>
+        <app-star [selectedStars]="nutritionist.rating ?? 3"></app-star>
       </div>
       <h2>{{ nutritionist.name }}</h2>
       <p>{{ nutritionist.patientsNumber }}+ Patients</p>

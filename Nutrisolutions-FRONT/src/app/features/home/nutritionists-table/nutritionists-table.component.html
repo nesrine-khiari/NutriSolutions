@@ -2,8 +2,8 @@
   <h2>Nos Nutritionnistes:</h2>
   <div class="filters">
     <app-search [formControlName]="searchControl"></app-search>
-    <app-dropdown [name]="'Trier'" [options]="trieOptions" [formControlName]="trieControl"></app-dropdown>
-    <app-dropdown [name]="'Status'" [options]="statusOptions" [formControlName]="statusControl"></app-dropdown>
+    <app-dropdown [name]="'Trier'" [options]="trieOptions" [control]="trieControl"></app-dropdown>
+    <app-dropdown [name]="'Status'" [options]="statusOptions" [control]="statusControl"></app-dropdown>
   </div>
   <table>
     <thead>

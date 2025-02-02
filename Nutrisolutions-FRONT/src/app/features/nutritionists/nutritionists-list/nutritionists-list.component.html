@@ -8,7 +8,7 @@
     <div class="filters">
       <app-search [formControlName]="searchControl"></app-search>
       <app-dropdown [name]="'Experience'" [options]="experienceOptions"
-        [formControlName]="experienceControl"></app-dropdown>
+        [control]="experienceControl"></app-dropdown>
     </div>
     <div class="grid-container">
       <app-nutritionist-item *ngFor="

@@ -30,7 +30,10 @@
         [class.active]="index == currentDate.getDay() - 1"
         *ngFor="let day of workDaysOfWeek; let index = index"
       >
-        {{ day }}
+        <div class="day">
+          {{ day }}
+          <p *ngIf="index == currentDate.getDay() - 1">Today</p>
+        </div>
       </div>
     </div>
 
@@ -84,6 +87,19 @@
             src="assets/images/cancel.png"
             width="30px"
             height="30px"
+            alt="appointment"
+          />
+          <img
+            (click)="showRatingPopup(index)"
+            *ngIf="
+              slot.isReserved &&
+              slot.isReservation &&
+              userRole == 'Client' &&
+              slot.date <= currentDate
+            "
+            src="assets/images/rate2.png"
+            width="40px"
+            height="40px"
             alt="appointment"
           />
         </div>
@@ -146,28 +162,25 @@
         ></app-button>
       </div>
     </app-popup>
-  </div>
-
-  <!-- <div class="modal" [style.display]="isReservationPopupVisible ? 'block' : 'none'">
-    <div class="modal-content">
-      <span class="close-btn" (click)="closeReservationPopup()">&times;</span>
-      <h4>Confirmer la prise de rendez-vous</h4>
+    <app-popup
+      [text]="'Donner une évaluation à votre nutritionniste'"
+      *ngIf="isRatingPopupVisible"
+      (popupClosed)="isRatingPopupVisible = false"
+    >
       <div style="display: flex; gap: 10px">
-        <app-button [text]="'Confirmer'" [onClick]="pickSlot"></app-button><app-button
-          [boxShadow]="'0 4px 8px 2px #ffc5c5'" [backgroundColor]="'#df0404'" [onClick]="closeReservationPopup"
-          [text]="'Annuler'"></app-button>
+        <app-dropdown
+          [name]="'Trier'"
+          [options]="starOptions"
+          [control]="starControl"
+        ></app-dropdown>
+        <app-button [text]="'Confirmer'" [onClick]="addRating"></app-button>
+        <app-button
+          [boxShadow]="'0 4px 8px 2px #ffc5c5'"
+          [backgroundColor]="'#df0404'"
+          [onClick]="closeRatingPopup"
+          [text]="'Annuler'"
+        ></app-button>
       </div>
-    </div>
+    </app-popup>
   </div>
-  <div class="modal" [style.display]="isCancelPopupVisible ? 'block' : 'none'">
-    <div class="modal-content">
-      <span class="close-btn" (click)="closeReservationPopup()">&times;</span>
-      <h4>Confirmer l'annulation du rendez-vous</h4>
-      <div style="display: flex; gap: 10px">
-        <app-button [text]="'Confirmer'" [onClick]="cancelReservation"></app-button><app-button
-          [boxShadow]="'0 4px 8px 2px #ffc5c5'" [backgroundColor]="'#df0404'" [onClick]="closeCancelnPopup"
-          [text]="'Annuler'"></app-button>
-      </div>
-    </div>
-  </div> -->
 </app-page-background>
