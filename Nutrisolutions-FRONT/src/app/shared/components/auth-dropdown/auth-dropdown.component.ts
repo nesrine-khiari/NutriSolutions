@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-auth-dropdown',
@@ -8,6 +9,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class AuthDropdownComponent {
   @Input({ required: true }) label: string = 'test';
   @Input({ required: true }) options: any[] = ['Options1', 'Option2'];
+  @Input() control: FormControl = new FormControl('');
+
   @Input() selectedOption: string = '';
   @Output() onInputChange = new EventEmitter<string>();
 

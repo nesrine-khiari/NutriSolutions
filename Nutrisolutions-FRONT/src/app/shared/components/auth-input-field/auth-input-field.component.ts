@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { FormControl, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-auth-input-field',
@@ -16,23 +16,25 @@ export class AuthInputFieldComponent {
   @Input() isPassword: boolean = false;
   @Input() required: boolean = false;
   @Input() inputValue: string = '';
-
   @Input() valid: boolean = true;
+  @Input() password?: string;
+  @Input() control: FormControl = new FormControl('');
+  @Input() applyCheck: boolean = false;
 
-  @Input() updateInputNote: (newValue: string, errors: any) => string = (
-    newValue: string,
-    errors: any
-  ) => {
-    if (errors) {
-      if (errors['required']) {
-        return 'Required Field..';
-      } else {
-        return 'Invalid input..';
-      }
-    } else {
-      return '';
-    }
-  };
+  // @Input() updateInputNote: (newValue: string, errors: any) => string = (
+  //   newValue: string,
+  //   errors: any
+  // ) => {
+  //   if (errors) {
+  //     if (errors['required']) {
+  //       return 'Required Field..';
+  //     } else {
+  //       return 'Invalid input..';
+  //     }
+  //   } else {
+  //     return '';
+  //   }
+  // };
 
   @Output() onInputChange = new EventEmitter<string>();
 
@@ -42,7 +44,7 @@ export class AuthInputFieldComponent {
     this.onInputChange.emit(newValue);
     console.log('errors: ' + errors);
 
-    this.inputNote = this.updateInputNote(newValue, errors);
+    // this.inputNote = this.updateInputNote(newValue, errors);
   }
 
   isPasswordVisible: boolean = false;

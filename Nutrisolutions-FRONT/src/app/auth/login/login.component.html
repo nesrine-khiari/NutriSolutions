@@ -3,10 +3,14 @@
     <h1>Connexion</h1>
     <div class="inputs">
       <app-auth-input-field label="Email Address" placeholder="Type your email here" type="email" name="email"
+        [control]="emailControl" [required]="true"></app-auth-input-field>
+      <app-auth-input-field label="Password" [control]="passwordControl" placeholder="Type your password here"
+        [isPassword]="true" name="password" [required]="true"></app-auth-input-field>
+      <!-- <app-auth-input-field label="Email Address" placeholder="Type your email here" type="email" name="email"
         [inputValue]="email" (onInputChange)="setEmail($event)" [required]="true"></app-auth-input-field>
       <app-auth-input-field label="Password" [inputValue]="password" placeholder="Type your password here"
         (onInputChange)="setPassword($event)" [isPassword]="true" ngModel name="password"
-        [required]="true"></app-auth-input-field>
+        [required]="true"></app-auth-input-field> -->
       <div class="extra-options">
         <div class="checkbox">
           <input type="checkbox" /> <label> Remember me ? </label>

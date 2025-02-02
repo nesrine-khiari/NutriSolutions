@@ -14,6 +14,7 @@ export class LoginComponent {
   password: string = '';
   authService = inject(AuthService);
   emailControl: FormControl = new FormControl('');
+  passwordControl: FormControl = new FormControl('');
   toastr = inject(ToastrService);
 
   setEmail(event: string) {
@@ -27,7 +28,8 @@ export class LoginComponent {
     this.password = event;
   }
   connexion = () => {
-    this.authService.login(this.email, this.password);
+    // this.authService.login(this.email, this.password);
+    this.authService.login(this.emailControl.value, this.passwordControl.value);
   };
 
   isRequestPopupVisible: boolean = false;

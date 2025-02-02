@@ -18,6 +18,8 @@ import { UnavailableSlot } from 'src/planning/unavailable-slot/unavailable-slot.
 export class Nutritionist extends UserEntity {
   @Column()
   experienceYears: number;
+  @Column({ default: 0 })
+  patientsNumber: number;
   @Column()
   certificateUrl: string;
   @Column()
@@ -29,9 +31,12 @@ export class Nutritionist extends UserEntity {
     default: NutritionistStatusEnum.WAITING,
   })
   status: NutritionistStatusEnum;
-  @Column({default: 4})
+  @Column({ default: 4 })
   stars: number;
 
-  @OneToMany(() => UnavailableSlot, (unavailableSlot) => unavailableSlot.nutritionist)
+  @OneToMany(
+    () => UnavailableSlot,
+    (unavailableSlot) => unavailableSlot.nutritionist,
+  )
   unavailableSlots: UnavailableSlot[];
 }

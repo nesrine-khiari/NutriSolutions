@@ -22,6 +22,7 @@ import { SearchHeaderComponent } from './components/search-header/search-header.
 import { RouterModule } from '@angular/router';
 import { PreloaderComponent } from './components/preloader/preloader.component';
 import { PopupComponent } from './components/popup/popup.component';
+import { CoreModule } from '../core/core.module';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -45,7 +46,13 @@ import { PopupComponent } from './components/popup/popup.component';
     PreloaderComponent,
     PopupComponent,
   ],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    CoreModule,
+  ],
   exports: [
     AuthBackgroundComponent,
     AuthInputFieldComponent,

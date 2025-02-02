@@ -47,13 +47,9 @@ export class RecipesService {
       params,
     });
   }
-<<<<<<< HEAD
   getRecipesCount(): Observable<{ total: number }> {
     return this.http.get<{ total: number }>(this.apiUrl + '/count');
   }
-=======
-
->>>>>>> houcemFixes
   getRecipeById(id: string): Observable<RecipeModel> {
     return this.http.get<RecipeModel>(`${this.apiUrl}/${id}`);
   }

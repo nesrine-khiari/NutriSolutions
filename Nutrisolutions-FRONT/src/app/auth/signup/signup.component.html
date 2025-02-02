@@ -2,10 +2,7 @@
   <form [formGroup]="signupForm">
     <h1>Inscription</h1>
     <div class="steps-wrapper">
-      <app-progress-indicator
-        [steps]="stepLabels"
-        [activeStep]="currentStep"
-      ></app-progress-indicator>
+      <app-progress-indicator [steps]="stepLabels" [activeStep]="currentStep"></app-progress-indicator>
     </div>
 
     <!-- __________ STEP 1 : ACCOUNT TYPE ___________ -->
@@ -13,194 +10,143 @@
     <div *ngIf="currentStep == 0" class="inputs">
       <h2>Choose your Account Type</h2>
 
-      <app-auth-account-type
-        *ngFor="let account of accountTypes"
-        [type]="account.type"
-        [description]="account.description"
-        [selectedType]="signupForm.get('accountType')?.value"
-        (typeSelected)="selectType($event)"
-      ></app-auth-account-type>
+      <app-auth-account-type *ngFor="let account of accountTypes" [type]="account.type"
+        [description]="account.description" [selectedType]="signupForm.get('accountType')?.value"
+        (typeSelected)="selectType($event)"></app-auth-account-type>
     </div>
 
     <!-- __________ STEP 2 : EMAIL & PASSWORD ___________ -->
 
     <div *ngIf="currentStep == 1" class="inputs">
-      <app-auth-input-field
-        label="Email Address"
-        [inputValue]="signupForm.get('email')?.value"
-        (onInputChange)="setEmail($event)"
-        placeholder="Type your email here"
-        type="email"
-        name="email"
-        [required]="true"
-        [updateInputNote]="updateEmailInputNote"
-      ></app-auth-input-field>
+      <app-auth-input-field label="Email Address" [control]="emailControl" placeholder="Type your email here"
+        type="email" name="email" [required]="true" [applyCheck]="true"></app-auth-input-field>
 
-      <app-auth-input-field
-        label="Password"
-        [inputValue]="signupForm.get('password')?.value"
-        placeholder="Type your password here"
-        [isPassword]="true"
-        name="password"
-        [required]="true"
-        (onInputChange)="setPassword($event)"
-        [updateInputNote]="updatePasswordInputNote"
-      ></app-auth-input-field>
-      <app-auth-input-field
-        label="Confirm Password"
-        [inputValue]="signupForm.get('confirmPassword')?.value"
-        placeholder="Confirm your password here"
-        [isPassword]="true"
-        name="password"
-        [required]="true"
-        [valid]="valid"
-        (onInputChange)="setConfirmPassword($event)"
-        [updateInputNote]="updateConfirmPasswordInputNote"
-      ></app-auth-input-field>
+      <app-auth-input-field label="Password" [control]="passwordControl" placeholder="Type your password here"
+        [isPassword]="true" name="password" [required]="true" [applyCheck]="true"></app-auth-input-field>
+      <app-auth-input-field label="Confirm Password" [control]="confirmPasswordControl"
+        placeholder="Confirm your password here" [isPassword]="true" name="password" [required]="true" [valid]="valid"
+        [password]="passwordControl.value" [applyCheck]="true"></app-auth-input-field>
+      <!-- <app-auth-input-field label="Email Address" [inputValue]="signupForm.get('email')?.value"
+        (onInputChange)="setEmail($event)" placeholder="Type your email here" type="email" name="email"
+        [required]="true" [updateInputNote]="updateEmailInputNote"></app-auth-input-field>
+
+      <app-auth-input-field label="Password" [inputValue]="signupForm.get('password')?.value"
+        placeholder="Type your password here" [isPassword]="true" name="password" [required]="true"
+        (onInputChange)="setPassword($event)" [updateInputNote]="updatePasswordInputNote"></app-auth-input-field>
+      <app-auth-input-field label="Confirm Password" [inputValue]="signupForm.get('confirmPassword')?.value"
+        placeholder="Confirm your password here" [isPassword]="true" name="password" [required]="true" [valid]="valid"
+        (onInputChange)="setConfirmPassword($event)" [updateInputNote]="updateConfirmPasswordInputNote"
+        [password]="signupForm.get('password')?.value"></app-auth-input-field> -->
     </div>
 
     <!-- __________ STEP 3 : NAME / GENDER / AGE / PHONENUMBER ___________ -->
 
     <div *ngIf="currentStep == 2" class="inputs">
-      <app-auth-input-field
-        label="Full Name"
-        [inputValue]="signupForm.get('name')?.value"
-        (onInputChange)="setName($event)"
-        placeholder="Type your full name here"
-        type="text"
-        [required]="true"
-      ></app-auth-input-field>
+      <app-auth-input-field label="Full Name" [control]="nameControl" placeholder="Type your full name here" type="text"
+        [required]="true"></app-auth-input-field>
       <div class="dropdowns">
-        <app-auth-dropdown
-          [options]="genderOptions"
-          class="dropdown"
-          [label]="'Gender'"
-          [selectedOption]="signupForm.get('gender')?.value"
-          (onInputChange)="selectGender($event)"
-        ></app-auth-dropdown>
+        <app-auth-dropdown [options]="genderOptions" class="dropdown" [label]="'Gender'"
+          [control]="genderControl"></app-auth-dropdown>
         <div class="birthdate">
           <label class="input-label">Date de naissance</label>
-          <input
-            id="date-input"
-            type="date"
-            class="date-input"
-            formControlName="birthDate"
-          />
+          <input id="date-input" type="date" class="date-input" formControlName="birthDate" />
         </div>
       </div>
-      <app-auth-input-field
-        label="Phone Number"
-        [inputValue]="signupForm.get('phoneNumber')?.value"
-        (onInputChange)="setPhoneNumber($event)"
-        placeholder="+216"
-        type="text"
-        [required]="true"
-      ></app-auth-input-field>
+      <app-auth-input-field label="Phone Number" [control]="phoneNumberControl" placeholder="+216" type="text"
+        [required]="true"></app-auth-input-field>
     </div>
+    <!-- <div *ngIf="currentStep == 2" class="inputs">
+      <app-auth-input-field label="Full Name" [inputValue]="signupForm.get('name')?.value"
+        (onInputChange)="setName($event)" placeholder="Type your full name here" type="text"
+        [required]="true"></app-auth-input-field>
+      <div class="dropdowns">
+        <app-auth-dropdown [options]="genderOptions" class="dropdown" [label]="'Gender'"
+          [selectedOption]="signupForm.get('gender')?.value" (onInputChange)="selectGender($event)"></app-auth-dropdown>
+        <div class="birthdate">
+          <label class="input-label">Date de naissance</label>
+          <input id="date-input" type="date" class="date-input" formControlName="birthDate" />
+        </div>
+      </div>
+      <app-auth-input-field label="Phone Number" [inputValue]="signupForm.get('phoneNumber')?.value"
+        (onInputChange)="setPhoneNumber($event)" placeholder="+216" type="text"
+        [required]="true"></app-auth-input-field>
+    </div> -->
 
     <!-- __________ STEP 4 : POIDS / TAILLE / ACTIVITE / OBJECTIF ___________ -->
-
-    <div
-      *ngIf="
-        currentStep == 3 && signupForm.get('accountType')?.value == clientRole
-      "
-      class="inputs"
-    >
+    <div *ngIf="
+    currentStep == 3 && accountTypeControl.value == clientRole
+  " class="inputs">
       <div class="dropdowns">
-        <app-auth-dropdown
-          [options]="poidsActuelOptions"
-          class="dropdown"
-          [label]="'Poids Actuel (Kg)'"
-          [selectedOption]="signupForm.get('poids')?.value"
-          (onInputChange)="selectPoids($event)"
-        ></app-auth-dropdown>
+        <app-auth-dropdown [options]="poidsActuelOptions" class="dropdown" [label]="'Poids Actuel (Kg)'"
+          [control]="poidsControl"></app-auth-dropdown>
 
-        <app-auth-dropdown
-          [options]="tailleOptions"
-          class="dropdown"
-          [label]="'Taille (cm)'"
-          [selectedOption]="signupForm.get('taille')?.value"
-          (onInputChange)="selectTaille($event)"
-        ></app-auth-dropdown>
+        <app-auth-dropdown [options]="tailleOptions" class="dropdown" [label]="'Taille (cm)'"
+          [control]="tailleControl"></app-auth-dropdown>
       </div>
-      <app-auth-dropdown
-        [options]="activiteJournaliereOptions"
-        class="dropdown"
-        [label]="'Activité journalière'"
-        [selectedOption]="signupForm.get('activiteJournaliere')?.value"
-        (onInputChange)="selectActiviteJournaliere($event)"
-      ></app-auth-dropdown>
-      <app-auth-dropdown
-        [options]="objectifOptions"
-        class="dropdown"
-        [label]="'Objectif'"
-        [selectedOption]="signupForm.get('objectif')?.value"
-        (onInputChange)="selectObjectif($event)"
-      ></app-auth-dropdown>
+      <app-auth-dropdown [options]="activiteJournaliereOptions" class="dropdown" [label]="'Activité journalière'"
+        [control]="activiteJournaliereControl"></app-auth-dropdown>
+      <app-auth-dropdown [options]="objectifOptions" class="dropdown" [label]="'Objectif'"
+        [control]="objectifControl"></app-auth-dropdown>
     </div>
-    <div
-      *ngIf="
+    <div *ngIf="
+    currentStep == 3 &&
+    accountTypeControl.value == nutritionnistRole
+  " class="inputs">
+      <div class="dropdowns">
+        <app-auth-dropdown [options]="experienceYearsOptions" class="dropdown" [label]="'Années d\'expérience'"
+          [control]="experienceYearsControl"></app-auth-dropdown>
+      </div>
+      <app-auth-input-field label="Localisation" [control]="locationControl" placeholder="Type your location here"
+        type="text" name="location" [required]="true"></app-auth-input-field>
+      <app-upload-image [uploadedFileName]="uploadedFile" [acceptedFileTypes]="'application/pdf'"
+        (fileSelected)="selectFile($event)"></app-upload-image>
+    </div>
+
+    <!-- <div *ngIf="
+        currentStep == 3 && signupForm.get('accountType')?.value == clientRole
+      " class="inputs">
+      <div class="dropdowns">
+        <app-auth-dropdown [options]="poidsActuelOptions" class="dropdown" [label]="'Poids Actuel (Kg)'"
+          [selectedOption]="signupForm.get('poids')?.value" (onInputChange)="selectPoids($event)"></app-auth-dropdown>
+
+        <app-auth-dropdown [options]="tailleOptions" class="dropdown" [label]="'Taille (cm)'"
+          [selectedOption]="signupForm.get('taille')?.value" (onInputChange)="selectTaille($event)"></app-auth-dropdown>
+      </div>
+      <app-auth-dropdown [options]="activiteJournaliereOptions" class="dropdown" [label]="'Activité journalière'"
+        [selectedOption]="signupForm.get('activiteJournaliere')?.value"
+        (onInputChange)="selectActiviteJournaliere($event)"></app-auth-dropdown>
+      <app-auth-dropdown [options]="objectifOptions" class="dropdown" [label]="'Objectif'"
+        [selectedOption]="signupForm.get('objectif')?.value"
+        (onInputChange)="selectObjectif($event)"></app-auth-dropdown>
+    </div>
+    <div *ngIf="
         currentStep == 3 &&
         signupForm.get('accountType')?.value == nutritionnistRole
-      "
-      class="inputs"
-    >
+      " class="inputs">
       <div class="dropdowns">
-        <app-auth-dropdown
-          [options]="experienceYearsOptions"
-          class="dropdown"
-          [label]="'Années d\'expérience'"
+        <app-auth-dropdown [options]="experienceYearsOptions" class="dropdown" [label]="'Années d\'expérience'"
           [selectedOption]="signupForm.get('experienceYears')?.value"
-          (onInputChange)="selectExperienceYears($event)"
-        ></app-auth-dropdown>
+          (onInputChange)="selectExperienceYears($event)"></app-auth-dropdown>
       </div>
-      <app-auth-input-field
-        label="Localisation"
-        [inputValue]="signupForm.get('location')?.value"
-        (onInputChange)="setLocation($event)"
-        placeholder="Type your location here"
-        type="text"
-        name="location"
-        [required]="true"
-      ></app-auth-input-field>
-      <app-upload-image
-        [uploadedFileName]="uploadedFile"
-        [acceptedFileTypes]="'application/pdf'"
-        (fileSelected)="selectFile($event)"
-      ></app-upload-image>
-    </div>
+      <app-auth-input-field label="Localisation" [inputValue]="signupForm.get('location')?.value"
+        (onInputChange)="setLocation($event)" placeholder="Type your location here" type="text" name="location"
+        [required]="true"></app-auth-input-field>
+      <app-upload-image [uploadedFileName]="uploadedFile" [acceptedFileTypes]="'application/pdf'"
+        (fileSelected)="selectFile($event)"></app-upload-image>
+    </div> -->
 
     <!-- __________ STEP 5 : PHOTO  ___________ -->
 
     <div *ngIf="currentStep == 4" class="inputs">
-      <app-upload-image
-        [acceptedFileTypes]="'image/*'"
-        [uploadedImage]="uploadedImage"
-        (fileSelected)="selectImage($event)"
-      ></app-upload-image>
+      <app-upload-image [acceptedFileTypes]="'image/*'" [uploadedImage]="uploadedImage"
+        (fileSelected)="selectImage($event)"></app-upload-image>
     </div>
     <div class="buttons">
-      <app-button
-        [text]="'Previous'"
-        (click)="goPrevious()"
-        *ngIf="currentStep > 0"
-        [fontWeight]="'300'"
-        [backgroundColor]="'white'"
-        [textColor]="'var(--hint-text)'"
-        [boxShadow]="'0 4px 8px 2px var(--hint-text)'"
-      ></app-button>
-      <app-button
-        [text]="'Next'"
-        (click)="goNext()"
-        *ngIf="currentStep < 4"
-        [fontWeight]="'300'"
-      ></app-button>
-      <app-button
-        [text]="'Confirm'"
-        *ngIf="currentStep == 4"
-        [fontWeight]="'300'"
-        [onClick]="saveUser"
-      ></app-button>
+      <app-button [text]="'Previous'" (click)="goPrevious()" *ngIf="currentStep > 0" [fontWeight]="'300'"
+        [backgroundColor]="'white'" [textColor]="'var(--hint-text)'"
+        [boxShadow]="'0 4px 8px 2px var(--hint-text)'"></app-button>
+      <app-button [text]="'Next'" (click)="goNext()" *ngIf="currentStep < 4" [fontWeight]="'300'"></app-button>
+      <app-button [text]="'Confirm'" *ngIf="currentStep == 4" [fontWeight]="'300'" [onClick]="saveUser"></app-button>
     </div>
   </form>
 </app-auth-background>

@@ -377,7 +377,12 @@
 // }
 
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AppUtils } from 'src/app/core/utils/functions.utils';
 import {
@@ -420,6 +425,8 @@ export class SignupComponent {
 
   valid: boolean = true;
 
+  control = new FormControl('');
+
   constructor(private fb: FormBuilder) {
     this.signupForm = this.fb.group({
       accountType: ['', Validators.required],
@@ -439,11 +446,79 @@ export class SignupComponent {
       imageFile: [null],
       pdfFile: [null],
     });
+    this.signupForm.valueChanges.subscribe((form) => console.log(form));
+
+    this.signupForm
+      .get('confirmPassword')
+      ?.valueChanges.subscribe((value) => this.checkPasswordValidation(value));
 
     // this.populateAgeOptions();
     this.populatePoidsActuelOptions();
     this.populateTailleOptions();
     this.populateExpYearsOptions();
+  }
+  get accountTypeControl(): FormControl {
+    return this.signupForm.get('accountType') as FormControl;
+  }
+
+  get emailControl(): FormControl {
+    return this.signupForm.get('email') as FormControl;
+  }
+
+  get passwordControl(): FormControl {
+    return this.signupForm.get('password') as FormControl;
+  }
+
+  get confirmPasswordControl(): FormControl {
+    return this.signupForm.get('confirmPassword') as FormControl;
+  }
+
+  get nameControl(): FormControl {
+    return this.signupForm.get('name') as FormControl;
+  }
+
+  get genderControl(): FormControl {
+    return this.signupForm.get('gender') as FormControl;
+  }
+
+  get birthDateControl(): FormControl {
+    return this.signupForm.get('birthDate') as FormControl;
+  }
+
+  get phoneNumberControl(): FormControl {
+    return this.signupForm.get('phoneNumber') as FormControl;
+  }
+
+  get poidsControl(): FormControl {
+    return this.signupForm.get('poids') as FormControl;
+  }
+
+  get tailleControl(): FormControl {
+    return this.signupForm.get('taille') as FormControl;
+  }
+
+  get activiteJournaliereControl(): FormControl {
+    return this.signupForm.get('activiteJournaliere') as FormControl;
+  }
+
+  get objectifControl(): FormControl {
+    return this.signupForm.get('objectif') as FormControl;
+  }
+
+  get experienceYearsControl(): FormControl {
+    return this.signupForm.get('experienceYears') as FormControl;
+  }
+
+  get locationControl(): FormControl {
+    return this.signupForm.get('location') as FormControl;
+  }
+
+  get imageFileControl(): FormControl {
+    return this.signupForm.get('imageFile') as FormControl;
+  }
+
+  get pdfFileControl(): FormControl {
+    return this.signupForm.get('pdfFile') as FormControl;
   }
 
   goNext(): void {
@@ -475,68 +550,66 @@ export class SignupComponent {
 
   //__________ STEP 2 : EMAIL & PASSWORD ___________
 
-  setEmail(event: string) {
-    console.log('email set');
-    this.signupForm.patchValue({ email: event });
-  }
-  setPassword(event: string) {
-    console.log('password set');
-    this.signupForm.patchValue({ password: event });
-  }
-  setConfirmPassword(event: string) {
-    console.log('confirm password set');
-    this.signupForm.patchValue({ confirmPassword: event });
-    this.checkPasswordValidation();
+  // setEmail(event: string) {
+  //   console.log('email set');
+  //   this.signupForm.patchValue({ email: event });
+  // }
+  // setPassword(event: string) {
+  //   console.log('password set');
+  //   this.signupForm.patchValue({ password: event });
+  // }
+  // setConfirmPassword(event: string) {
+  //   console.log('confirm password set');
+  //   this.signupForm.patchValue({ confirmPassword: event });
+  //   this.checkPasswordValidation();
+  // }
+
+  checkPasswordValidation(newConfirmPassword: string) {
+    this.valid = this.signupForm.value.password === newConfirmPassword;
   }
 
-  checkPasswordValidation() {
-    this.valid =
-      this.signupForm.value.password === this.signupForm.value.confirmPassword;
-    console.log('valid from signup: ' + this.valid);
-  }
+  // updatePasswordInputNote = (password: string, errors: any): string => {
+  //   if (errors) {
+  //     if (errors['required']) {
+  //       return 'Required Field..';
+  //     } else if (errors['minlength']) {
+  //       return `Minimum length is ${errors['minlength'].requiredLength}..`;
+  //     } else {
+  //       return 'Invalid input..';
+  //     }
+  //   } else {
+  //     if (this.strengthLevels['strong'].test(password)) {
+  //       return 'Strong..'; // Valid password (strong).
+  //     } else if (this.strengthLevels['normal'].test(password)) {
+  //       return 'Normal..';
+  //     } // Normal password strength.
+  //     else {
+  //       return 'Weak'; // Weak password strength.
+  //     }
+  //   }
+  // };
 
-  updatePasswordInputNote = (password: string, errors: any): string => {
-    if (errors) {
-      if (errors['required']) {
-        return 'Required Field..';
-      } else if (errors['minlength']) {
-        return `Minimum length is ${errors['minlength'].requiredLength}..`;
-      } else {
-        return 'Invalid input..';
-      }
-    } else {
-      if (this.strengthLevels['strong'].test(password)) {
-        return 'Strong..'; // Valid password (strong).
-      } else if (this.strengthLevels['normal'].test(password)) {
-        return 'Normal..';
-      } // Normal password strength.
-      else {
-        return 'Weak'; // Weak password strength.
-      }
-    }
-  };
+  // updateConfirmPasswordInputNote = (newValue: string, errors: any): string => {
+  //   if (!errors && this.valid) return '';
+  //   if (!this.valid) {
+  //     return 'Password Mismatch..';
+  //   }
+  //   return '';
+  // };
 
-  updateConfirmPasswordInputNote = (newValue: string, errors: any): string => {
-    if (!errors && this.valid) return '';
-    if (!this.valid) {
-      return 'Password Mismatch..';
-    }
-    return '';
-  };
-
-  updateEmailInputNote(newValue: string, errors: any): string {
-    if (errors) {
-      if (errors['required']) {
-        return 'Required Field..';
-      } else if (errors['email']) {
-        return 'Invalid email..';
-      } else {
-        return 'Invalid input..';
-      }
-    } else {
-      return '';
-    }
-  }
+  // updateEmailInputNote(newValue: string, errors: any): string {
+  //   if (errors) {
+  //     if (errors['required']) {
+  //       return 'Required Field..';
+  //     } else if (errors['email']) {
+  //       return 'Invalid email..';
+  //     } else {
+  //       return 'Invalid input..';
+  //     }
+  //   } else {
+  //     return '';
+  //   }
+  // }
 
   // __________ STEP 3 : NAME / GENDER / AGE / PHONENUMBER ___________
 
@@ -619,10 +692,12 @@ export class SignupComponent {
   }
 
   // __________ STEP 5 : Image Upload ___________
-  imageFile?: File;
+  // imageFile?: File;
   uploadedImage: string = '';
   selectImage(selectedImage: File) {
-    this.imageFile = selectedImage;
+    this.signupForm.patchValue({ imageFile: selectedImage });
+
+    // this.imageFile = selectedImage;
     const reader = new FileReader();
     reader.onload = (e: ProgressEvent<FileReader>) => {
       this.uploadedImage = e.target?.result as string;
@@ -633,6 +708,8 @@ export class SignupComponent {
   uploadedFile: string = '';
   pdfFile?: File;
   selectFile(selectedFile: File) {
+    this.signupForm.patchValue({ pdfFile: selectedFile });
+
     this.pdfFile = selectedFile;
     this.uploadedFile = selectedFile.name;
   }
@@ -686,25 +763,27 @@ export class SignupComponent {
   toastr = inject(ToastrService);
   uploadFileService = inject(FileUploadService);
   saveUser = () => {
-    if (this.imageFile) {
+    if (this.imageFileControl.value) {
       // Upload the image first
-      this.uploadFileService.uploadImage(this.imageFile).subscribe({
-        next: (response) => {
-          console.log('Upload Success:', response);
-          this.uploadedImage = response.path;
-          this.processSignup(); // Handle the recipe after uploading the image
-        },
-        error: (err) => {
-          console.error('Upload Failed:', err);
-          this.toastr.error('Image upload failed. Please try again.');
-        },
-      });
+      this.uploadFileService
+        .uploadImage(this.imageFileControl.value)
+        .subscribe({
+          next: (response) => {
+            console.log('Upload Success:', response);
+            this.uploadedImage = response.path;
+            this.processSignup(); // Handle the recipe after uploading the image
+          },
+          error: (err) => {
+            console.error('Upload Failed:', err);
+            this.toastr.error('Image upload failed. Please try again.');
+          },
+        });
     }
   };
 
   private processSignup = () => {
-    if (this.pdfFile) {
-      this.uploadFileService.uploadFile(this.pdfFile).subscribe({
+    if (this.pdfFileControl.value) {
+      this.uploadFileService.uploadFile(this.pdfFileControl.value).subscribe({
         next: (response) => {
           console.log('Upload Success:', response);
           this.uploadedFile = response.path;
