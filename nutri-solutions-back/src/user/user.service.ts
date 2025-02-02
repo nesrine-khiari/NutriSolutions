@@ -19,7 +19,7 @@ export class UserService {
     @InjectRepository(UserEntity)
     protected readonly userRepository: Repository<UserEntity>,
   ) {}
-  private readonly logger = new Logger(UserService.name);
+  protected readonly logger = new Logger(UserService.name);
   async findAll(): Promise<UserEntity[]> {
     return this.userRepository.find();
   }

@@ -13,6 +13,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { join } from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { ReservedSlotSubscriber } from './planning/reserved-slot/reserved-slot.subscriber';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -64,6 +65,7 @@ import { ReservedSlotSubscriber } from './planning/reserved-slot/reserved-slot.s
     UploadModule,
     AuthModule,
     ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController, FileUploadController],
   providers: [AppService],

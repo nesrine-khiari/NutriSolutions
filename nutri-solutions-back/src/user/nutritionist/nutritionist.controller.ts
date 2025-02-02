@@ -12,7 +12,7 @@ import {
 import { NutritionistService } from './nutritionist.service';
 import { Nutritionist } from './nutritionist.entity';
 import { Roles } from 'src/auth/guards/role.guard';
-import { UserRoleEnum } from 'src/enums/user-enums';
+import { ExperienceEnum, UserRoleEnum } from 'src/enums/user-enums';
 import { UpdateNutritionistDto } from './dtos/update-nutritionist.dto';
 
 @Controller('nutritionists')
@@ -23,11 +23,18 @@ export class NutritionistController {
   async findAll(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
+    @Query('searchText') searchText?: string,
+    @Query('experience') experience?: ExperienceEnum,
   ): Promise<{
     data: Nutritionist[];
     total: number;
   }> {
-    return this.nutritionistService.findAllNutritionists(page, limit);
+    return this.nutritionistService.findAllNutritionists(
+      page,
+      limit,
+      searchText,
+      experience as ExperienceEnum,
+    );
   }
   @Get('top')
   async getBestNutritionists(): Promise<Nutritionist[]> {

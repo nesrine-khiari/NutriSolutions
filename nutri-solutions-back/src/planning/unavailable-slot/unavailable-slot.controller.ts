@@ -18,6 +18,7 @@ import { UnavailableSlotService } from './unavailable-slot.service';
 import { UnavailableSlot } from './unavailable-slot.entity';
 import { ReservedSlot } from '../reserved-slot/reserved-slot.entity';
 import { CreateUnavailableSlotDto } from './dtos/create-unavailable-slot.dto';
+import { UpdateResult } from 'typeorm';
 
 @Controller('planning')
 export class UnavailableSlotController {
@@ -74,13 +75,13 @@ export class UnavailableSlotController {
    */
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async delete(@Param('id') id: string): Promise<void> {
+  async delete(@Param('id') id: string): Promise<UpdateResult> {
     const slot = await this.unavailableSlotService.findOne(id);
     if (!slot) {
       throw new NotFoundException(`Slot with ID ${id} not found`);
     }
 
-    const result = await this.unavailableSlotService.delete(id);
+    const result = await this.unavailableSlotService.softDelete(id);
     if (!result) {
       throw new NotFoundException(`Slot with ID ${id} not found`);
     }
@@ -93,7 +94,9 @@ export class UnavailableSlotController {
         reservationDate,
       );
     }
+    return result;
   }
+
   @Patch(':id')
   async update(
     @Param('id') id: string,

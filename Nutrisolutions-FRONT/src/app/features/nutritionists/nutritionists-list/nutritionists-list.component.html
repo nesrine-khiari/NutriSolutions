@@ -13,9 +13,7 @@
     <div class="grid-container">
       <app-nutritionist-item *ngFor="
           let nutritionist of nutritionists
-            | nutritionistsFilter
-              : searchControl.value
-              : experienceControl.value
+
         " [nutritionist]="nutritionist"></app-nutritionist-item>
     </div>
     <div class="pagination">

@@ -19,10 +19,7 @@
     <div *ngIf="!isLoading" class="grid-container">
       <app-recipe-item [recipe]="recipe" *ngFor="
           let recipe of recipes
-            | recipeFilter
-              : searchControl.value
-              : categoryControl.value
-              : objectifControl.value
+
         "></app-recipe-item>
     </div>
     <div class="pagination">

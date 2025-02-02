@@ -3,7 +3,11 @@ import { NutritionistModel } from '../models/nutritionist.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { generateFakeRecipe } from '../core/helpers/faker.helper';
-import { RecipeModel } from '../models/recipe.model';
+import {
+  CategoryEnum,
+  ObjectifEnum,
+  RecipeModel,
+} from '../models/recipe.model';
 import { Observable } from 'rxjs';
 import { APP_API } from '../core/constants/constants.config';
 
@@ -20,25 +24,30 @@ export class RecipesService {
 
   getAllRecipes(
     page: number = 1,
-    limit: number = 12
-  ): Observable<{
-    data: RecipeModel[];
-    total: number;
-  }> {
-    let params = new HttpParams();
+    limit: number = 12,
+    searchText?: string,
+    objectif?: ObjectifEnum,
+    category?: CategoryEnum
+  ): Observable<{ data: RecipeModel[]; total: number }> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
 
-    if (page > 0) {
-      params = params.set('page', page.toString());
+    if (searchText?.trim()) {
+      params = params.set('searchText', searchText.trim());
     }
-    if (limit > 0) {
-      params = params.set('limit', limit.toString());
+    if (objectif) {
+      params = params.set('objectif', objectif);
+    }
+    if (category) {
+      params = params.set('categorie', category);
     }
 
-    return this.http.get<{
-      data: RecipeModel[];
-      total: number;
-    }>(this.apiUrl, { params });
+    return this.http.get<{ data: RecipeModel[]; total: number }>(this.apiUrl, {
+      params,
+    });
   }
+
   getRecipeById(id: string): Observable<RecipeModel> {
     return this.http.get<RecipeModel>(`${this.apiUrl}/${id}`);
   }

@@ -234,6 +234,7 @@ export class PlanningComponent {
       }
       this.planningService.addSlot(slotModelDto).subscribe({
         next: (reservedSlot) => {
+          slot.id = reservedSlot.id ?? '';
           slot.reservedBy = reservedSlot.isReservation
             ? this.clientUserName
             : '';

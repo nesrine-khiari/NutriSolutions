@@ -14,8 +14,4 @@ export class PaginationComponent {
     this.pageChanged.emit(index);
     this.selectedPageIndex = index;
   }
-
-  getNumberSequence() {
-    return Array.from({ length: 2 }, (_, i) => this.selectedPageIndex + i);
-  }
 }

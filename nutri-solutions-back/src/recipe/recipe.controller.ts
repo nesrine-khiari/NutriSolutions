@@ -24,6 +24,7 @@ import { Public } from 'src/auth/guards/auth.guard';
 import { Roles } from 'src/auth/guards/role.guard';
 import { UserRoleEnum } from 'src/enums/user-enums';
 import { RecipeEntity } from './recipe-entity';
+import { CategoryEnum, ObjectifEnum } from 'src/enums/recipe-enums';
 @Controller('recipes')
 export class RecipeController {
   constructor(private readonly recipesService: RecipesService) {}
@@ -37,11 +38,17 @@ export class RecipeController {
   async getRecipes(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
-  ): Promise<{
-    data: RecipeEntity[];
-    total: number;
-  }> {
-    return this.recipesService.findAll(Number(page), Number(limit));
+    @Query('searchText') searchText?: string,
+    @Query('objectif') objectif?: ObjectifEnum,
+    @Query('categorie') category?: CategoryEnum,
+  ): Promise<{ data: RecipeEntity[]; total: number }> {
+    return this.recipesService.findAll(
+      Number(page),
+      Number(limit),
+      searchText,
+      objectif as ObjectifEnum, // Ensure it's treated as an enum
+      category as CategoryEnum, // Ensure it's treated as an enum
+    );
   }
 
   @Get(':id')

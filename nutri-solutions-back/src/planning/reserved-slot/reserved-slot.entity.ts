@@ -1,5 +1,5 @@
 import { Client } from 'src/user/client/client.entity';
-import { Column, ManyToOne, ChildEntity } from 'typeorm';
+import { Column, ManyToOne, ChildEntity, AfterSoftRemove } from 'typeorm';
 import { UnavailableSlot } from '../unavailable-slot/unavailable-slot.entity';
 
 @ChildEntity()
@@ -12,5 +12,4 @@ export class ReservedSlot extends UnavailableSlot {
     eager: true,
   })
   client: Client;
-
 }

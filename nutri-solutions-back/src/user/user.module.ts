@@ -13,6 +13,7 @@ import { ReservedSlot } from 'src/planning/reserved-slot/reserved-slot.entity';
 import { ReservedSlotService } from 'src/planning/reserved-slot/reserved-slot.service';
 import { Admin } from './admin/admin.entity';
 import { EmailService } from 'src/common/email/email.service';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   controllers: [NutritionistController, ClientController],
