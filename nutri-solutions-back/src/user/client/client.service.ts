@@ -41,6 +41,7 @@ export class ClientService extends UserService {
       .createQueryBuilder('client')
       .leftJoinAndSelect('client.favoriteRecipes', 'favoriteRecipes')
       .leftJoinAndSelect('client.reservedSlots', 'reservedSlots')
+      .leftJoinAndSelect('reservedSlots.nutritionist', 'nutritionist') // Include the nutritionist for each reserved slot
       .where('client.id = :id', { id })
       .orderBy('reservedSlots.date', 'ASC') // Order reservedSlots by date ascending
       .getOne();

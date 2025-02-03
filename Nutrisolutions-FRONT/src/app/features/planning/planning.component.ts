@@ -70,6 +70,7 @@ export class PlanningComponent {
   selectedIndex: number = 0;
   isMorning: boolean = true;
   currentDate = new Date();
+  date = new Date('2025-08-08');
   starOptions = Object.values(StarsCountEnum);
   starControl: FormControl = new FormControl(StarsCountEnum.One);
   logger = inject(LoggerService);

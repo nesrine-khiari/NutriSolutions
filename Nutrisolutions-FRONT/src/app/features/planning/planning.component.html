@@ -77,7 +77,7 @@
             height="30px"
             alt="appointment"
           />
-          <img
+          <!-- <img
             (click)="showCancelPopup(index)"
             *ngIf="
               slot.date >= currentDate &&
@@ -88,14 +88,14 @@
             width="30px"
             height="30px"
             alt="appointment"
-          />
+          /> -->
           <img
             (click)="showRatingPopup(index)"
             *ngIf="
               slot.isReserved &&
               slot.isReservation &&
               userRole == 'Client' &&
-              slot.date <= currentDate
+              slot.date <= date
             "
             src="assets/images/rate2.png"
             width="40px"

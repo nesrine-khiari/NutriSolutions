@@ -14,12 +14,14 @@
             <p>{{ todayReservations.length }}</p>
             <div class="stats">
               <app-stats
-                [evolutionPercent]="51"
+                [evolutionPercent]="
+                  (recentReservations.length / reservations.length) * 100
+                "
                 [stat]="recentReservations.length"
-                [statObject]="'Nouveaux Patients'"
+                [statObject]="'Nouveaux RDV'"
               ></app-stats>
               <app-stats
-                [stat]="reservations.length"
+                [stat]="nutritionist?.patientsNumber ?? 0"
                 [statObject]="'Total Patients'"
               ></app-stats>
             </div>

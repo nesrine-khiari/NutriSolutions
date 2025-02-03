@@ -105,18 +105,23 @@ export class ReservedSlotSubscriber
     }
   }
   async afterUpdate(event: UpdateEvent<ReservedSlot>) {
-    Logger.warn('afterUpdateNutritionistRating');
-    const reservedSlot = event.entity;
-    const nutritionist = reservedSlot.nutritionist;
-    const slotsCount = await event.manager.count(ReservedSlot, {
-      where: { nutritionist: { id: reservedSlot.nutritionist.id } , rating: Not(0) },
-    });
-    Logger.warn('staars: ' + reservedSlot.rating);
-    let totalStars: number =
-      nutritionist.rating * (slotsCount - 1) + Number(reservedSlot.rating);
-    Logger.warn('totalStars: ' + totalStars);
-    nutritionist.rating = totalStars / slotsCount;
-    Logger.warn('nutritionistRating: ' + nutritionist.rating);
-    await event.manager.save(nutritionist);
+    if (event.entity.rating !== 0) {
+      Logger.warn('afterUpdateNutritionistRating');
+      const reservedSlot = event.entity;
+      const nutritionist = reservedSlot.nutritionist;
+      const slotsCount = await event.manager.count(ReservedSlot, {
+        where: {
+          nutritionist: { id: reservedSlot.nutritionist.id },
+          rating: Not(0),
+        },
+      });
+      Logger.warn('staars: ' + reservedSlot.rating);
+      let totalStars: number =
+        nutritionist.rating * (slotsCount - 1) + Number(reservedSlot.rating);
+      Logger.warn('totalStars: ' + totalStars);
+      nutritionist.rating = totalStars / slotsCount;
+      Logger.warn('nutritionistRating: ' + nutritionist.rating);
+      await event.manager.save(nutritionist);
+    }
   }
 }
