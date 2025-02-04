@@ -27,12 +27,19 @@
     <div class="vert-header">
       <div
         class="slot header-slot"
-        [class.active]="index == currentDate.getDay() - 1"
+        [class.active]="index == selectedDate.getDay() - 1"
         *ngFor="let day of workDaysOfWeek; let index = index"
       >
         <div class="day">
           {{ day }}
-          <p *ngIf="index == currentDate.getDay() - 1">Today</p>
+          <p
+            *ngIf="
+              index == currentDate.getDay() - 1 &&
+              getWeekInMonth(selectedDate) == getWeekInMonth(currentDate)
+            "
+          >
+            Today
+          </p>
         </div>
       </div>
     </div>
@@ -77,7 +84,7 @@
             height="30px"
             alt="appointment"
           />
-          <!-- <img
+          <img
             (click)="showCancelPopup(index)"
             *ngIf="
               slot.date >= currentDate &&
@@ -88,14 +95,14 @@
             width="30px"
             height="30px"
             alt="appointment"
-          /> -->
+          />
           <img
             (click)="showRatingPopup(index)"
             *ngIf="
               slot.isReserved &&
               slot.isReservation &&
               userRole == 'Client' &&
-              slot.date <= date
+              slot.date <= currentDate && allSlots[selectedIndex].rating == 0
             "
             src="assets/images/rate2.png"
             width="40px"

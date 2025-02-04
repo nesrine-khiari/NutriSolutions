@@ -8,6 +8,11 @@ import {
   RecipeModel,
 } from 'src/app/models/recipe.model';
 
+
+
+//! On a préparé des fonctions pour générer des données factices pour les recettes, les nutritionnistes et les clients.
+
+
 // export function generateFakeNutritionist(): NutritionistModel {
 //   return {
 //     id: faker.string.uuid(),

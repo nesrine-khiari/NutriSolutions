@@ -1,4 +1,6 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, inject } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 // Extend HTMLDivElement to include `x` and `y` properties
 interface CustomHTMLDivElement extends HTMLDivElement {
@@ -12,6 +14,7 @@ interface CustomHTMLDivElement extends HTMLDivElement {
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements AfterViewInit {
+  activatedRoute = inject(ActivatedRoute);
   coords = { x: 0, y: 0 };
   colors: string[] = [
     '#cc5500',
@@ -34,7 +37,23 @@ export class AppComponent implements AfterViewInit {
     '#874000',
     '#7c3c00',
   ];
+  isNavBarVisible: boolean = true;
 
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        const url = this.router.url;
+        this.isNavBarVisible = !(
+          url === '/' ||
+          url.includes('/login') ||
+          url.includes('/signup') ||
+          url.includes('/reset-password')
+        );
+      });
+  }
   ngAfterViewInit(): void {
     const circles = document.querySelectorAll<CustomHTMLDivElement>('.circle');
 

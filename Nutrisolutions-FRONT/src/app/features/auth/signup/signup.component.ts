@@ -28,7 +28,7 @@ import { NutritionistsService } from 'src/app/services/nutritionists.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['../../../assets/css/auth-common.css', './signup.component.css'],
+  styleUrls: ['../../../../assets/css/auth-common.css', './signup.component.css'],
 })
 export class SignupComponent {
   signupForm: FormGroup;

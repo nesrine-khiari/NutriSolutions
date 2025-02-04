@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { APP_API } from '../core/constants/constants.config';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Slot } from '../features/planning/planning.component';
 import { SlotModel, CreateSlotModelDto } from '../models/slot.model';
 
 @Injectable({

@@ -79,6 +79,12 @@
     left: -30%;
   }
 }
+.itemsTitles .menu-item.selected::before {
+  left: -30%;
+}
+.itemsTitles .menu-item.selected {
+  color: var(--light-orange);
+}
 
 .menu-item .icon,
 .menu-item .title {
@@ -86,10 +92,7 @@
   transition: color 0.3s ease;
 }
 
-.menu-item.selected .icon,
-.menu-item.selected .title {
-  color: var(--light-orange);
-}
+
 .menu-item.hovered .icon,
 .menu-item.hovered .title {
   color: var(--light-orange);

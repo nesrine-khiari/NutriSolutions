@@ -4,17 +4,30 @@
       <img src="assets/images/oranges.png" alt="oranges" />
     </div>
     <div class="nav-bar-content" #navBar>
-      <img src="assets/images/nutri-logo.png" alt="nutri-logo" class="logo" #logo />
+      <img
+        src="assets/images/nutri-logo.png"
+        alt="nutri-logo"
+        class="logo"
+        #logo
+      />
       <div class="menu-items">
         <ul class="itemsIcons" #itemsIcons>
-          <li class="menu-item" *ngFor="let item of menuItems; let i = index" [class.selected]="selectedItem === i"
-            (click)="selectItem(i)" [routerLink]="item.route">
+          <li
+            class="menu-item"
+            *ngFor="let item of menuItems; let i = index"
+            routerLinkActive="selected"
+            [routerLink]="item.route"
+          >
             <span class="icon"><i [class]="item.iconClass"></i></span>
           </li>
         </ul>
         <ul class="itemsTitles" #itemsTitles>
-          <li class="menu-item" *ngFor="let item of menuItems; let i = index" [class.selected]="selectedItem === i"
-            (click)="selectItem(i)" [routerLink]="item.route">
+          <li
+            class="menu-item"
+            *ngFor="let item of menuItems; let i = index"
+            routerLinkActive="selected"
+            [routerLink]="item.route"
+          >
             <span class="title">{{ item.title }}</span>
           </li>
         </ul>
@@ -24,7 +37,11 @@
       </div>
 
       <div class="logout" #logout>
-        <app-button [onClick]="signout" [text]="'Déconnexion'" [fontWeight]="'500'"></app-button>
+        <app-button
+          [onClick]="signout"
+          [text]="'Déconnexion'"
+          [fontWeight]="'500'"
+        ></app-button>
       </div>
     </div>
   </div>

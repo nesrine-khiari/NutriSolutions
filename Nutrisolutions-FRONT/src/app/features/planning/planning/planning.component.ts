@@ -15,9 +15,9 @@ import { PlanningService } from 'src/app/services/planning.service';
   selector: 'app-planning',
   templateUrl: './planning.component.html',
   styleUrls: [
-    '../../../assets/css/popup.css',
+    '../../../../assets/css/popup.css',
     './planning.component.css',
-    '../../../assets/css/list-common.css',
+    '../../../../assets/css/list-common.css',
   ],
 })
 export class PlanningComponent {
@@ -319,11 +319,7 @@ export class PlanningComponent {
   // Method to show the popup
   showRatingPopup = (index: number) => {
     this.selectedIndex = index;
-    if (this.allSlots[this.selectedIndex].rating == 0) {
-      this.isRatingPopupVisible = true;
-    } else {
-      this.toastr.error('Vous avez déjà noté ce créneau');
-    }
+    this.isRatingPopupVisible = true;
   };
 
   // Method to hide the popup
@@ -338,6 +334,9 @@ export class PlanningComponent {
     this.isRatingPopupVisible = false;
     this.starControl.setValue(StarsCountEnum.One);
   };
+  getWeekInMonth(date: Date): number {
+    return AppUtils.getWeekInMonth(date);
+  }
 }
 
 export interface Slot {

@@ -6,7 +6,6 @@ import {
   inject,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { ro } from '@faker-js/faker/.';
 import { UserRoleEnum } from 'src/app/models/client.model';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -127,12 +126,9 @@ export class NavBarComponent implements AfterViewInit {
     { title: 'Settings', iconClass: 'fas fa-cog', route: '/settings' },
   ];
 
-  selectedItem: number | null = null;
   isHovered: boolean = false;
 
-  selectItem(index: number): void {
-    this.selectedItem = index;
-  }
+
 
   ngAfterViewInit(): void {
     this.toggle.nativeElement.addEventListener(

@@ -17,6 +17,7 @@ import { RecipesService } from 'src/app/services/recipe.service';
   styleUrls: ['./profile-page.component.css'],
 })
 export class ProfilePageComponent implements OnInit {
+  currentDate = new Date();
   recipesService = inject(RecipesService);
   client: ClientModel | null = null;
   recettes: RecipeModel[] | undefined;
@@ -26,7 +27,7 @@ export class ProfilePageComponent implements OnInit {
   toastr = inject(ToastrService);
   base_url = APP_API.base_url;
   upcomingAppointement: SlotModel | null = null;
-  logger=inject(LoggerService);
+  logger = inject(LoggerService);
   constructor(private getAgePipe: GetAgePipe) {
     this.clientService.getClientById(this.authService.getUserId()).subscribe({
       next: (response) => {

@@ -1,5 +1,6 @@
 <app-page-background>
-  <app-water-tracking></app-water-tracking>
+  <!-- La feature water Track est seulement du UI -->
+  <app-water-tracking></app-water-tracking> 
   <app-top-list [title]="'Les recettes les plus récentes'" [onVoirPlusClicked]="navigateToRecipes">
     <app-recipe-item [recipe]="recipe" *ngFor="let recipe of recetRecipes"></app-recipe-item>
   </app-top-list>

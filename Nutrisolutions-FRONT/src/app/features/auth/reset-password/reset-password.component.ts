@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['../../../assets/css/auth-common.css'],
+  styleUrls: ['../../../../assets/css/auth-common.css'],
 })
 export class ResetPasswordComponent {
   actRoute = inject(ActivatedRoute);

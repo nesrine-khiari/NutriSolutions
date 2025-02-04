@@ -6,10 +6,10 @@
     <div class="recipe-container">
       <div class="first-section-recipe">
         <div class="img-container">
-          <img [src]="base_url + recipe?.imageUrl" alt="recipe_image" />
+          <img [src]="base_url + recipe.imageUrl" alt="recipe_image" />
         </div>
         <div class="recipe-details">
-          <h2>{{ recipe?.name }}</h2>
+          <h2>{{ recipe.name }}</h2>
           <div class="details-grid-container">
             <div class="detail-item" *ngFor="let item of items">
               <img [src]="item.image" alt="goal" />
@@ -56,9 +56,9 @@
           </ul>
         </div>
         <app-recipe-details-item [title]="'Instructions :'"
-          [details]="recipe?.instructions || []"></app-recipe-details-item>
+          [details]="recipe.instructions || []"></app-recipe-details-item>
         <app-recipe-details-item [title]="'Cooking Notes :'"
-          [details]="recipe?.cookingNotes || []"></app-recipe-details-item>
+          [details]="recipe.cookingNotes || []"></app-recipe-details-item>
       </div>
     </div>
   </app-svg-box>

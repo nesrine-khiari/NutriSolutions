@@ -1,21 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LandingPageComponent } from './features/landing/landing-page/landing-page.component';
-import { LoginComponent } from './auth/login/login.component';
-import { SignupComponent } from './auth/signup/signup.component';
 import { NutritionistsListComponent } from './features/nutritionists/nutritionists-list/nutritionists-list.component';
 import { authGuard } from './core/guards/auth.guard';
-import { RecipesListComponent } from './features/recipes/recipes-list/recipes-list.component';
-import { PlanningComponent } from './features/planning/planning.component';
 import { ProfilePageComponent } from './features/profile/profile-page/profile-page.component';
 import { AdminHomeComponent } from './features/home/admin-home/admin-home.component';
 import { roleGuard } from './core/guards/role.guard';
 import { HomePageComponent } from './features/home/home-page/home-page.component';
 import { HomeNutritionisteComponent } from './features/home/home-nutritioniste/home-nutritioniste.component';
-import { AddRecipeComponent } from './features/recipes/add-recipe/add-recipe.component';
-import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { UserRoleEnum } from './models/client.model';
-import { UnderConstructionComponent } from './features/under-construction/under-construction.component';
+import { UnderConstructionComponent } from './shared/components/under-construction/under-construction.component';
+import { LoginComponent } from './features/auth/login/login.component';
+import { ResetPasswordComponent } from './features/auth/reset-password/reset-password.component';
+import { SignupComponent } from './features/auth/signup/signup.component';
+import { PlanningComponent } from './features/planning/planning/planning.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },

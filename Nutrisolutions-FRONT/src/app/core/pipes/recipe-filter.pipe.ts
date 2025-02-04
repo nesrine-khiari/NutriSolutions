@@ -4,7 +4,8 @@ import {
   ObjectifEnum,
   RecipeModel,
 } from 'src/app/models/recipe.model';
-
+//! Ce pipe a été initialement créé pour filtrer les recettes localement.
+//! Cependant, le filtrage est maintenant effectué directement dans la requête API.
 @Pipe({
   name: 'recipeFilter',
 })

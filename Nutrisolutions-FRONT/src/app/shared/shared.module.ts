@@ -23,6 +23,7 @@ import { RouterModule } from '@angular/router';
 import { PreloaderComponent } from './components/preloader/preloader.component';
 import { PopupComponent } from './components/popup/popup.component';
 import { CoreModule } from '../core/core.module';
+import { UnderConstructionComponent } from './components/under-construction/under-construction.component';
 @NgModule({
   declarations: [
     AuthBackgroundComponent,
@@ -45,6 +46,7 @@ import { CoreModule } from '../core/core.module';
     SearchHeaderComponent,
     PreloaderComponent,
     PopupComponent,
+    UnderConstructionComponent
   ],
   imports: [
     CommonModule,
@@ -74,6 +76,7 @@ import { CoreModule } from '../core/core.module';
     SearchHeaderComponent,
     PreloaderComponent,
     PopupComponent,
+    UnderConstructionComponent
   ],
 })
 export class SharedModule {}

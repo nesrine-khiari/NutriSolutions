@@ -18,4 +18,9 @@ export class AppUtils {
     );
     return matchedValue as T[keyof T];
   }
+  static getWeekInMonth(date:Date):number {
+    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+    const dayOfMonth = date.getDate();
+    return Math.ceil((dayOfMonth + firstDay) / 7);
+  }
 }
